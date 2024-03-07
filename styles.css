@@ -73,3 +73,6 @@ li{
 .one-of-four div{
 margin: 30px;
 }
+li,h1,p{
+    color:white;
+}
