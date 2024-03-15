@@ -94,7 +94,54 @@ text-align: center;
 h1,h6,h2,h3,h4,h5,p{
     font-family: 'Courier New', Courier, monospace;
 }
+#about{
+    margin-left: 200px;
+    height: 50%;
+}
+.texttoo{
+    max-width: 400px;
+}
+.imgl{
+    justify-content: space-between;
+    height: 200px;
+    width: 200px;
+    margin-left:500px;
+}
+.img-and-text{
+    display: flex;
+}
 
+  .game-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background-color: #fff;
+    border: 2px solid #000;
+    margin-left: 1100px;
+  }
+  .animated-square {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: orange;
+    animation: moveSquare 1s linear infinite;
+  }
+  @keyframes moveSquare {
+    0% { top: 0; left: 0; }
+    25% { top: 0; left: 250px; }
+    50% { top: 250px; left: 250px; }
+    75% { top: 250px; left: 0; }
+    100% { top: 0; left: 0; }
+  }
+  .game-container:hover .animated-square:first-of-type {
+    animation-play-state: paused;
+  }
+  .game-container:hover .victory-message {
+    display: block;
+  }
+  .animated-square:hover{
+    animation-play-state: paused;
+  }
     </style>
     <body>
         <header>
@@ -117,6 +164,18 @@ h1,h6,h2,h3,h4,h5,p{
         </div>
     </div>
         </div>
-        
+        <div id="about">
+            <h1 class="sometext">О нас</h1>
+            <div class="img-and-text">
+            <p class="texttoo">Мы - компания Max Kranz, которая занимается веб-разработкой и обучением детей. Мы считаем, что сайты - это одна из самых важных частей любого бизнеса, потому что, согласитесь, без сайта бизнесу никуда. Поэтому мы предлагаем обучение веб-разработке и разработку сайтов на заказ.</p>
+            <img class="imgl" src="html.png">
+        </div>
+        </div>
+        <div class="game-container">
+            <div class="animated-square"></div>
+            <div class="animated-square"></div>
+            <div class="animated-square"></div>
+        </div>
+
     </body>
 </html>
