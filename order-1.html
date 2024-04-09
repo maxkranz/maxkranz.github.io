@@ -2,12 +2,9 @@
 <html>
 <head>
     <title>Order</title>
-    <style>
-        #more {
-            display: none;
-        }
+    <style>       
         .wholecode {
-            display: flex;
+        display: flex;
         }
         button {
             background-color: white;
@@ -17,13 +14,16 @@
             left: 0;
             top: 0;
         }
+        #btn {
+            border: 0.5px dotted black;
+            margin-top: 95px;
+        }
         #expanding-text {
             margin-left: 22px;
             max-width: 300px;
         }
-        #btn {
-            border: 0.5px dotted black;
-            margin-top: 95px;
+        #more {
+            display: none;
         }
     </style>
 </head>
@@ -31,7 +31,7 @@
     <h1 style="text-align: center;">Заголовок</h1>
     <div class="wholecode">
         <button id="btn" onclick="readMore()">+</button>
-        <p id="expanding-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam recusandae voluptatibus explicabo tenetur obcaecati magni excepturi dolorem? Officiis corrupti harum laudantium sit odit perspiciatis inventore at repellat quo quasi reiciendis voluptatem modi, enim magni atque fugiat non iure. Voluptatem recusandae velit consequuntur pariatur doloremque, deleniti quia qui porro quas facilis accusantium natus sed voluptate itaque voluptatibus voluptas veritatis sapiente. Harum eum ipsum asperiores ipsa similique velit, voluptates sed atque id?</span></p>
+        <p id="expanding-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam recusandae <span id="dots">...</span><span id="more">voluptatibus explicabo tenetur obcaecati magni excepturi dolorem? Officiis corrupti harum laudantium sit odit perspiciatis inventore at repellat quo quasi reiciendis voluptatem modi, enim magni atque fugiat non iure. Voluptatem recusandae velit consequuntur pariatur doloremque, deleniti quia qui porro quas facilis accusantium natus sed voluptate itaque voluptatibus voluptas veritatis sapiente. Harum eum ipsum asperiores ipsa similique velit, voluptates sed atque id?</span></p>
     </div>
     <a href="https://github.com/maxkranz/maxkranz.github.io">Github Code</a>
     <script>
