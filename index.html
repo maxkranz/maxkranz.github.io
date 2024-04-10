@@ -3,6 +3,8 @@
         <title>Max Kranz</title>
         <link rel="stylesheet" href="maxkranz.css">
         <link rel="shortcut icon" href="html.png">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
     </head>
     <style>
         header{
@@ -16,6 +18,23 @@
     top:0
     
 }
+.three-of-prices {
+           display: flex;
+           justify-content: center;
+           margin-top: 100px;
+       }
+       .one-of-three {
+           flex: 1;
+           padding: 20px;
+           background-color: orange;
+           margin: 0 10px;
+           border-radius: 10px;
+       }
+       .big-h1 {
+           font-size: 24px;
+           margin-bottom: 10px;
+       }
+
 .maxford{
     text-decoration: none;
     margin-top: 35px;
@@ -87,12 +106,9 @@ text-align: center;
 .text1{
     font-size: 40px;
 }
-@font-face {
-    font-family: 'Courier New', Courier, monospace;
-    src: url(/home/max/Downloads/Montserrat.zip);
-}
+
 h1,h6,h2,h3,h4,h5,p{
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Montserrat', sans-serif;
 }
 #about{
     margin-left: 200px;
@@ -100,6 +116,9 @@ h1,h6,h2,h3,h4,h5,p{
 }
 .texttoo{
     max-width: 400px;
+}
+body{
+    font-family: 'Montserrat', sans-serif;
 }
 .imgl{
     justify-content: space-between;
@@ -177,6 +196,91 @@ justify-content: center;
         #how-it-works div{
             margin: 30px;
         }
+        .secondchild {
+           padding: 10px 20px;
+           background-color: orange;
+           border: none;
+           border-radius: 5px;
+           font-size: 18px;
+           color: black;
+           cursor: pointer;
+       }
+  footer {
+           background-color: darkslategray;
+           padding: 40px 20px;
+           text-align: center;
+           color: white;
+           margin-top: 100px;
+       }
+       footer a {
+           color: white;
+           text-decoration: none;
+       }
+  body {
+           font-family: 'Montserrat', sans-serif;
+           background-color: darkslategray;
+           color: white;
+           margin: 0;
+           padding: 0;
+       }
+       /* CSS для телефонной версии */
+/* CSS для телефонной версии */
+@media screen and (max-width: 430px) {
+
+
+    header {
+        position: relative;
+        text-align: center; /* Выравниваем элементы по центру */
+    }
+
+    .maxford {
+        display: block;
+        margin-bottom: 10px;
+        margin-right: 50;
+    }
+footer{
+    text-align: center;
+}
+    .links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: darkslategray;
+        width: 100%;
+        text-align: center;
+
+    }
+    .secondchild{
+        text-align: center;
+
+    }
+
+    .links a {
+        display: block;
+        padding: 10px 0;
+        color: white;
+        text-decoration: none;
+    }
+
+    .links a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .game-container {
+        position: static; /* Изменяем позиционирование на стандартное */
+        margin: 0 auto; /* Выравниваем по центру */
+        display: none;
+    }
+    .one-of-three{
+        width: 100;
+        height: 500;
+        text-align: center;
+
+    }
+}
+
+
+
     </style>
     <body>
         <header>
