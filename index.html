@@ -209,7 +209,6 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background-color: black;
             width: 100%;
             text-align: center;
             display: none;
@@ -254,6 +253,7 @@
             max-width: 1000px;
         }
         #how-it-works{
+            margin-top: 0%;
             text-align: center;
             justify-content: center;
             align-items: center;
@@ -352,13 +352,25 @@
     <!-- JavaScript для мобильного меню -->
     <script>
         // Получаем элементы
-        const menuIcon = document.querySelector('.menu-icon');
-        const links = document.querySelector('.links');
+   const menuIcon = document.querySelector('.menu-icon');
+const links = document.querySelector('.links');
 
-        // Добавляем обработчик события на клик по иконке меню
-        menuIcon.addEventListener('click', () => {
-            // Переключаем класс для отображения/скрытия меню
-            links.classList.toggle('show');
+// Добавляем обработчик события на клик по документу
+document.addEventListener('click', (event) => {
+    // Проверяем, был ли клик выполнен вне меню
+    if (!links.contains(event.target) && !menuIcon.contains(event.target)) {
+        // Убираем класс для скрытия меню
+        links.classList.remove('show');
+    }
+});
+
+// Добавляем обработчик события на клик по иконке меню
+menuIcon.addEventListener('click', (event) => {
+    event.stopPropagation(); // Остановка всплытия события
+    // Переключаем класс для отображения/скрытия меню
+    links.classList.toggle('show');
+});
+
         });
     </script>
 </body>
