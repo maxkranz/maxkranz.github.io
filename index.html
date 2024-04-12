@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <title>Max Kranz</title>
     <link rel="stylesheet" href="maxkranz.css">
@@ -8,8 +8,8 @@
     <link rel="shortcut icon" href="html.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <style>
-    /* Общие стили */
     body, html {
         margin: 0;
         padding: 0;
@@ -18,12 +18,12 @@
         color: white;
         width: 100%;
     }
+
     a {
         color: white;
         text-decoration: none;
     }
 
-    /* Шапка */
     header {
         display: flex;
         justify-content: space-between;
@@ -32,27 +32,30 @@
         margin: 0;
         position: fixed;
         width: 100%;
-        top:0;
+        top: 0;
         background-color: darkslategray;
     }
+
     .maxford {
         text-decoration: none;
         margin-top: 35px;
         font-size: 40px;
         margin-left: 20px;
     }
+
     .links {
         margin-top: 55px;
     }
+
     .links a {
         margin-right: 100px;
         text-align: center;
     }
+
     .link {
         text-decoration: none;
     }
 
-    /* Главная секция */
     #home {
         height: 100%;
         width: auto;
@@ -60,67 +63,77 @@
         align-items: center;
         display: flex;
     }
+
     .sub-home {
         max-width: 40%;
         text-align: center;
         background-position: center;
         margin-top: 22%;
     }
-    body{
+
+    body {
         overflow-x: hidden;
     }
+
     .the-button {
         justify-content: center;
         display: flex;
     }
+
     .secondchild {
         width: 170px;
         padding: 10px 20px;
         background-color: orange;
         text-align: center;
     }
+
     .text1 {
         font-size: 40px;
         text-align: center;
     }
-    .three-of-prices{
+
+    .three-of-prices {
         display: flex;
     }
 
-    /* О компании */
     #about {
         margin-left: 200px;
         height: 50%;
         margin-top: 400px;
     }
+
     .texttoo {
         max-width: 400px;
     }
+
     .imgl {
         justify-content: space-between;
         height: 200px;
         width: 200px;
         margin-left: 500px;
     }
+
     .img-and-text {
         display: flex;
     }
-    @media screen and (min-width: 769px){
-        .menu-icon{
+
+    @media screen and (min-width: 769px) {
+        .menu-icon {
             display: none;
         }
     }
-        
-    /* Секция "Что мы предлагаем" */
+
     #how-it-works {
         display: flex;
         justify-content: center;
         text-align: center;
         margin-top: 300px;
     }
+
     #how-it-works div {
         margin: 30px;
     }
+
     .one-of-three {
         flex: 1;
         padding: 20px;
@@ -129,10 +142,12 @@
         border-radius: 10px;
         text-align: center;
     }
+
     .big-h1 {
         font-size: 24px;
         margin-bottom: 10px;
     }
+
     .secondchild {
         padding: 10px 20px;
         background-color: orange;
@@ -143,14 +158,12 @@
         cursor: pointer;
     }
 
-    /* Секция "Об основателе" */
     #founder {
         margin-left: 200px;
         height: 50%;
         margin-top: 100px;
     }
 
-    /* Футер */
     footer {
         background-color: darkslategray;
         padding: 40px 20px;
@@ -158,19 +171,19 @@
         color: white;
         margin-top: 100px;
     }
+
     footer a {
         color: white;
         text-decoration: none;
     }
 
-    /* Анимация квадрата */
     .game-container {
         position: absolute;
         width: 300px;
         height: 300px;
         margin-left: 1100px;
-
     }
+
     .animated-square {
         position: absolute;
         width: 50px;
@@ -178,107 +191,151 @@
         background-color: orange;
         animation: moveSquare 1s linear infinite;
     }
+
     @keyframes moveSquare {
-        0% { top: 0; left: 0; }
-        25% { top: 0; left: 250px; }
-        50% { top: 250px; left: 250px; }
-        75% { top: 250px; left: 0; }
-        100% { top: 0; left: 0; }
+        0% {
+            top: 0;
+            left: 0;
+        }
+
+        25% {
+            top: 0;
+            left: 250px;
+        }
+
+        50% {
+            top: 250px;
+            left: 250px;
+        }
+
+        75% {
+            top: 250px;
+            left: 0;
+        }
+
+        100% {
+            top: 0;
+            left: 0;
+        }
     }
+
     .game-container:hover .animated-square:first-of-type {
         animation-play-state: paused;
     }
+
     .animated-square:hover {
         animation-play-state: paused;
     }
 
-    /* Адаптивные стили для мобильных устройств */
     @media screen and (max-width: 768px) {
         header {
             position: fixed;
         }
-        .three-of-prices{
+
+        .three-of-prices {
             display: block;
         }
+
         .maxford {
             display: block;
             margin-bottom: 10px;
             margin-right: 50px;
         }
+
         .links {
             position: absolute;
             top: 100%;
             left: 0;
             width: 100%;
+            background-color: darkslategray;
             text-align: center;
+            justify-content: center;
+            align-items: center;
+            margin-left: 30px;
             display: none;
         }
+
         .links.show {
             display: block;
         }
-        body{
+
+        body {
             overflow-x: hidden;
         }
+
         .links a {
             display: block;
             padding: 10px 0;
             color: white;
             text-decoration: none;
         }
+
         .links a:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
+
         .game-container {
             position: static;
             margin: 0 auto;
             display: none;
         }
+
         .one-of-three {
             width: 100%;
             height: 500px;
             text-align: center;
         }
-        /* Добавленные стили для мобильного меню */
+
         .maxford {
             display: block;
             margin-bottom: 10px;
         }
+
         .menu-icon {
             display: block;
             margin-right: 60px;
             font-size: 24px;
             cursor: pointer;
         }
-        .texttoo{
+
+        .texttoo {
             max-width: 1000px;
         }
-        #how-it-works{
+
+        #how-it-works {
             margin-top: 0%;
             text-align: center;
             justify-content: center;
             align-items: center;
             margin-right: 100px;
         }
-        #founder{
+
+        #founder {
             margin-left: 20px;
             margin-top: 0%;
         }
-        .imgl{
+
+        .imgl {
             display: none;
         }
-        #about{
-            margin-top: 300px;
+
+        #about {
+            margin-top: 100px;
             margin-left: 30px;
         }
-        .sub-home{
+
+        .sub-home {
             margin-top: 200px;
+        }
+        footer{
+            margin-top: 10%;
         }
     }
 </style>
+
 <body>
     <header>
         <a class="maxford" href="#home">Max Kranz</a>
-        <!-- Добавлен иконка меню для мобильных устройств -->
         <div class="menu-icon">&#9776;</div>
         <div class="links">
             <a href="#home" class="link">Главная</a>
@@ -338,40 +395,39 @@
     <div id="founder">
         <h1 class="sometext">Об основателе</h1>
         <div class="img-and-text">
-            <p class="texttoo">Основатель компании Max Kranz - это одиннадцатилетний подросток Макс Кранц, который мечтает стать веб-разработчиком и пока что учится на него. Он создал все продукты и саму компанию сам, также как и сайты. Также для некоторых он больше известен как писатель и поэт.</p>
-            <img class="imgl" src="_AN-543.jpg">
+            <p class="texttoo">Основатель нашей компании - это подросток Макс Кранц, который мечтает стать веб-разработчиком и пока что учится на него. Он создал сайты и все, что связано с компанией сам. Также для некоторых автор книги "История Джона Сандерса".</p>
+            <img class="imgl" src="AN-543.png">
         </div>
     </div>
     <footer>
         <h1 class="maxford2">Max Kranz</h1>
         <p>Если у вас остались вопросы, пожалуйста напишите нашему основателю Максу Кранцу:</p>
-        <a href="mailto:gmax.nikolaev@gmail.com">Напишите ему на почту!</a>
+        <a href="mailto:gmax.nikolaev@gmail.com" style="text-decoration: underline;">Напишите ему на почту!</a>
+        <p>Репозиторий в Github: <a href="github.com/maxkranz/maxkranz.github.io" style="text-decoration: underline;">Жми сюда!</a> (если вам понравилось, поставьте звездочку в Github!)
         <p>© 2024 Max Kranz LLC</p>
     </footer>
-
-    <!-- JavaScript для мобильного меню -->
     <script>
-        // Получаем элементы
-   const menuIcon = document.querySelector('.menu-icon');
+        const menuIcon = document.querySelector('.menu-icon');
 const links = document.querySelector('.links');
 
-// Добавляем обработчик события на клик по документу
 document.addEventListener('click', (event) => {
-    // Проверяем, был ли клик выполнен вне меню
     if (!links.contains(event.target) && !menuIcon.contains(event.target)) {
-        // Убираем класс для скрытия меню
         links.classList.remove('show');
     }
 });
 
-// Добавляем обработчик события на клик по иконке меню
 menuIcon.addEventListener('click', (event) => {
-    event.stopPropagation(); // Остановка всплытия события
-    // Переключаем класс для отображения/скрытия меню
+    event.stopPropagation(); 
     links.classList.toggle('show');
 });
 
-        });
+links.addEventListener('click', (event) => {
+    if (event.target.tagName === 'A') {
+        links.classList.remove('show');
+    }
+});
+
     </script>
 </body>
+
 </html>
