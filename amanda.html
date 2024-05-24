@@ -37,6 +37,20 @@
                 width: 350px;
             }
         }
+
+        .link-container a {
+            margin: 0 10px; /* Добавляет отступ по горизонтали между ссылками */
+            text-decoration: none; /* Убирает подчеркивание ссылок для лучшего вида */
+            color: darkblue; /* Задает цвет ссылок */
+        }
+
+        .link-container {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 30px;
+            display: flex;
+        }
     </style>
 </head>
 <body>
@@ -48,7 +62,7 @@
         </form>
     </div>
 
-    <div style="justify-content: center; align-items: center; text-align: center; margin: 30px; justify-content: space-between; padding: 10px;">
+    <div class="link-container">
         <a href="https://www.youtube.com">YouTube</a>
         <a href="https://www.wikipedia.org/">Wikipedia</a>
         <a href="https://www.tiktok.com">TikTok</a>
