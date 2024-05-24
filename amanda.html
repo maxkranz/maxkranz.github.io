@@ -14,6 +14,18 @@
                 window.location.href = searchURL;
             }
         }
+        #search-input {
+            width: 500px;
+            height: 30px;
+            border: 1px solid blue;
+            background-position: center;
+            text-align: center;
+            margin-top: 200px;
+        }
+        #search-input:focus {
+            border-color: yellow; /* Замените 'green' на любой другой цвет по вашему выбору */
+            outline: none; /* Убирает стандартное обведение при фокусе */
+        }
     </script>
 </head>
 <body>
@@ -21,7 +33,7 @@
 
     <div id="input" style="align-items: center; justify-content: center; text-align: center;">
         <form onsubmit="search(event)">
-            <input id="search-input" type="text" style="width: 500px; height: 30px; border: 1px blue solid; background-position: center; justify-content: center; align-items: center; text-align: center; margin-top: 200px;">
+            <input id="search-input" type="text" style="width: 500px; height: 30px; border: 1px yellow solid; background-position: center; justify-content: center; align-items: center; text-align: center; margin-top: 200px;">
         </form>
     </div>
 
