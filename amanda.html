@@ -14,15 +14,28 @@
                 window.location.href = searchURL;
             }
         }
-      
     </script>
     <style>
-        @media screen and (max-width: 667px){
-            width: 350px;
+        #search-input {
+            width: 500px;
+            height: 30px;
+            border: 1px darkorange solid;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 200px;
         }
+
         #search-input:focus {
-            border-color: darkorange; /* Замените 'green' на любой другой цвет по вашему выбору */
+            border-color: darkorange; /* Замените 'darkorange' на любой другой цвет по вашему выбору */
             outline: none; /* Убирает стандартное обведение при фокусе */
+        }
+
+        @media screen and (max-width: 667px) {
+            #search-input {
+                width: 350px;
+            }
         }
     </style>
 </head>
@@ -31,7 +44,7 @@
 
     <div id="input" style="align-items: center; justify-content: center; text-align: center;">
         <form onsubmit="search(event)">
-            <input id="search-input" type="text" style="width: 500px; height: 30px; border: 1px darkorange solid; background-position: center; justify-content: center; align-items: center; text-align: center; margin-top: 200px;">
+            <input id="search-input" type="text">
         </form>
     </div>
 
