@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amanda Search Engine</title>
+    <link rel="shortcut icon" href="Снимок экрана от 2024-05-24 09-46-24.png">
+    <script>
+        function search(event) {
+            event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+            const query = document.getElementById('search-input').value;
+            if (query) {
+                const searchURL = 'https://google.com/search?q=' + encodeURIComponent(query);
+                window.location.href = searchURL;
+            }
+        }
+    </script>
+    <style>
+        #search-input {
+            width: 500px;
+            height: 30px;
+            border: 1px darkorange solid;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 200px;
+        }
+
+        #search-input:focus {
+            border-color: darkorange; /* Замените 'darkorange' на любой другой цвет по вашему выбору */
+            outline: none; /* Убирает стандартное обведение при фокусе */
+        }
+
+        @media screen and (max-width: 667px) {
+            #search-input {
+                width: 350px;
+            }
+        }
+
+        .link-container a {
+            margin: 0 10px; /* Добавляет отступ по горизонтали между ссылками */
+            text-decoration: none; /* Убирает подчеркивание ссылок для лучшего вида */
+            color: darkblue; /* Задает цвет ссылок */
+        }
+        .link-container a:hover{
+            text-decoration: underline;
+        }
+
+        .link-container {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 30px;
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <img class="imgl" src="Снимок экрана от 2024-05-24 09-46-24.png">
+
+    <div id="input" style="align-items: center; justify-content: center; text-align: center;">
+        <form onsubmit="search(event)">
+            <input id="search-input" type="text" placeholder="Искать в Amanda...">
+        </form>
+    </div>
+
+    <div class="link-container">
+        <a href="https://www.youtube.com" target="_blank">YouTube</a>
+        <a href="https://www.wikipedia.org/" target="_blank">Wikipedia</a>
+        <a href="https://www.tiktok.com" target="_blank">TikTok</a>
+        <a href="https://maxkranz.github.io/amandagl">Искать в Яндексе</a>
+    </div>
+</body>
+</html>
