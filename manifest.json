@@ -8,14 +8,9 @@
   "description": "A simple search engine",
   "icons": [
     {
-      "src": "icon-192x192.png",
+      "src": "Снимок экрана от 2024-05-24 09-46-24.png",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "icon-512x512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "173x184"
     }
   ]
 }
