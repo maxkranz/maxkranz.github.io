@@ -85,6 +85,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            display: none; /* Initially hidden */
         }
 
         .install-button:hover {
@@ -114,11 +115,13 @@
 
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('beforeinstallprompt event fired');
             e.preventDefault();
             deferredPrompt = e;
             const installButton = document.getElementById('install-button');
             installButton.style.display = 'block';
             installButton.addEventListener('click', () => {
+                console.log('Install button clicked');
                 installButton.style.display = 'none';
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
