@@ -3,8 +3,9 @@ self.addEventListener('install', function(event) {
         caches.open('static-v1').then(function(cache) {
             return cache.addAll([
                 '/',
-                '/amandagl.html',
-                '/Снимок экрана от 2024-05-24 09-46-24.png'
+                '/index.html',
+                '/Снимок экрана от 2024-05-24 09-46-24.png',
+                '/manifest.json'
             ]);
         })
     );
