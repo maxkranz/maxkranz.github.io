@@ -7,16 +7,7 @@
     <link rel="shortcut icon" href="Снимок экрана от 2024-05-24 09-46-24.png">
     <!-- Подключаем Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script>
-        function search(event) {
-            event.preventDefault(); // Предотвращаем отправку формы по умолчанию
-            const query = document.getElementById('search-input').value;
-            if (query) {
-                const searchURL = 'https://google.com/search?q=' + encodeURIComponent(query);
-                window.location.href = searchURL;
-            }
-        }
-    </script>
+    <link rel="manifest" href="manifest.json">
     <style>
         #search-container {
             display: flex;
@@ -37,7 +28,7 @@
 
         #search-input:focus {
             border-color: darkorange;
-            outline: none; /* Убирает стандартное обведение при фокусе */
+            outline: none;
         }
 
         #search-button {
@@ -67,10 +58,11 @@
         }
 
         .link-container a {
-            margin: 0 10px; /* Добавляет отступ по горизонтали между ссылками */
-            text-decoration: none; /* Убирает подчеркивание ссылок для лучшего вида */
-            color: darkblue; /* Задает цвет ссылок */
+            margin: 0 10px;
+            text-decoration: none;
+            color: darkblue;
         }
+
         .link-container a:hover {
             text-decoration: underline;
         }
@@ -83,6 +75,27 @@
             display: flex;
         }
     </style>
+    <script>
+        function search(event) {
+            event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+            const query = document.getElementById('search-input').value;
+            if (query) {
+                const searchURL = 'https://google.com/search?q=' + encodeURIComponent(query);
+                window.location.href = searchURL;
+            }
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
 </head>
 <body>
     <img class="imgl" src="Снимок экрана от 2024-05-24 09-46-24.png">
@@ -91,7 +104,7 @@
         <form id="search-container" onsubmit="search(event)">
             <input id="search-input" type="text" placeholder="Искать в Amanda...">
             <button id="search-button" type="submit">
-                <i class="fas fa-search"></i> <!-- Иконка лупы -->
+                <i class="fas fa-search"></i>
             </button>
         </form>
     </div>
