@@ -1,7 +1,7 @@
 {
   "name": "Amanda Search Engine",
   "short_name": "Amanda",
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
