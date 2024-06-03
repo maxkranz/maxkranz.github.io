@@ -1,11 +1,11 @@
 {
   "name": "Amanda Search Engine",
   "short_name": "Amanda",
-  "start_url": "/",
+  "start_url": "/amandagl",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#ffffff",
-  "description": "A simple search engine",
+  "theme_color": "#8B4000",
+  "description": "New interface for Google and Yandex",
   "icons": [
     {
       "src": "Снимок экрана от 2024-05-24 09-46-24.png",
