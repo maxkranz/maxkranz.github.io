@@ -1,16 +1,27 @@
 {
   "name": "Amanda Search Engine",
   "short_name": "Amanda",
-  "start_url": "/amandagl",
-  "display": "standalone",
+  "start_url": "maxkranz.github.io/amandagl",
+  "display": "browser",
   "background_color": "#ffffff",
   "theme_color": "#8B4000",
   "description": "New interface for Google and Yandex",
   "icons": [
     {
-      "src": "Снимок экрана от 2024-05-24 09-46-24.png",
+      "src": "Снимок экрана от 2024-06-02 10-11-05.png",
       "type": "image/png",
       "sizes": "173x184"
     }
+  ],
+  "scope": "maxkranz.github.io/amandagl",
+  "orientation": "any",
+  "lang": "ru",
+  "dir": "auto",
+  "display_override": [
+    "browser",
+    "fullscreen",
+    "standalone",
+    "minimal-ui",
+    "window-controls-overlay"
   ]
 }
