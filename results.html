@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты поиска - Amanda Search Engine</title>
+    <link rel="shortcut icon" href="Снимок экрана от 2024-06-02 10-11-05.png">
+    <!-- Подключаем Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #results-container {
+            margin: 50px auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #results-container h2 {
+            color: darkorange;
+        }
+
+        #results-container p {
+            color: #333;
+        }
+
+        .link-container a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: darkblue;
+        }
+
+        .link-container a:hover {
+            text-decoration: underline;
+        }
+
+        .link-container {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 30px;
+            display: flex;
+        }
+    </style>
+    <script>
+        // Пример локальной базы данных
+        const documents = [
+            { title: "Документ 1", content: "Это содержание документа 1" },
+            { title: "Документ 2", content: "Это содержание документа 2" },
+            { title: "Документ 3", content: "Это содержание документа 3" },
+            // Добавьте больше документов по необходимости
+        ];
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function search() {
+            const query = getQueryParam('query').toLowerCase();
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = ''; // Очищаем предыдущие результаты
+
+            if (query) {
+                const results = documents.filter(doc => doc.content.toLowerCase().includes(query) || doc.title.toLowerCase().includes(query));
+                if (results.length > 0) {
+                    results.forEach(doc => {
+                        const resultItem = document.createElement('div');
+                        resultItem.innerHTML = `<h2>${doc.title}</h2><p>${doc.content}</p>`;
+                        resultsContainer.appendChild(resultItem);
+                    });
+                } else {
+                    resultsContainer.innerHTML = '<p>Нет результатов</p>';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', search);
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <div id="results-container" class="results-container"></div>
+
+    <div class="link-container">
+        <a href="https://maxkranz.github.io/amandagl.html">На главную</a>
+    </div>
+</body>
+</html>
