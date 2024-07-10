@@ -109,7 +109,7 @@
             event.preventDefault(); // Предотвращаем отправку формы по умолчанию
             const query = document.getElementById('search-input').value;
             if (query) {
-                const searchURL = 'results?query=' + encodeURIComponent(query);
+                const searchURL = 'search?query=' + encodeURIComponent(query);
                 window.location.href = searchURL;
             }
         }
