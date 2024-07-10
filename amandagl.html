@@ -104,27 +104,6 @@
             background-color: orange;
         }
     </style>
-    <script>
-        function search(event) {
-            event.preventDefault(); // Предотвращаем отправку формы по умолчанию
-            const query = document.getElementById('search-input').value;
-            if (query) {
-                const searchURL = 'search?query=' + encodeURIComponent(query);
-                window.location.href = searchURL;
-            }
-        }
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('service-worker.js')
-                .then(function(registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                }).catch(function(error) {
-                    console.log('Service Worker registration failed:', error);
-                });
-            });
-        }
-    </script>
 </head>
 <body>
 
@@ -145,5 +124,27 @@
         <a href="https://www.tiktok.com" target="_blank">TikTok</a>
         <a href="https://maxkranz.github.io/amanda" target="_self">Яндекс</a>
     </div>
+
+    <script>
+        function search(event) {
+            event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+            const query = document.getElementById('search-input').value;
+            if (query) {
+                const searchURL = 'results.html?query=' + encodeURIComponent(query);
+                window.location.href = searchURL;
+            }
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                }).catch(function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
 </body>
 </html>
