@@ -126,24 +126,13 @@
     </div>
 
     <script>
-        function search(event) {
+ function search(event) {
             event.preventDefault(); // Предотвращаем отправку формы по умолчанию
             const query = document.getElementById('search-input').value;
             if (query) {
-                const searchURL = 'https://www.google.com/search?q= + encodeURIComponent(query);
+                const searchURL = 'https://www.google.com/search?q=' + encodeURIComponent(query);
                 window.location.href = searchURL;
             }
-        }
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('service-worker.js')
-                .then(function(registration) {
-                    console.log('Service Worker registered with scope:', registration.scope);
-                }).catch(function(error) {
-                    console.log('Service Worker registration failed:', error);
-                });
-            });
         }
     </script>
 </body>
