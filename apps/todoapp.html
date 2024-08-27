@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App</title>
+    <link rel="shortcut icon" href="html.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .todo-container {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px;
+        }
+        /* Обычные стили остаются без изменений */
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 28px;
+    }
+
+    .todo-container {
+        width: 90%; /* Увеличиваем ширину контейнера для мобильных устройств */
+        padding: 15px;
+    }
+
+    input[type="text"] {
+        width: 70%; /* Уменьшаем ширину поля ввода на мобильных устройствах */
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 8px 12px; /* Уменьшаем размер кнопок */
+        font-size: 14px;
+    }
+
+    li {
+        padding: 12px; /* Уменьшаем внутренние отступы для элементов списка */
+        font-size: 14px;
+    }
+
+    li button {
+        font-size: 14px; /* Уменьшаем размер кнопок удаления */
+    }
+}
+
+
+        .todo-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 75%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #007BFF;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 36px;
+            color: #007BFF;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        li.completed {
+            background-color: #d4edda;
+            color: #155724;
+            text-decoration: line-through;
+        }
+
+        li span {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        li span:hover {
+            color: #007BFF;
+        }
+
+        li button {
+            background-color: transparent;
+            color: #dc3545;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        li button:hover {
+            color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>To Do App</h1>
+
+<div class="todo-container">
+    <div class="todo-header">
+        <input type="text" id="todoInput" placeholder="Введите задачу...">
+        <button onclick="addTodo()">Добавить</button>
+    </div>
+    <ul id="todoList"></ul>
+</div>
+
+<script>
+    let todos = [];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        todos = JSON.parse(localStorage.getItem('todos')) || [];
+        renderTodos();
+
+        // Добавляем обработчик для нажатия клавиши Enter
+        document.getElementById('todoInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                addTodo();
+            }
+        });
+    });
+
+    function addTodo() {
+        const inputField = document.getElementById('todoInput');
+        const todoText = inputField.value.trim();
+        if (todoText === '') return;
+
+        const newTodo = { text: todoText, completed: false };
+        todos.push(newTodo);
+        saveAndRenderTodos();
+
+        inputField.value = '';
+    }
+
+    function toggleTodo(index) {
+        todos[index].completed = !todos[index].completed;
+        saveAndRenderTodos();
+    }
+
+    function deleteTodo(index) {
+        todos.splice(index, 1);
+        saveAndRenderTodos();
+    }
+
+    function saveAndRenderTodos() {
+        localStorage.setItem('todos', JSON.stringify(todos));
+        renderTodos();
+    }
+
+    function renderTodos() {
+        const todoList = document.getElementById('todoList');
+        todoList.innerHTML = '';
+
+        todos.forEach((todo, index) => {
+            const li = document.createElement('li');
+            li.className = todo.completed ? 'completed' : '';
+            li.innerHTML = `
+                <span onclick="toggleTodo(${index})">${todo.text}</span>
+                <button onclick="deleteTodo(${index})">Удалить</button>
+            `;
+            todoList.appendChild(li);
+        });
+    }
+</script>
+
+
+</body>
+</html>
