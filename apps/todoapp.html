@@ -153,8 +153,8 @@
 
 <div class="todo-container">
     <div class="todo-header">
-        <input type="text" id="todoInput" placeholder="Введите задачу...">
-        <button onclick="addTodo()">Добавить</button>
+        <input type="text" id="todoInput" placeholder="Enter task...">
+        <button onclick="addTodo()">Add</button>
     </div>
     <ul id="todoList"></ul>
 </div>
@@ -210,7 +210,7 @@
             li.className = todo.completed ? 'completed' : '';
             li.innerHTML = `
                 <span onclick="toggleTodo(${index})">${todo.text}</span>
-                <button onclick="deleteTodo(${index})">Удалить</button>
+                <button onclick="deleteTodo(${index})">Delete</button>
             `;
             todoList.appendChild(li);
         });
