@@ -1,46 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Страница не найдена</title>
+    <title>Page not found</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
             margin: 0;
             padding: 0;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
         }
-        
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
         h1 {
-            font-size: 36px;
+            font-size: 72px;
             margin-bottom: 20px;
-            color: #d9534f;
         }
-        
+
         p {
             font-size: 18px;
             margin-bottom: 30px;
         }
-        
+
         a {
-            color: #428bca;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff4757;
+            color: white;
             text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
-        
+
         a:hover {
-            text-decoration: underline;
+            background-color: #ff6b81;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 48px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            a {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>404 - Страница не найдена</h1>
-    <p>Извините, но запрашиваемая страница не найдена. Пожалуйста, проверьте правильность URL или перейдите на <a href="https://maxkranz.github.io">главную страницу</a>.</p>
+    <div class="container">
+        <h1>404</h1>
+        <p>Oops! Page not found.</p>
+        <a href="https://maxkranz.github.io">Home Page</a>
+    </div>
 </body>
 </html>
