@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <link rel="shortcut icon" href="html.png">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .quote {
+            font-size: 18px;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .author {
+            font-size: 16px;
+            color: #888;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            select {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .quote {
+                font-size: 18px;
+            }
+
+            .author {
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Random Quote Generator</h1>
+    <select id="themeSelect">
+        <option value="success">Success</option>
+        <option value="courage">Courage</option>
+        <option value="philosophy">Philosophy</option>
+        <option value="life">Life</option>
+        <option value="wisdom">Wisdom</option>
+        <option value="motivation">Motivation</option>
+    </select>
+    <div class="quote" id="quoteDisplay">Click "Get Quote" to start.</div>
+    <div class="author" id="authorDisplay"></div>
+    <button onclick="generateQuote()">Get Quote</button>
+</div>
+
+<script>
+    const quotes = {
+        success: [
+            { quote: "Whatever the mind of man can conceive and believe, it can achieve.", author: "Napoleon Hill" },
+            { quote: "I attribute my success to this: I never gave or took any excuse.", author: "Florence Nightingale" },
+            { quote: "Eighty percent of success is showing up.", author: "Woody Allen" },
+            { quote: "The best revenge is massive success.", author: "Frank Sinatra" },
+            { quote: "Winning isn’t everything, but wanting to win is.", author: "Vince Lombardi" },
+            { quote: "I attribute my success to this: I never gave or took any excuse.", author: "Florence Nightingale" }
+        ],
+        courage: [
+            { quote: "Courage is not the absence of fear, but the triumph over it.", author: "Nelson Mandela" },
+            { quote: "Only those who will risk going too far can possibly find out how far one can go.", author: "T.S. Eliot" },
+            { quote: "In my dictionary, there is no word 'impossible'.", author: "Napoleon Bonaparte" },
+            { quote: "You can never cross the ocean until you have the courage to lose sight of the shore.", author: "Christopher Columbus" },
+            { quote: "Whatever you can do, or dream you can, begin it. Boldness has genius, power, and magic in it.", author: "Johann Wolfgang von Goethe" }
+        ],
+        philosophy: [
+            { quote: "True responsibility is always personal.", author: "Fazil Iskander" },
+            { quote: "The unexamined life is not worth living.", author: "Socrates" },
+            { quote: "Freedom is not worth having if it does not include the freedom to make mistakes.", author: "Mahatma Gandhi" },
+            { quote: "Logic will get you from A to B. Imagination will take you everywhere.", author: "Albert Einstein" },
+            { quote: "Science is organized knowledge. Wisdom is organized life.", author: "Immanuel Kant" }
+        ],
+        life: [
+            { quote: "One must love life more than the meaning of life.", author: "Fyodor Dostoevsky" },
+            { quote: "Your time is limited, so don’t waste it living someone else’s life.", author: "Steve Jobs" },
+            { quote: "The two most important days in your life are the day you are born and the day you find out why.", author: "Mark Twain" },
+            { quote: "People often say that motivation doesn’t last. Well, neither does bathing – that’s why we recommend it daily.", author: "Zig Ziglar" }
+        ],
+        wisdom: [
+            { quote: "The most difficult thing is the decision to act, the rest is merely tenacity.", author: "Amelia Earhart" },
+            { quote: "Whether you think you can or you think you can’t, you’re right.", author: "Henry Ford" },
+            { quote: "You should start with doubt.", author: "Boris Strugatsky" },
+            { quote: "It’s all about thoughts. Thought is the beginning of everything. And thoughts can be managed. So, the key to improvement is to work on thoughts.", author: "Boris Akunin" }
+        ],
+        motivation: [
+            { quote: "Twenty years from now you will be more disappointed by the things that you didn’t do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover.", author: "Mark Twain" },
+            { quote: "Weak people spend their lives trying not to be worse than others. The strong strive to be better than everyone.", author: "Boris Akunin" },
+            { quote: "Whatever the mind of man can conceive and believe, it can achieve.", author: "Napoleon Hill" },
+            { quote: "Whether you think you can or you think you can’t, you’re right.", author: "Henry Ford" }
+        ]
+    };
+
+    function generateQuote() {
+        const theme = document.getElementById('themeSelect').value;
+        const themeQuotes = quotes[theme];
+        const randomIndex = Math.floor(Math.random() * themeQuotes.length);
+        const randomQuote = themeQuotes[randomIndex];
+
+        document.getElementById('quoteDisplay').textContent = `"${randomQuote.quote}"`;
+        document.getElementById('authorDisplay').textContent = `— ${randomQuote.author}`;
+    }
+</script>
+
+</body>
+</html>
