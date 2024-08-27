@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Max Kranz</title>
+    <link rel="shortcut icon" href="html.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 30px 20px;
+            background-color: DeepSkyBlue;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .burger-menu {
+            display: block;
+            position: absolute;
+            top: 25px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .burger-menu div {
+            width: 30px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+
+        .content {
+            margin: 20px 0;
+            padding: 20px;
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            line-height: 1.5;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .content h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            width: 100%;
+            font-size: 14px;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: block;
+            }
+
+            header {
+                font-size: 24px;
+                padding: 20px;
+            }
+
+            .content {
+                font-size: 18px;
+                padding: 0 15px;
+            }
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        @media (min-width: 769px) {
+            .nav-links {
+                display: block;
+            }
+
+            .nav-links a {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                margin-left: 20px;
+                transition: color 0.3s ease;
+            }
+
+            .nav-links a:hover {
+                color: #0056b3;
+            }
+
+            .burger-menu {
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="nav-links">
+        <a href="https://maxkranz.github.io" style="margin-left:300px">Home</a>
+    </div>
+    <div>About Me</div>
+    <div class="nav-links">
+        <a href="https://maxkranz.github.io/en/about" style="margin-right: 300px;">About Me</a>
+    </div>
+    <div class="burger-menu" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</header>
+
+<div class="content">
+    <h2>Hello, I'm Max Kranz!</h2>
+    <p>I am 12 years old, and I am engaged in web development. I enjoy creating various web applications and games. Currently, I am working on different projects to include them in my portfolio.</p>
+    <p>One of my achievements is writing a book titled <strong>"The Story of John Sanders"</strong>. <a href="https://www.litres.ru/book/maks-kranc/istoriya-dzhona-sandersa-67846449/">(You can read it here).</a></p>
+    <p>I love learning new things and developing my skills. In the future, I plan to create even more interesting projects and share them with the world!</p>
+</div>
+
+<footer>
+    © Max Kranz. All rights reserved.
+</footer>
+
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('navMenu');
+        const burger = document.querySelector('.burger-menu');
+        menu.classList.toggle('active');
+        burger.classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>
