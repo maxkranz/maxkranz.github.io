@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess The Number</title>
+    <link rel="shortcut icon" href="html.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        .game-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Guess The Number</h1>
+
+<div class="game-container">
+    <p>I've guessed a number between 1 and 100. Guess it!</p>
+    <input type="number" id="guessInput" placeholder="Enter a number..." min="1" max="100">
+    <button onclick="checkGuess()">Guess</button>
+    <div id="message"></div>
+</div>
+
+<script>
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+
+    // Добавляем обработчик события keydown
+    document.getElementById('guessInput').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            checkGuess();
+        }
+    });
+
+    function checkGuess() {
+        const userGuess = Number(document.getElementById('guessInput').value);
+        const message = document.getElementById('message');
+        attempts++;
+
+        if (userGuess === randomNumber) {
+            message.textContent = `Congratulations! You have guessed the number ${randomNumber} in ${attempts} of tries.`;
+            message.style.color = 'green';
+            resetGame();
+        } else if (userGuess > randomNumber) {
+            message.textContent = 'Less!';
+            message.style.color = 'red';
+        } else if (userGuess < randomNumber) {
+            message.textContent = 'More!';
+            message.style.color = 'red';
+        }
+    }
+
+    function resetGame() {
+        setTimeout(() => {
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            document.getElementById('guessInput').value = '';
+            document.getElementById('message').textContent = '';
+        }, 5000); 
+    }
+</script>
+
+</body>
+</html>
