@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <link rel="shortcut icon" href="html.png">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .timer-container {
+            background: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 30px;
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-container input {
+            width: 30%;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .timer-controls button {
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1;
+        }
+
+        .timer-controls button:hover {
+            background-color: #0056b3;
+        }
+
+        .timer-controls button.reset {
+            background-color: #ff4757;
+        }
+
+        .timer-controls button.reset:hover {
+            background-color: #c82333;
+        }
+
+        @media (max-width: 600px) {
+            .timer-display {
+                font-size: 36px;
+            }
+
+            .timer-controls button {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+
+            .input-container input {
+                padding: 8px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="timer-container">
+    <div class="input-container">
+        <input type="number" id="hoursInput" placeholder="HH" min="0">
+        <input type="number" id="minutesInput" placeholder="MM" min="0">
+        <input type="number" id="secondsInput" placeholder="SS" min="0">
+    </div>
+    <div class="timer-display" id="timer">00:00:00</div>
+    <div class="timer-controls">
+        <button id="startPauseBtn" style="background-color: #32CD32	;">Start</button>
+        <button class="reset" id="resetBtn">Reset</button>
+    </div>
+</div>
+
+<script>
+    let timer;
+    let totalSeconds;
+    let isRunning = false;
+
+    const timerDisplay = document.getElementById('timer');
+    const startPauseBtn = document.getElementById('startPauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const hoursInput = document.getElementById('hoursInput');
+    const minutesInput = document.getElementById('minutesInput');
+    const secondsInput = document.getElementById('secondsInput');
+
+    startPauseBtn.addEventListener('click', () => {
+        if (!isRunning) {
+            startTimer();
+            startPauseBtn.textContent = 'Pause';
+        } else {
+            pauseTimer();
+            startPauseBtn.textContent = 'Start';
+        }
+    });
+
+    resetBtn.addEventListener('click', resetTimer);
+
+    function startTimer() {
+        if (!isRunning) {
+            const hours = parseInt(hoursInput.value) || 0;
+            const minutes = parseInt(minutesInput.value) || 0;
+            const seconds = parseInt(secondsInput.value) || 0;
+            totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+            if (totalSeconds > 0) {
+                isRunning = true;
+                timer = setInterval(updateTimer, 1000);
+            }
+        }
+    }
+
+    function pauseTimer() {
+        clearInterval(timer);
+        isRunning = false;
+    }
+
+    function resetTimer() {
+        clearInterval(timer);
+        isRunning = false;
+        totalSeconds = 0;
+        hoursInput.value = '';
+        minutesInput.value = '';
+        secondsInput.value = '';
+        startPauseBtn.textContent = 'Start';
+        updateTimerDisplay(0, 0, 0);
+    }
+
+    function updateTimer() {
+        if (totalSeconds > 0) {
+            totalSeconds--;
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            updateTimerDisplay(hours, minutes, seconds);
+        } else {
+            resetTimer();
+            triggerVibration(); // Вибрация при завершении
+        }
+    }
+
+    function updateTimerDisplay(hours, minutes, seconds) {
+        timerDisplay.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    function pad(unit) {
+        return unit.toString().padStart(2, '0');
+    }
+
+    function triggerVibration() {
+        if ("vibrate" in navigator) {
+            navigator.vibrate([500, 200, 500]); // Вибрация: 500 мс, пауза 200 мс, снова вибрация 500 мс
+        }
+    }
+</script>
+
+</body>
+</html>
