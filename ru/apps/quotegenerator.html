@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <link rel="shortcut icon" href="html.png
+">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .quote {
+            font-size: 18px;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .author {
+            font-size: 16px;
+            color: #888;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+   @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            select {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .quote {
+                font-size: 18px;
+            }
+
+            .author {
+                font-size: 16px;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Генератор случайных цитат</h1>
+    <select id="themeSelect">
+        <option value="success">Успех</option>
+        <option value="courage">Смелость</option>
+        <option value="philosophy">Философия</option>
+        <option value="life">Жизнь</option>
+        <option value="wisdom">Мудрость</option>
+        <option value="motivation">Мотивация</option>
+    </select>
+    <div class="quote" id="quoteDisplay">Нажмите "Получить цитату" для начала.</div>
+    <div class="author" id="authorDisplay"></div>
+    <button onclick="generateQuote()">Получить цитату</button>
+</div>
+
+<script>
+    const quotes = {
+        success: [
+            { quote: "Что разум человека может постигнуть и во что он может поверить, того он способен достичь.", author: "Наполеон Хилл" },
+            { quote: "Своим успехом я обязана тому, что никогда не оправдывалась и не принимала оправданий от других.", author: "Флоренс Найтингейл" },
+            { quote: "80% успеха - это появиться в нужном месте в нужное время.", author: "Вуди Аллен" },
+            { quote: "Лучшая месть – огромный успех.", author: "Фрэнк Синатра" },
+            { quote: "Победа - это еще не все, все - это постоянное желание побеждать.", author: "Винс Ломбарди" },
+            { quote: "Своим успехом я обязана тому, что никогда не оправдывалась и не принимала оправданий от других.", author: "Флоренс Найтингейл" }
+        ],
+        courage: [
+            { quote: "Смелость — это не отсутствие страха, а победа над ним.", author: "Нельсон Мандела" },
+            { quote: "Только тот, кто рискует идти слишком далеко, может узнать, насколько далеко можно зайти.", author: "Т. С. Элиот" },
+            { quote: "В моем словаре нет слова «невозможно».", author: "Наполеон Бонапарт" },
+            { quote: "Вы никогда не пересечете океан, если не наберетесь мужества потерять берег из виду.", author: "Христофор Колумб" },
+            { quote: "Начинайте делать все, что вы можете сделать – и даже то, о чем можете хотя бы мечтать. В смелости гений, сила и магия.", author: "Иоганн Вольфганг Гете" }
+        ],
+        philosophy: [
+            { quote: "Настоящая ответственность бывает только личной.", author: "Фазиль Искандер" },
+            { quote: "Неосмысленная жизнь не стоит того, чтобы жить.", author: "Сократ" },
+            { quote: "Свобода ничего не стоит, если она не включает в себя свободу ошибаться.", author: "Махатма Ганди" },
+            { quote: "Логика может привести Вас от пункта А к пункту Б, а воображение — куда угодно.", author: "Альберт Эйнштейн" },
+            { quote: "Наука — это организованные знания, мудрость — это организованная жизнь.", author: "Иммануил Кант" }
+        ],
+        life: [
+            { quote: "Надо любить жизнь больше, чем смысл жизни.", author: "Федор Достоевский" },
+            { quote: "Ваше время ограничено, не тратьте его, живя чужой жизнью.", author: "Стив Джобс" },
+            { quote: "Два самых важных дня в твоей жизни: день, когда ты появился на свет, и день, когда понял, зачем.", author: "Марк Твен" },
+            { quote: "Зачастую говорят, что мотивации хватает ненадолго. Но то же самое происходит и с освежающим душем, поэтому и рекомендуют его принимать ежедневно.", author: "Зиг Зиглар" }
+        ],
+        wisdom: [
+            { quote: "Сложнее всего начать действовать, все остальное зависит только от упорства.", author: "Амелия Эрхарт" },
+            { quote: "Если вы думаете, что на что-то способны, вы правы; если думаете, что у вас ничего не получится - вы тоже правы.", author: "Генри Форд" },
+            { quote: "Начинать всегда стоит с того, что сеет сомнения.", author: "Борис Стругацкий" },
+            { quote: "Все дело в мыслях. Мысль — начало всего. И мыслями можно управлять. И поэтому главное дело совершенствования: работать над мыслями.", author: "Борис Акунин" }
+        ],
+        motivation: [
+            { quote: "Через 20 лет вы будете больше разочарованы теми вещами, которые вы не делали, чем теми, которые вы сделали. Так отчальте от тихой пристани. Почувствуйте попутный ветер в вашем парусе. Двигайтесь вперед, действуйте, открывайте!", author: "Марк Твен" },
+            { quote: "Слабые люди всю жизнь стараются быть не хуже других. Сильным во что бы то ни стало нужно стать лучше всех.", author: "Борис Акунин" },
+            { quote: "Что разум человека может постигнуть и во что он может поверить, того он способен достичь.", author: "Наполеон Хилл" },
+            { quote: "Если вы думаете, что на что-то способны, вы правы; если думаете, что у вас ничего не получится - вы тоже правы.", author: "Генри Форд" }
+        ]
+    };
+
+    function generateQuote() {
+        const theme = document.getElementById('themeSelect').value;
+        const themeQuotes = quotes[theme];
+        const randomIndex = Math.floor(Math.random() * themeQuotes.length);
+        const randomQuote = themeQuotes[randomIndex];
+
+        document.getElementById('quoteDisplay').textContent = `"${randomQuote.quote}"`;
+        document.getElementById('authorDisplay').textContent = `— ${randomQuote.author}`;
+    }
+</script>
+
+</body>
+</html>
