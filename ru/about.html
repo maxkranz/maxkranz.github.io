@@ -6,7 +6,7 @@
     <title>Обо мне - Max Kranz</title>
     <link rel="shortcut icon" href="html.png">
     <style>
-        * {
+         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -72,69 +72,127 @@
             text-align: center;
             margin-top: 50px;
             padding: 20px;
-
             width: 100%;
             font-size: 14px;
             color: #777;
         }
 
-        @media (max-width: 768px) {
-            .burger-menu {
-                display: block;
-            }
-
-            header {
-                font-size: 24px;
-                padding: 20px;
-            }
-
-            .content {
-                font-size: 18px;
-                padding: 0 15px;
-            }
-        }
-
-.nav-links {
+      .burger-menu {
     display: none;
+    position: absolute;
+    top: 25px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 10;
 }
 
-@media (min-width: 769px) {
+.burger-menu div {
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    margin: 5px 0;
+    transition: 0.4s;
+}
+
+.nav-menu {
+    display: none;
+    flex-direction: column;
+    background-color: DeepSkyBlue;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    width: 200px;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 9;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: #0056b3;
+}
+
+.nav-menu.active {
+    display: flex;
+}
+
+@media (max-width: 768px) {
     .nav-links {
-        display: block;
-    }
-
-    .nav-links a {
-        color: white;
-        text-decoration: none;
-        font-size: 20px;
-        margin-left: 20px;
-        transition: color 0.3s ease;
-    }
-
-    .nav-links a:hover {
-        color: #0056b3;
+        display: none;
     }
 
     .burger-menu {
-        display: none;
+        display: block;
     }
+  .burger-menu.active div:nth-child(1) {
+    transform: rotate(-45deg) translate(-7px, 7px);
 }
 
+.burger-menu.active div:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active div:nth-child(3) {
+    transform: rotate(45deg) translate(-7px, -7px);
+}
+}
+
+
+        @media (min-width: 769px) {
+            .nav-links {
+                display: block;
+            }
+
+            .nav-links a {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                margin-left: 20px;
+                transition: color 0.3s ease;
+            }
+
+            a:hover {
+                color: #0056b3;
+            }
+
+            .burger-menu {
+                display: none;
+            }
+        }
 
     </style>
 </head>
 <body>
 
- <header>
+<header>
     <div class="nav-links">
-        <a href="https://maxkranz.github.io" style="margin-left:300px">Главная</a>
+        <a href="https://maxkranz.github.io/ru" style="margin-left:300px">Главная</a>
     </div>
-    <div>Обо мне</div>
+    <div>About Me</div>
     <div class="nav-links">
-        <a href="https://maxkranz.github.io/ru/about" style="margin-right: 300px; ">Обо мне</a>
+        <a href="https://maxkranz.github.io/ru/about" style="margin-right: 300px;">Обо мне</a>
     </div>
-    </div>
+  <div class="burger-menu" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<nav id="navMenu" class="nav-menu">
+    <a href="https://maxkranz.github.io/ru">Главная</a>
+    <a href="https://maxkranz.github.io/ru/about">Обо Мне</a>
+</nav>
+
+  
+
 </header>
+
 
 
 
@@ -148,6 +206,14 @@
     <footer>
         © Max Kranz. Все права защищены.
     </footer>
+     <script>
+           function toggleMenu() {
+        const menu = document.getElementById('navMenu');
+        const burger = document.querySelector('.burger-menu');
+        menu.classList.toggle('active');
+        burger.classList.toggle('active');
+    }
+     </script>
 
 
 
