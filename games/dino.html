@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino Game - WEB IT Team</title>
+    <link rel="shortcut icon" href="DALL·E 2024-08-15 09.50.25 - A minimalist logo design for a team called 'WEB IT Team' that creates web applications and web games like Snake, Tic-Tac-Toe, and web browsers. The lo.webp">
+    <style>
+        .game {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            border: 1px solid black;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+        #dino {
+            width: 50px;
+            height: 50px;
+            background-image: url(dino2.png);
+            background-size: 50px 50px;
+            position: absolute;
+            top: 150px;
+            left: 50px;
+        }
+        #cactus {
+            width: 20px;
+            height: 40px;
+            background-image: url(cactus.png);
+            background-size: 20px 40px;
+            position: absolute;
+            top: 150px;
+            left: 580px;
+            animation: cactusMov 1s infinite linear;
+        }
+        @keyframes cactusMov {
+            0% {
+                left: 580px;
+            }
+            100% {
+                left: -20px;
+            }
+        }
+        .jump {
+            animation: jump 0.5s linear;
+        }
+        @keyframes jump {
+            0% {
+                top: 150px;
+            }
+            30% {
+                top: 130px;
+            }
+            50% {
+                top: 80px;
+            }
+            80% {
+                top: 130px;
+            }
+            100% {
+                top: 150px;
+            }
+        }
+        #scoreboard {
+            text-align: center;
+            margin: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreboard">
+        Time: <span id="time">0</span> sec | Best Time: <span id="best-time">0</span> sec
+    </div>
+    <div class="game">
+        <div id="dino"></div>
+        <div id="cactus"></div>
+    </div>
+    <script>
+        const dino = document.getElementById("dino");
+        const cactus = document.getElementById("cactus");
+        const timeElement = document.getElementById("time");
+        const bestTimeElement = document.getElementById("best-time");
+
+        let time = 0;
+        let bestTime = localStorage.getItem("bestTime") || 0;
+        bestTimeElement.textContent = bestTime;
+
+        let timeInterval = setInterval(function() {
+            time++;
+            timeElement.textContent = time;
+        }, 1000);
+
+        // Обработка нажатия на клавишу
+        document.addEventListener("keydown", function(event) {
+            jump();
+        });
+
+        // Обработка касания динозаврика
+        dino.addEventListener("touchstart", function(event) {
+            jump();
+        });
+
+        function jump() {
+            if (!dino.classList.contains("jump")) {
+                dino.classList.add("jump");
+                setTimeout(function() {
+                    dino.classList.remove("jump");
+                }, 300);
+            }
+        }
+
+        let isAlive = setInterval(function() {
+            let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"));
+            let cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"));
+
+            if (cactusLeft < 70 && cactusLeft > 50 && dinoTop >= 140) {
+                clearInterval(isAlive);
+                clearInterval(timeInterval);
+                cactus.style.animation = "none";
+                cactus.style.left = `${cactusLeft}px`;
+
+                if (time > bestTime) {
+                    localStorage.setItem("bestTime", time);
+                    bestTimeElement.textContent = time;
+                    alert(`Game Over! New record: ${time} seconds! Do you want to play again?`);
+                } else {
+                    alert(`Game Over! Your time: ${time} seconds. Do you want to play again?`);
+                }
+                
+                if (confirm("Play again?")) {
+                    location.reload();
+                }
+            }
+        }, 10);
+    </script>
+</body>
+</html>
