@@ -77,7 +77,6 @@
         .keys .equal {
             background-color: #4CD964;
         }
-      
 
         @media (max-width: 600px) {
             .calculator {
@@ -99,129 +98,133 @@
 </head>
 <body>
 
-    <div class="calculator">
-        <div id="display" class="display">0</div>
-        <div class="keys">
-            <button class="clear" onclick="clearDisplay()">C</button>
-            <button onclick="appendNumber('10')">10</button>
-            <button onclick="appendNumber('11')">11</button>
-            <button class="delete" onclick="deleteDigit()">Delete</button>
+<div class="calculator">
+    <div id="display" class="display">0</div>
+    <div class="keys">
+        <button class="clear" onclick="clearDisplay()">C</button>
+        <button onclick="appendNumber('10')">10</button>
+        <button class="operator" onclick="calculateSquareRoot()">√</button>
+        <button class="delete" onclick="deleteDigit()">Delete</button>
 
-            <button onclick="appendNumber('7')">7</button>
-            <button onclick="appendNumber('8')">8</button>
-            <button onclick="appendNumber('9')">9</button>
-            <button class="operator" onclick="appendOperator('/')">/</button>
+        <button onclick="appendNumber('7')">7</button>
+        <button onclick="appendNumber('8')">8</button>
+        <button onclick="appendNumber('9')">9</button>
+        <button class="operator" onclick="appendOperator('/')">/</button>
 
-            <button onclick="appendNumber('4')">4</button>
-            <button onclick="appendNumber('5')">5</button>
-            <button onclick="appendNumber('6')">6</button>
-            <button class="operator" onclick="appendOperator('*')">*</button>
+        <button onclick="appendNumber('4')">4</button>
+        <button onclick="appendNumber('5')">5</button>
+        <button onclick="appendNumber('6')">6</button>
+        <button class="operator" onclick="appendOperator('*')">*</button>
 
-            <button onclick="appendNumber('1')">1</button>
-            <button onclick="appendNumber('2')">2</button>
-            <button onclick="appendNumber('3')">3</button>
-            <button class="operator" onclick="appendOperator('-')">-</button>
+        <button onclick="appendNumber('1')">1</button>
+        <button onclick="appendNumber('2')">2</button>
+        <button onclick="appendNumber('3')">3</button>
+        <button class="operator" onclick="appendOperator('-')">-</button>
 
-            <button onclick="appendNumber('0')">0</button>
-            <button onclick="appendDecimalPoint()">.</button>
-            <button class="equal" onclick="calculateResult()">=</button>
-            <button class="operator" onclick="appendOperator('+')">+</button>
-        </div>
+        <button onclick="appendNumber('0')">0</button>
+        <button onclick="appendDecimalPoint()">.</button>
+        <button class="equal" onclick="calculateResult()">=</button>
+        <button class="operator" onclick="appendOperator('+')">+</button>
     </div>
+</div>
 
-    <script>
-        let displayValue = '0';
-        let currentOperator = null;
-        let firstOperand = null;
+<script>
+    let displayValue = '0';
+    let currentOperator = null;
+    let firstOperand = null;
 
-        function updateDisplay() {
-            document.getElementById('display').textContent = displayValue;
+    function updateDisplay() {
+        document.getElementById('display').textContent = displayValue;
+    }
+
+    function appendNumber(number) {
+        if (displayValue === '0') {
+            displayValue = number;
+        } else {
+            displayValue += number;
         }
+        updateDisplay();
+    }
 
-        function appendNumber(number) {
-            if (displayValue === '0') {
-                displayValue = number;
-            } else {
-                displayValue += number;
-            }
+    function appendOperator(operator) {
+        if (currentOperator !== null) {
+            calculateResult();
+        }
+        firstOperand = displayValue;
+        currentOperator = operator;
+        displayValue = '0';
+    }
+
+    function appendDecimalPoint() {
+        if (!displayValue.includes('.')) {
+            displayValue += '.';
             updateDisplay();
         }
+    }
 
-        function appendOperator(operator) {
-            if (currentOperator !== null) {
-                calculateResult();
-            }
-            firstOperand = displayValue;
-            currentOperator = operator;
+    function clearDisplay() {
+        displayValue = '0';
+        currentOperator = null;
+        firstOperand = null;
+        updateDisplay();
+    }
+
+    function deleteDigit() {
+        displayValue = displayValue.slice(0, -1);
+        if (displayValue === '' || displayValue === '-') {
             displayValue = '0';
         }
+        updateDisplay();
+    }
 
-        function appendDecimalPoint() {
-            if (!displayValue.includes('.')) {
-                displayValue += '.';
-                updateDisplay();
-            }
+    function calculateSquareRoot() {
+        displayValue = Math.sqrt(parseFloat(displayValue)).toString();
+        updateDisplay();
+    }
+
+    function calculateResult() {
+        let result;
+        const secondOperand = displayValue;
+
+        if (currentOperator === '+') {
+            result = parseFloat(firstOperand) + parseFloat(secondOperand);
+        } else if (currentOperator === '-') {
+            result = parseFloat(firstOperand) - parseFloat(secondOperand);
+        } else if (currentOperator === '*') {
+            result = parseFloat(firstOperand) * parseFloat(secondOperand);
+        } else if (currentOperator === '/') {
+            result = parseFloat(firstOperand) / parseFloat(secondOperand);
         }
 
-        function clearDisplay() {
-            displayValue = '0';
-            currentOperator = null;
-            firstOperand = null;
-            updateDisplay();
+        displayValue = result.toString();
+        currentOperator = null;
+        firstOperand = null;
+        updateDisplay();
+    }
+
+    document.addEventListener('keydown', function(event) {
+        const key = event.key;
+
+        if (!isNaN(key)) {
+            appendNumber(key);
+        } else if (key === '+') {
+            appendOperator('+');
+        } else if (key === '-') {
+            appendOperator('-');
+        } else if (key === '*') {
+            appendOperator('*');
+        } else if (key === '/') {
+            appendOperator('/');
+        } else if (key === 'Enter') {
+            calculateResult();
+        } else if (key === 'Escape') {
+            clearDisplay();
+        } else if (key === 'Backspace') {
+            deleteDigit();
+        } else if (key === '.') {
+            appendDecimalPoint();
         }
-
-        function deleteDigit() {
-            displayValue = displayValue.slice(0, -1);
-            if (displayValue === '' || displayValue === '-') {
-                displayValue = '0';
-            }
-            updateDisplay();
-        }
-
-        function calculateResult() {
-            let result;
-            const secondOperand = displayValue;
-
-            if (currentOperator === '+') {
-                result = parseFloat(firstOperand) + parseFloat(secondOperand);
-            } else if (currentOperator === '-') {
-                result = parseFloat(firstOperand) - parseFloat(secondOperand);
-            } else if (currentOperator === '*') {
-                result = parseFloat(firstOperand) * parseFloat(secondOperand);
-            } else if (currentOperator === '/') {
-                result = parseFloat(firstOperand) / parseFloat(secondOperand);
-            }
-
-            displayValue = result.toString();
-            currentOperator = null;
-            firstOperand = null;
-            updateDisplay();
-        }
-
-        document.addEventListener('keydown', function(event) {
-            const key = event.key;
-
-            if (!isNaN(key)) {
-                appendNumber(key);
-            } else if (key === '+') {
-                appendOperator('+');
-            } else if (key === '-') {
-                appendOperator('-');
-            } else if (key === '*') {
-                appendOperator('*');
-            } else if (key === '/') {
-                appendOperator('/');
-            } else if (key === 'Enter') {
-                calculateResult();
-            } else if (key === 'Escape') {
-                clearDisplay();
-            } else if (key === 'Backspace') {
-                deleteDigit();
-            } else if (key === '.') {
-                appendDecimalPoint();
-            }
-        });
-    </script>
-
+    });
+</script>
 </body>
 </html>
