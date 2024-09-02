@@ -46,10 +46,6 @@
             margin-bottom: 20px;
         }
 
-        .click-icon {
-            margin-right: 10px;
-        }
-
         .click-count {
             font-size: 24px;
             font-weight: bold;
@@ -59,6 +55,11 @@
             width: 200px;
             margin: 20px;
             cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .main-mouse:active {
+            transform: translateY(-10px);
         }
 
         .buttons {
@@ -107,8 +108,8 @@
     <script>
         let clickCount = 0;
         const storyTexts = [
-        "A man caged a mouse.",
-        "The lord of the animals saw this and told the poacher to set him free.",
+            "A man caged a mouse.",
+            "The lord of the animals saw this and told the poacher to set him free.",
             "The poacher was frightened and set to work, but the cage was so strong he couldn't break it.",
             "Now he has to hit it 10,000 times to break it, and if he doesn't, it will be very bad...",
         ];
@@ -186,7 +187,7 @@
 
         function showStory() {
             document.getElementById("gameScreen").classList.add("hidden");
-            currentStoryIndex = 0;
+            currentStoryIndex = 0;  // Сбросить индекс перед показом сюжета
             storyCompleted = false;
             document.getElementById("introScreen").classList.remove("hidden");
             showNextStory();
