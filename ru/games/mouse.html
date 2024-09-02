@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кликер с сюжетом</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+  <style>body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+.intro-screen, .game-screen, .end-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.story-text {
+    font-size: 24px;
+    margin: 20px;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+}
+
+.hidden {
+    display: none;
+}
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.click-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.main-mouse {
+    width: 200px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+</style>
+<body>
+    <div id="introScreen" class="intro-screen">
+        <div id="storyText" class="story-text"></div>
+    </div>
+    <div id="gameScreen" class="game-screen hidden">
+        <div class="top-bar">
+            <img src="mish.png" alt="Клики" id="clickIcon" class="click-icon">
+            <span id="clickCount">0</span> / 10000
+        </div>
+        <img id="mouseImage" src="mish.png" alt="Мышонок" class="main-mouse" onclick="incrementClicks()">
+        <button id="shareButton" onclick="shareWithFriends()">Поделиться с друзьями</button>
+    </div>
+    <div id="endScreen" class="end-screen hidden">
+        <div id="endText">Мышонок освобожден!</div>
+        <button onclick="restartGame()">Свободный режим</button>
+    </div>
+    <script>let clickCount = 0;
+
+const storyTexts = [
+    "Один человек заковал мышонка в клетку.",
+    "Владыка животных увидел это, и велел браконьеру освободить его.",
+    "Браконьер испугался, и принялся за дело, но клетка настолько крепкая, что он не смог ее сломать.",
+    "Теперь он должен бить по ней 10 000 раз, чтобы разбить ее, а если не разобьет, все будет очень плохо..."
+];
+
+let currentStoryIndex = 0;
+
+function showNextStory() {
+    if (currentStoryIndex < storyTexts.length) {
+        const storyTextElement = document.getElementById("storyText");
+        storyTextElement.textContent = storyTexts[currentStoryIndex];
+        currentStoryIndex++;
+    } else {
+        document.getElementById("introScreen").classList.add("hidden");
+        document.getElementById("gameScreen").classList.remove("hidden");
+    }
+}
+
+document.getElementById("introScreen").addEventListener("click", showNextStory);
+
+function incrementClicks() {
+    clickCount++;
+    document.getElementById("clickCount").textContent = clickCount;
+
+    if (clickCount >= 10000) {
+        endGame();
+    }
+}
+
+function shareWithFriends() {
+    clickCount += 100;
+    document.getElementById("clickCount").textContent = clickCount;
+    alert("Спасибо за то, что поделились! Вам добавлено 100 кликов.");
+}
+
+function endGame() {
+    document.getElementById("gameScreen").classList.add("hidden");
+    document.getElementById("endScreen").classList.remove("hidden");
+}
+
+function restartGame() {
+    clickCount = 0;
+    document.getElementById("clickCount").textContent = clickCount;
+    document.getElementById("endScreen").classList.add("hidden");
+    document.getElementById("gameScreen").classList.remove("hidden");
+}
+</script>
+</body>
+</html>
