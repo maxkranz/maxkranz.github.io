@@ -99,14 +99,14 @@
         <img id="mouseImage" src="mish-Photoroom.png" alt="Мышонок" class="main-mouse" onclick="incrementClicks()">
         <div class="buttons">
             <button onclick="showStory()">Story</button>
-            <button onclick="restartGame()" style="background-color: red;">Restart</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Restart</button>
         </div>
     </div>
     <div id="endScreen" class="end-screen hidden">
         <div id="endText">Mouse is free!</div>
         <div class="buttons">
             <button onclick="freeMode()">Free Mode</button>
-            <button onclick="restartGame()">Restart</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Restart</button>
         </div>
     </div>
     <script>
@@ -176,6 +176,12 @@
             freeModeActive = true; // Активируем свободный режим
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
+        }
+
+        function confirmResetGame() {
+            if (confirm("Are you sure you want to start a new game? All achievements will be lost.")) {
+                restartGame();
+            }
         }
 
         function restartGame() {
