@@ -98,18 +98,23 @@
         </div>
         <img id="mouseImage" src="mish-Photoroom.png" alt="Мышонок" class="main-mouse" onclick="incrementClicks()">
         <div class="buttons">
-            <button onclick="showStory()">Watch the story</button>
+            <button onclick="showStory()">Story</button>
+            <button onclick="restartGame()" style="background-color: red;">Restart</button>
         </div>
     </div>
     <div id="endScreen" class="end-screen hidden">
         <div id="endText">Mouse is free!</div>
-        <button onclick="restartGame()">Free Mode</button>
+        <div class="buttons">
+            <button onclick="freeMode()">Free Mode</button>
+            <button onclick="restartGame()">Restart</button>
+        </div>
     </div>
     <script>
         let clickCount = 0;
+        let freeModeActive = false; // Флаг для отслеживания активации свободного режима
         const storyTexts = [
-            "A man caged a mouse...",
-            "A man caged a mouse. The lord of the animals saw this and told the poacher to set him free.",
+            "A man caged a mouse.",
+            "The lord of the animals saw this and told the poacher to set him free.",
             "The poacher was frightened and set to work, but the cage was so strong he couldn't break it.",
             "Now he has to hit it 10,000 times to break it, and if he doesn't, it will be very bad...",
         ];
@@ -157,7 +162,7 @@
             document.getElementById("clickCount").textContent = clickCount;
             localStorage.setItem('clickCount', clickCount);
 
-            if (clickCount >= 10000) {
+            if (!freeModeActive && clickCount >= 10000) {
                 endGame();
             }
         }
@@ -167,8 +172,15 @@
             document.getElementById("endScreen").classList.remove("hidden");
         }
 
+        function freeMode() {
+            freeModeActive = true; // Активируем свободный режим
+            document.getElementById("endScreen").classList.add("hidden");
+            document.getElementById("gameScreen").classList.remove("hidden");
+        }
+
         function restartGame() {
             clickCount = 0;
+            freeModeActive = false; // Сбрасываем флаг свободного режима
             localStorage.setItem('clickCount', clickCount);
             document.getElementById("clickCount").textContent = clickCount;
             document.getElementById("endScreen").classList.add("hidden");
