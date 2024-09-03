@@ -99,24 +99,24 @@
         <img id="mouseImage" src="mish-Photoroom.png" alt="Мышонок" class="main-mouse" onclick="incrementClicks()">
         <div class="buttons">
             <button onclick="showStory()">Сюжет</button>
-            <button onclick="restartGame()" style="background-color: red;">Новая игра</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button>
         </div>
     </div>
     <div id="endScreen" class="end-screen hidden">
-        <div id="endText">Мышонок освобожден!</div>
+        <div id="endText">Мышонок освобождён!</div>
         <div class="buttons">
             <button onclick="freeMode()">Свободный режим</button>
-            <button onclick="restartGame()">Новая игра</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button>
         </div>
     </div>
     <script>
         let clickCount = 0;
         let freeModeActive = false; // Флаг для отслеживания активации свободного режима
         const storyTexts = [
-            "Один человек заковал мышонка в клетку.",
-            "Владыка животных увидел это и велел браконьеру освободить его.",
+            "Человек заковал мышонка в клетку...",
+            "Человек заковал мышонка в клетку. Владыка животных увидел это и велел браконьеру освободить его.",
             "Браконьер испугался и принялся за дело, но клетка была настолько крепкой, что он не смог её сломать.",
-            "Теперь он должен ударить по ней 10 000 раз, чтобы разбить её, иначе будет очень плохо...",
+            "Теперь он должен ударить по ней 10 000 раз, чтобы разбить её, а если не сможет, всё будет очень плохо...",
         ];
         let currentStoryIndex = 0;
         let gameStarted = localStorage.getItem('gameStarted') === 'true';
@@ -176,6 +176,12 @@
             freeModeActive = true; // Активируем свободный режим
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
+        }
+
+        function confirmResetGame() {
+            if (confirm("Вы уверены, что хотите начать новую игру? Все достижения будут сброшены.")) {
+                restartGame();
+            }
         }
 
         function restartGame() {
