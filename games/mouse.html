@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mouse Clicker</title>
+    <title>Мышонок (Кликер)</title>
     <link rel="shortcut icon" href="mish-Photoroom.png">
     <style>
         body, html {
@@ -66,6 +66,7 @@
         .buttons {
             display: flex;
             gap: 20px;
+            align-items: center;
         }
 
         button {
@@ -87,6 +88,20 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
+        @keyframes explode {
+            0% { opacity: 1; transform: scale(1) translate(0, 0); }
+            100% { opacity: 0; transform: scale(2) translate(100px, -100px); }
+        }
+
+        .exploding {
+            position: relative;
+            animation: explode 1s forwards ease-out;
+        }
+        #endButton{
+            background-color: gold;
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -99,25 +114,29 @@
         </div>
         <img id="mouseImage" src="mish-Photoroom.png" alt="Мышонок" class="main-mouse" onclick="incrementClicks()">
         <div class="buttons">
-            <button onclick="showStory()">Story</button>
-            <button onclick="confirmResetGame()" style="background-color: red;">Restart</button>
+            <button onclick="showStory()">Сюжет</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button>
+            <button id="endButton" class="hidden" onclick="triggerEnding()">Концовка</button> <!-- Новая кнопка -->
         </div>
     </div>
     <div id="endScreen" class="end-screen hidden">
-        <div id="endText">Mouse is free!</div>
+        <h1 id="endText">Мышонок освобождён!</h1>
+        <img id="explodingMouse" src="mish-Photoroom.png" alt="Мышонок" class="main-mouse hidden">
         <div class="buttons">
-            <button onclick="freeMode()">Free Mode</button>
-            <button onclick="confirmResetGame()" style="background-color: red;">Restart</button>
+            <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Свободный режим</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button>
+            <button id="shareButton">Поделиться результатом</button>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script>
         let clickCount = 0;
         let freeModeActive = false; // Флаг для отслеживания активации свободного режима
         const storyTexts = [
-            "A man caged a mouse...",
-            "A man caged a mouse. The lord of the animals saw this and told the poacher to set him free.",
-            "The poacher was frightened and set to work, but the cage was so strong he couldn't break it.",
-            "Now he has to hit it 10,000 times to break it, and if he doesn't, it will be very bad...",
+            "Человек заковал мышонка в клетку...",
+            "Владыка животных увидел это и велел браконьеру освободить его.",
+            "Браконьер испугался и принялся за дело, но клетка была настолько крепкой, что он не смог её сломать.",
+            "Теперь он должен ударить по ней 10 000 раз, чтобы разбить её, а если не сможет, всё будет очень плохо...",
         ];
         let currentStoryIndex = 0;
         let gameStarted = localStorage.getItem('gameStarted') === 'true';
@@ -171,16 +190,33 @@
         function endGame() {
             document.getElementById("gameScreen").classList.add("hidden");
             document.getElementById("endScreen").classList.remove("hidden");
+            triggerExplosion();
+        }
+
+        function triggerExplosion() {
+            const mouseImage = document.getElementById("explodingMouse");
+            mouseImage.classList.remove("hidden");
+            mouseImage.classList.add("exploding");
+            setTimeout(() => {
+                mouseImage.classList.add("hidden");
+            }, 1000);
         }
 
         function freeMode() {
             freeModeActive = true; // Активируем свободный режим
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
+
+            // Показать кнопку "Концовка"
+            document.getElementById("endButton").classList.remove("hidden");
+        }
+
+        function triggerEnding() {
+            endGame(); // Показываем концовку
         }
 
         function confirmResetGame() {
-            if (confirm("Are you sure you want to start a new game? All achievements will be lost.")) {
+            if (confirm("Вы уверены, что хотите начать новую игру? Все достижения будут сброшены.")) {
                 restartGame();
             }
         }
@@ -192,6 +228,9 @@
             document.getElementById("clickCount").textContent = clickCount;
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
+
+            // Скрыть кнопку "Концовка"
+            document.getElementById("endButton").classList.add("hidden");
         }
 
         function resetGame() {
@@ -211,6 +250,15 @@
             document.getElementById("introScreen").classList.remove("hidden");
             showNextStory();
         }
+
+        document.getElementById('shareButton').addEventListener('click', () => {
+            html2canvas(document.body).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'mouse_clicker_result.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
     </script>
 </body>
 </html>
