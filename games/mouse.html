@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мышонок (Кликер)</title>
+    <title>Mouse (Clicker)</title>
     <link rel="shortcut icon" href="mish-Photoroom.png">
     <style>
         body, html {
@@ -98,7 +98,7 @@
             position: relative;
             animation: explode 1s forwards ease-out;
         }
-        #endButton{
+        #endButton {
             background-color: gold;
             color: black;
         }
@@ -112,31 +112,31 @@
         <div class="top-bar">
             <span id="clickCount" class="click-count">0</span> / 10000
         </div>
-        <img id="mouseImage" src="mish-Photoroom.png" alt="Мышонок" class="main-mouse" onclick="incrementClicks()">
+        <img id="mouseImage" src="mish-Photoroom.png" alt="Mouse" class="main-mouse" onclick="incrementClicks()">
         <div class="buttons">
-            <button onclick="showStory()">Сюжет</button>
-            <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button>
-            <button id="endButton" class="hidden" onclick="triggerEnding()">Концовка</button> <!-- Новая кнопка -->
+            <button onclick="showStory()">Story</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">New Game</button>
+            <button id="endButton" class="hidden" onclick="triggerEnding()">Ending</button> <!-- New button -->
         </div>
     </div>
     <div id="endScreen" class="end-screen hidden">
-        <h1 id="endText">Мышонок освобождён!</h1>
-        <img id="explodingMouse" src="mish-Photoroom.png" alt="Мышонок" class="main-mouse hidden">
+        <h1 id="endText">Mouse is freed!</h1>
+        <img id="explodingMouse" src="mish-Photoroom.png" alt="Mouse" class="main-mouse hidden">
         <div class="buttons">
-            <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Свободный режим</button>
-            <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button>
-            <button id="shareButton">Поделиться результатом</button>
+            <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Free Mode</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">New Game</button>
+            <button id="shareButton">Share Result</button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script>
         let clickCount = 0;
-        let freeModeActive = false; // Флаг для отслеживания активации свободного режима
+        let freeModeActive = false; // Flag to track free mode activation
         const storyTexts = [
-            "Человек заковал мышонка в клетку...",
-            "Владыка животных увидел это и велел браконьеру освободить его.",
-            "Браконьер испугался и принялся за дело, но клетка была настолько крепкой, что он не смог её сломать.",
-            "Теперь он должен ударить по ней 10 000 раз, чтобы разбить её, а если не сможет, всё будет очень плохо...",
+            "A human locked the mouse in a cage...",
+            "The lord of the animals saw this and ordered the poacher to release it.",
+            "The poacher got scared and tried, but the cage was so strong that he couldn't break it.",
+            "Now he must hit it 10,000 times to break it, or else it will be very bad...",
         ];
         let currentStoryIndex = 0;
         let gameStarted = localStorage.getItem('gameStarted') === 'true';
@@ -203,33 +203,33 @@
         }
 
         function freeMode() {
-            freeModeActive = true; // Активируем свободный режим
+            freeModeActive = true; // Activate free mode
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
 
-            // Показать кнопку "Концовка"
+            // Show "Ending" button
             document.getElementById("endButton").classList.remove("hidden");
         }
 
         function triggerEnding() {
-            endGame(); // Показываем концовку
+            endGame(); // Show ending
         }
 
         function confirmResetGame() {
-            if (confirm("Вы уверены, что хотите начать новую игру? Все достижения будут сброшены.")) {
+            if (confirm("Are you sure you want to start a new game? All achievements will be reset.")) {
                 restartGame();
             }
         }
 
         function restartGame() {
             clickCount = 0;
-            freeModeActive = false; // Сбрасываем флаг свободного режима
+            freeModeActive = false; // Reset free mode flag
             localStorage.setItem('clickCount', clickCount);
             document.getElementById("clickCount").textContent = clickCount;
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
 
-            // Скрыть кнопку "Концовка"
+            // Hide "Ending" button
             document.getElementById("endButton").classList.add("hidden");
         }
 
@@ -245,7 +245,7 @@
 
         function showStory() {
             document.getElementById("gameScreen").classList.add("hidden");
-            currentStoryIndex = 0;  // Сбросить индекс перед показом сюжета
+            currentStoryIndex = 0;  // Reset index before showing the story
             storyCompleted = false;
             document.getElementById("introScreen").classList.remove("hidden");
             showNextStory();
