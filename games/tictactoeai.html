@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Крестики-нолики PvP</title>
-	<link rel="shortcut icon" href="img/html.png">
+	<title>Tic-Tac-Toe Player vs AI</title>
+	<link rel="shortcut icon" href="html.png">
 	<style>
 		* {
 			box-sizing: border-box;
@@ -20,7 +20,7 @@
 			margin: 0;
 			background: linear-gradient(to right, #6A82FB, #a5c9f8);
 			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #6A82FB,;
+			background-color: #6A82FB;
 		}
 
 		.res {
@@ -126,7 +126,7 @@
 		<div class="field"></div>
 		<div class="field"></div>
 	</div>
-	<button class="new-game">Новая игра</button>
+	<button class="new-game">New Game</button>
 
 	<script>
 		let game = document.querySelector('.game'),
@@ -146,24 +146,37 @@
 		function stepCross(target) {
 			target.innerHTML = cross;
 			target.classList.add('x');
-			let crossAudio = new Audio('audio/cross.mp3');
-			crossAudio.play();
 			count++;
 		}
 
 		function stepZero(target) {
 			target.innerHTML = circle;
 			target.classList.add('o');
-			let circleAudio = new Audio('audio/zero.mp3');
-			circleAudio.play();
 			count++;
 		}
 
+		function computerMove() {
+			let availableFields = Array.from(fields).filter(field => !field.classList.contains('x') && !field.classList.contains('o'));
+			if (availableFields.length > 0) {
+				let randomField = availableFields[Math.floor(Math.random() * availableFields.length)];
+				stepZero(randomField);
+				randomField.classList.add('o');
+				checkWinner();
+				step = !step;
+			}
+		}
+
 		function init(e) {
-			if (!step) stepCross(e.target);
-			else stepZero(e.target);
-			step = !step;
-			win();
+			if (!step && !e.target.classList.contains('x') && !e.target.classList.contains('o')) {
+				stepCross(e.target);
+				e.target.classList.add('x');
+				checkWinner();
+				step = !step;
+
+				if (count < 9 && step) {
+					setTimeout(computerMove, 500); // Short delay before the computer's move
+				}
+			}
 		}
 
 		function newGame() {
@@ -177,7 +190,7 @@
 			game.addEventListener('click', init);
 		}
 
-		function win() {
+		function checkWinner() {
 			let comb = [
 				[0, 1, 2],
 				[3, 4, 5],
@@ -190,7 +203,6 @@
 			];
 
 			for (let i = 0; i < comb.length; i++) {
-
 				if (fields[comb[i][0]].classList.contains('x') &&
 					fields[comb[i][1]].classList.contains('x') &&
 					fields[comb[i][2]].classList.contains('x')) {
@@ -198,9 +210,10 @@
 						fields[comb[i][0]].classList.add('active');
 						fields[comb[i][1]].classList.add('active');
 						fields[comb[i][2]].classList.add('active');
-						res.innerText = 'Выиграли X';
+						res.innerText = 'X wins';
 					}, 500);
 					game.removeEventListener('click', init);
+					return;
 				}
 
 				else if (fields[comb[i][0]].classList.contains('o') &&
@@ -210,15 +223,16 @@
 						fields[comb[i][0]].classList.add('active');
 						fields[comb[i][1]].classList.add('active');
 						fields[comb[i][2]].classList.add('active');
-						res.innerText = 'Выиграли O';
+						res.innerText = 'O wins';
 					}, 500);
 					game.removeEventListener('click', init);
+					return;
 				}
+			}
 
-				else if (count == 9) {
-					res.innerText = 'Ничья';
-					game.removeEventListener('click', init);
-				}
+			if (count == 9) {
+				res.innerText = 'Draw';
+				game.removeEventListener('click', init);
 			}
 		}
 
