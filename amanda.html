@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amanda Search Engine</title>
-    <link rel="shortcut icon" href="Снимок экрана от 2024-06-02 10-11-05.png">
+    <link rel="shortcut icon" href="amanda.png">
     <!-- Подключаем Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="manifest" href="manifest.json">
@@ -12,13 +12,18 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            top: 50%
         }
 
         .imgl {
             display: block;
             margin: 50px auto 0;
+            max-width: 200px; /* Установим максимальную ширину картинки для обычных экранов */
+            height: auto;
         }
 
         #search-container {
@@ -67,6 +72,11 @@
             #search-input {
                 width: 350px;
             }
+
+            /* Адаптивный размер для картинки на мобильных устройствах */
+            .imgl {
+                max-width: 150px; /* Размер картинки для маленьких экранов */
+            }
         }
 
         .link-container a {
@@ -107,7 +117,7 @@
 </head>
 <body>
 
-    <img class="imgl" src="Снимок экрана от 2024-05-24 09-46-24.png">
+    <img class="imgl" src="amanda.png">
 
     <div id="input" style="align-items: center; justify-content: center; text-align: center;">
         <form id="search-container" onsubmit="search(event)">
@@ -126,7 +136,7 @@
     </div>
 
     <script>
- function search(event) {
+        function search(event) {
             event.preventDefault(); // Предотвращаем отправку формы по умолчанию
             const query = document.getElementById('search-input').value;
             if (query) {

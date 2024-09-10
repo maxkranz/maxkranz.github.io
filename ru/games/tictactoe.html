@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Крестики-нолики</title>
+	<link rel="shortcut icon" href="DALL·E 2024-08-15 09.50.25 - A minimalist logo design for a team called 'WEB IT Team' that creates web applications and web games like Snake, Tic-Tac-Toe, and web browsers. The lo.webp">
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			margin: 0;
+			background: linear-gradient(to right, #6A82FB, #a5c9f8);
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #6A82FB,;
+		}
+
+		.res {
+			color: white;
+			font-weight: bold;
+			font-size: 36px;
+			margin-bottom: 20px;
+			text-shadow: 2px 2px 4px #000000;
+		}
+
+		.game {
+			width: 360px;
+			height: 360px;
+			display: flex;
+			flex-wrap: wrap;
+			background-color: #222;
+			border-radius: 10px;
+			overflow: hidden;
+			box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+		}
+
+		.field {
+			width: 120px;
+			height: 120px;
+			border: 2px solid #333;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #111;
+			cursor: pointer;
+			transition: background-color 0.3s, transform 0.2s;
+		}
+
+		.field:hover {
+			background-color: #444;
+			transform: scale(1.05);
+		}
+
+		.new-game {
+			border: none;
+			color: white;
+			background: #489928;
+			padding: 10px 20px;
+			font-size: 20px;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-top: 20px;
+			transition: background-color 0.3s;
+		}
+
+		.new-game:hover {
+			background-color: #ff4081;
+		}
+
+		.active {
+			background-color: rgba(0, 255, 0, 0.5);
+		}
+
+		.circle {
+			width: 100%;
+			height: 100%;
+			stroke-dasharray: 283;
+			stroke-dashoffset: 283;
+			animation: draw 1s forwards;
+		}
+
+		.cross {
+			width: 100%;
+			height: 100%;
+		}
+
+		.first {
+			stroke-dasharray: 125;
+			stroke-dashoffset: 125;
+			animation: draw 0.6s forwards;
+		}
+
+		.second {
+			stroke-dasharray: 125;
+			stroke-dashoffset: 125;
+			animation: draw 0.6s 0.6s forwards;
+		}
+
+		@keyframes draw {
+			100% {
+				stroke-dashoffset: 0;
+			}
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="res"></div>
+	<div class="game">
+		<div class="field"></div>
+		<div class="field"></div>
+		<div class="field"></div>
+		<div class="field"></div>
+		<div class="field"></div>
+		<div class="field"></div>
+		<div class="field"></div>
+		<div class="field"></div>
+		<div class="field"></div>
+	</div>
+	<button class="new-game">Новая игра</button>
+
+	<script>
+		let game = document.querySelector('.game'),
+			res = document.querySelector('.res'),
+			btnGame = document.querySelector('.new-game'),
+			fields = document.querySelectorAll('.field'),
+			step = false,
+			count = 0,
+			circle = `<svg class="circle">
+						<circle r="45" cx="58" cy="58" stroke="#00BFFF" stroke-width="10" fill="none" stroke-linecap="round" />
+					</svg>`,
+			cross = `<svg class="cross">
+						<line class="first" x1="15" y1="15" x2="100" y2="100" stroke="#FF4500" stroke-width="10" stroke-linecap="round" />
+						<line class="second" x1="100" y1="15" x2="15" y2="100" stroke="#FF4500" stroke-width="10" stroke-linecap="round" />
+					</svg>`;
+
+		function stepCross(target) {
+			target.innerHTML = cross;
+			target.classList.add('x');
+			let crossAudio = new Audio('audio/cross.mp3');
+			crossAudio.play();
+			count++;
+		}
+
+		function stepZero(target) {
+			target.innerHTML = circle;
+			target.classList.add('o');
+			let circleAudio = new Audio('audio/zero.mp3');
+			circleAudio.play();
+			count++;
+		}
+
+		function init(e) {
+			if (!step) stepCross(e.target);
+			else stepZero(e.target);
+			step = !step;
+			win();
+		}
+
+		function newGame() {
+			step = false;
+			count = 0;
+			res.innerText = '';
+			fields.forEach(item => {
+				item.innerHTML = '';
+				item.classList.remove('x', 'o', 'active');
+			});
+			game.addEventListener('click', init);
+		}
+
+		function win() {
+			let comb = [
+				[0, 1, 2],
+				[3, 4, 5],
+				[6, 7, 8],
+				[0, 3, 6],
+				[1, 4, 7],
+				[2, 5, 8],
+				[0, 4, 8],
+				[2, 4, 6]
+			];
+
+			for (let i = 0; i < comb.length; i++) {
+
+				if (fields[comb[i][0]].classList.contains('x') &&
+					fields[comb[i][1]].classList.contains('x') &&
+					fields[comb[i][2]].classList.contains('x')) {
+					setTimeout(() => {
+						fields[comb[i][0]].classList.add('active');
+						fields[comb[i][1]].classList.add('active');
+						fields[comb[i][2]].classList.add('active');
+						res.innerText = 'Выиграли X';
+					}, 500);
+					game.removeEventListener('click', init);
+				}
+
+				else if (fields[comb[i][0]].classList.contains('o') &&
+					fields[comb[i][1]].classList.contains('o') &&
+					fields[comb[i][2]].classList.contains('o')) {
+					setTimeout(() => {
+						fields[comb[i][0]].classList.add('active');
+						fields[comb[i][1]].classList.add('active');
+						fields[comb[i][2]].classList.add('active');
+						res.innerText = 'Выиграли O';
+					}, 500);
+					game.removeEventListener('click', init);
+				}
+
+				else if (count == 9) {
+					res.innerText = 'Ничья';
+					game.removeEventListener('click', init);
+				}
+			}
+		}
+
+		btnGame.addEventListener('click', newGame);
+		game.addEventListener('click', init);
+	</script>
+
+</body>
+
+</html>
