@@ -1,6 +1,28 @@
-<!DOCTYPE html> <html lang="ru"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1"> <title>Мышонок (Кликер)</title> <link rel="shortcut icon" href="mish-Photoroom.png"> <style> body, html { margin: 0; padding: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; background-color: #131313; font-family: Arial, sans-serif; color: #fff; -webkit-touch-callout: none; /* Отключаем вызов контекстного меню при долгом тапе */ -webkit-user-select: none; /* Отключаем выделение текста */ user-select: none; /* Для всех браузеров */ touch-action: manipulation; /* Отключаем жесты масштабирования и двойное нажатие */ }
- 
-    Copy
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
+    <title>Мышонок (Кликер)</title>
+    <link rel="shortcut icon" href="mish-Photoroom.png">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #131313;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            -webkit-touch-callout: none; /* Отключить контекстное меню при длинном нажатии */
+            -webkit-user-select: none;   /* Отключить выделение текста */
+            user-select: none;           /* Для всех браузеров */
+            touch-action: manipulation;  /* Отключить жестикуляции зумирования и двойного нажатия */
+        }
+
         .intro-screen, .game-screen, .end-screen {
             display: flex;
             flex-direction: column;
@@ -10,49 +32,48 @@
             width: 100%;
             height: 100%;
         }
-    
+
         .story-text {
             font-size: 24px;
             margin: 20px;
             opacity: 0;
             animation: fadeIn 2s forwards;
         }
-    
+
         .hidden {
             display: none;
         }
-    
+
         .top-bar {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
         }
-    
+
         .click-count {
             font-size: 24px;
             font-weight: bold;
         }
-    
+
         .main-mouse {
             width: 200px;
             margin: 20px;
             cursor: pointer;
             transition: transform 0.1s;
-            touch-action: none; /* Отключаем все жесты на изображении */
+            touch-action: none; /* Отключить все жесты на изображении */
         }
-    
+
         .main-mouse:active {
             transform: translateY(-10px);
         }
-    
+
         .buttons {
             display: flex;
             gap: 20px;
             align-items: center;
-            flex-direction: column;
         }
-    
+
         button {
             padding: 10px 20px;
             margin-top: 20px;
@@ -63,28 +84,65 @@
             cursor: pointer;
             font-size: 16px;
         }
-    
+
         button:hover {
             background-color: #0056b3;
         }
-    
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-    
+
         @keyframes explode {
             0% { opacity: 1; transform: scale(1) translate(0, 0); }
             100% { opacity: 0; transform: scale(2) translate(100px, -100px); }
         }
-    
+
         .exploding {
             position: relative;
             animation: explode 1s forwards ease-out;
         }
     </style>
-    </head> <body> <div id="introScreen" class="intro-screen hidden"> <div id="storyText" class="story-text"></div> </div> <div id="gameScreen" class="game-screen hidden"> <div class="top-bar"> <span id="clickCount" class="click-count">0</span> / 10000 </div> <img id="mouseImage" src="mish-Photoroom.png" alt="Мышонок" class="main-mouse" onclick="incrementClicks()"> <div class="buttons"> <button onclick="showStory()">Сюжет</button> <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button> <button id="endButton" class="hidden" onclick="triggerEnding()">Концовка</button> </div> </div> <div id="endScreen" class="end-screen hidden"> <h1 id="endText">Мышонок освобождён!</h1> <img id="explodingMouse" src="mish-Photoroom.png" alt="Мышонок" class="main-mouse hidden"> <div class="buttons"> <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Свободный режим</button> <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button> <button id="shareButton">Поделиться результатом</button> </div> </div> <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script> <script> let clickCount = 0; let freeModeActive = false; // Флаг для отслеживания активации свободного режима const storyTexts = [ "Человек заковал мышонка в клетку...", "Владыка животных увидел это и велел браконьеру освободить его.", "Браконьер испугался и принялся за дело, но клетка была настолько крепкой, что он не смог её сломать.", "Теперь он должен ударить по ней 10 000 раз, чтобы разбить её, а если не сможет, всё будет очень плохо...", ]; let currentStoryIndex = 0; let gameStarted = localStorage.getItem('gameStarted') === 'true'; let storyCompleted = localStorage.getItem('storyCompleted') === 'true';
-     
+</head>
+<body>
+    <div id="introScreen" class="intro-screen hidden">
+        <div id="storyText" class="story-text"></div>
+    </div>
+    <div id="gameScreen" class="game-screen hidden">
+        <div class="top-bar">
+            <span id="clickCount" class="click-count">0</span> / 10000
+        </div>
+        <img id="mouseImage" src="mish-Photoroom.png" alt="Мышь" class="main-mouse" onclick="incrementClicks()">
+        <div class="buttons">
+            <button onclick="showStory()">Сюжет</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Новая Игра</button>
+            <button id="endButton" class="hidden" onclick="triggerEnding()">Концовка</button>
+        </div>
+    </div>
+    <div id="endScreen" class="end-screen hidden">
+        <h1 id="endText">Мышь освобождена!</h1>
+        <img id="explodingMouse" src="mish-Photoroom.png" alt="Мышь" class="main-mouse hidden">
+        <div class="buttons">
+            <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Свободный Режим</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Новая Игра</button>
+            <button id="shareButton">Поделиться результатом</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+        let clickCount = 0;
+        let freeModeActive = false; // Флаг для отслеживания активации свободного режима
+        const storyTexts = [
+        "Человек заковал мышонка в клетку...",
+         "Человек заковал мышонка в клетку. Владыка животных увидел это и велел браконьеру освободить его.", 
+         "Браконьер испугался и принялся за дело, но клетка была настолько крепкой, что он не смог её сломать.", 
+         "Теперь он должен ударить по ней 10 000 раз, чтобы разбить её, а если не сможет, всё будет очень плохо..."
+        ];
+        let currentStoryIndex = 0;
+        let gameStarted = localStorage.getItem('gameStarted') === 'true';
+        let storyCompleted = localStorage.getItem('storyCompleted') === 'true';
+
         document.addEventListener("DOMContentLoaded", () => {
             if (!gameStarted || !storyCompleted) {
                 document.getElementById("introScreen").classList.remove("hidden");
@@ -95,13 +153,13 @@
                 document.getElementById("clickCount").textContent = clickCount;
             }
         });
-    
+
         document.addEventListener("click", () => {
             if (!storyCompleted) {
                 showNextStory();
             }
         });
-    
+
         function showNextStory() {
             if (currentStoryIndex < storyTexts.length) {
                 const storyTextElement = document.getElementById("storyText");
@@ -113,29 +171,29 @@
                 startGame();
             }
         }
-    
+
         function startGame() {
             document.getElementById("introScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
             localStorage.setItem('gameStarted', 'true');
         }
-    
+
         function incrementClicks() {
             clickCount++;
             document.getElementById("clickCount").textContent = clickCount;
             localStorage.setItem('clickCount', clickCount);
-    
+
             if (!freeModeActive && clickCount >= 10000) {
                 endGame();
             }
         }
-    
+
         function endGame() {
             document.getElementById("gameScreen").classList.add("hidden");
             document.getElementById("endScreen").classList.remove("hidden");
             triggerExplosion();
         }
-    
+
         function triggerExplosion() {
             const mouseImage = document.getElementById("explodingMouse");
             mouseImage.classList.remove("hidden");
@@ -144,38 +202,38 @@
                 mouseImage.classList.add("hidden");
             }, 1000);
         }
-    
+
         function freeMode() {
-            freeModeActive = true; // Активируем свободный режим
+            freeModeActive = true; // Активировать свободный режим
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
-    
-            // Показать кнопку "Концовка"
+
+            // Показать кнопку "Конец"
             document.getElementById("endButton").classList.remove("hidden");
         }
-    
+
         function triggerEnding() {
-            endGame(); // Показываем концовку
+            endGame(); // Показать конец
         }
-    
+
         function confirmResetGame() {
-            if (confirm("Вы уверены, что хотите начать новую игру? Все достижения будут сброшены.")) {
+            if (confirm("Вы уверены, что хотите начать новую игру? Все прогрессы будут сброшены.")) {
                 restartGame();
             }
         }
-    
+
         function restartGame() {
             clickCount = 0;
-            freeModeActive = false; // Сбрасываем флаг свободного режима
+            freeModeActive = false; // Сбросить флаг свободного режима
             localStorage.setItem('clickCount', clickCount);
             document.getElementById("clickCount").textContent = clickCount;
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
-    
-            // Скрыть кнопку "Концовка" после перезапуска
+
+            // Скрыть кнопку "Конец" после перезапуска
             document.getElementById("endButton").classList.add("hidden");
         }
-    
+
         function resetGame() {
             localStorage.removeItem('gameStarted');
             localStorage.removeItem('clickCount');
@@ -185,15 +243,15 @@
             storyCompleted = false;
             showNextStory();
         }
-    
+
         function showStory() {
             document.getElementById("gameScreen").classList.add("hidden");
-            currentStoryIndex = 0;  // Сбросить индекс перед показом сюжета
+            currentStoryIndex = 0;  // Сбросить индекс перед показом истории
             storyCompleted = false;
             document.getElementById("introScreen").classList.remove("hidden");
             showNextStory();
         }
-    
+
         document.getElementById('shareButton').addEventListener('click', () => {
             html2canvas(document.body).then(canvas => {
                 const link = document.createElement('a');
@@ -203,4 +261,5 @@
             });
         });
     </script>
-    </body> </html> 
+</body>
+</html>
