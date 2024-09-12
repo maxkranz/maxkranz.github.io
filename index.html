@@ -266,6 +266,111 @@
                 display: none;
             }
         }
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 30px 20px;
+            background-color: DeepSkyBlue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .intro {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project {
+            background-color: DeepSkyBlue;
+            padding: 30px;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease, font-size 0.3s ease;
+            position: relative;
+        }
+
+        .project:hover {
+            background-color: #0056b3;
+        }
+
+        .project a {
+            color: black;
+            text-decoration: none;
+        }
+
+        /* Описание */
+        .project-description {
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #003a77;
+            color: white;
+            font-size: 16px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .project:hover .project-description {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .project {
+                width: 100%;
+            }
+
+            .project-description {
+                font-size: 14px;
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -294,17 +399,51 @@
     </div>
 
     <div class="projects-grid">
-        <div class="project"><a href="https://maxkranz.github.io/amandagl">Amanda Search Engine</a></div>
-        <div class="project"><a href="https://maxkranz.github.io/apps/todoapp">To Do App</a></div>
-        <div class="project"><a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a></div>
-        <div class="project"><a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a></div>
-        <div class="project"><a href="https://maxkranz.github.io/apps/timer">Timer</a></div>
-        <div class="project"><a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a></div>
-          <div class="project"><a href="https://maxkranz.github.io/apps/calculator">Calculator</a></div>
-        <div class="project"><a href="https://maxkranz.github.io/games/dino">Dino Game</a></div>
-        <div class="project"><a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a></div>
-        <div class="project"><a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe PvP</a></div>
-        <div class="project"><a href="https://maxkranz.github.io/games/tictactoeai">Tic-Tac-Toe Player vs AI</a></div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/amandagl">Amanda Search Engine</a>
+            <div class="project-description">New interface for Google.</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
+            <div class="project-description">Organize your tasks efficiently.</div>
+        </div>
+            
+        <div class="project">
+            <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
+            <div class="project-description">Can you guess the number?</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
+            <div class="project-description">Enter your thoughts here.</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/apps/timer">Timer</a>
+            <div class="project-description">Check time.</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
+            <div class="project-description">Get a quick quote.</div>
+        </div>
+          <div class="project">
+            <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
+            <div class="project-description">Calculate.</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
+            <div class="project-description">Can you lead Dino to keep him safe?</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a>
+            <div class="project-description">Can you free the mouse?</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe PvP</a>
+            <div class="project-description">Play Tic-Tac-Toe with friends.</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/games/tictactoeai">Tic-Tac-Toe Player vs AI</a>
+            <div class="project-description">Play Tic-Tac-Toe against computer.</div>
+        </div>
     </div>
 
     <div class="dropdown-container">
@@ -334,6 +473,7 @@
                 font-size: 15px;
              
                 transition: color 0.3s ease;">RU</a></footer>
+                
     
     <script>
         function toggleDropdown(id) {
@@ -347,6 +487,13 @@
             menu.classList.toggle('active');
             burger.classList.toggle('active');
         }
+        document.querySelectorAll('.project').forEach((project) => {
+        project.addEventListener('click', () => {
+            const description = project.querySelector('.project-description');
+            description.style.opacity = description.style.opacity === '1' ? '0' : '1';
+            description.style.visibility = description.style.visibility === 'visible' ? 'hidden' : 'visible';
+        });
+    });
     </script>
 </body>
 </html>
