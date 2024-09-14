@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NoteApp</title>
-      <link rel="shortcut icon" href="html.png">
+    <link rel="shortcut icon" href="html.png">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #303030;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -27,30 +27,22 @@
             position: relative;
         }
 
-        h1 button,
-        .note-editor button,
-        .note-view button {
+        h1 button {
             padding: 10px 15px;
-            font-size: 16px;
+            font-size: 24px;
             cursor: pointer;
             border: none;
             background-color: #007BFF;
             color: white;
             border-radius: 5px;
             transition: background-color 0.3s ease;
-        }
-
-        h1 button:hover,
-        .note-editor button:hover,
-        .note-view button:hover {
-            background-color: #0056b3;
-        }
-
-        h1 button {
             position: absolute;
             right: 0;
             top: 0;
-            font-size: 24px;
+        }
+
+        h1 button:hover {
+            background-color: #0056b3;
         }
 
         .search-bar {
@@ -81,7 +73,7 @@
         }
 
         .note-editor input, .note-editor textarea {
-            width: 100%;
+            width: 97%;
             padding: 10px;
             font-size: 16px;
             margin-bottom: 10px;
@@ -130,18 +122,50 @@
             font-weight: bold;
         }
 
-        .note-list li button {
-            background-color: #ff4757;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            padding: 5px 10px;
-            transition: background-color 0.3s ease;
+        .menu {
+            position: relative;
         }
 
-        .note-list li button:hover {
-            background-color: #ff6b81;
+        .menu-button {
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-options {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .menu-options button {
+            background-color: transparent;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            text-align: left;
+        }
+        .btn{
+            background-color: #328ef0;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .menu-options button:hover {
+            background-color: #f1f1f1;
         }
 
         @media (max-width: 600px) {
@@ -159,140 +183,170 @@
             h1 {
                 padding: 10px;
             }
+            .note-editor input{
+                width: 93%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>
-        NoteApp
-        <button onclick="createNewNote()">+</button>
-    </h1>
+<h1 style="color: white;">
+    NoteApp
+    <button onclick="createNewNote()">+</button>
+</h1>
 
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search notes...">
-    </div>
+<div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search notes...">
+</div>
 
-    <!-- Редактор заметок -->
-    <div class="note-editor">
-        <input type="text" id="noteTitleInput" placeholder="Enter headline...">
-        <textarea id="noteInput" placeholder="Enter note..."></textarea>
-        <button onclick="saveNote()">Save</button>
-    </div>
+<!-- Редактор заметок -->
+<div class="note-editor">
+    <input type="text" id="noteTitleInput" placeholder="Введите заголовок...">
+    <textarea id="noteInput" placeholder="Введите текст заметки..."></textarea>
+    <button onclick="saveNote()" class="btn">Сохранить</button>
+</div>
 
-    <!-- Просмотр заметки -->
-    <div class="note-view">
-        <h2 id="noteViewTitle">Headline</h2>
-        <p id="noteViewContent">The content of the note will be displayed here...</p>
-        <button onclick="editNote()">Edit</button>
-    </div>
+<!-- Просмотр заметки -->
+<div class="note-view">
+    <h2 id="noteViewTitle">Заголовок</h2>
+    <p id="noteViewContent">Текст заметки будет отображаться здесь...</p>
+    <button onclick="editNote()" class="btn">Редактировать</button>
+</div>
 
-    <!-- Список заметок -->
-    <ul class="note-list" id="noteList"></ul>
+<!-- Список заметок -->
+<ul class="note-list" id="noteList"></ul>
 
-    <script>
-        let notes = [];
-        let currentNoteId = null;
+<script>
+    let notes = [];
+    let currentNoteId = null;
 
-        const noteTitleInput = document.getElementById('noteTitleInput');
-        const noteInput = document.getElementById('noteInput');
-        const noteList = document.getElementById('noteList');
-        const noteViewTitle = document.getElementById('noteViewTitle');
-        const noteViewContent = document.getElementById('noteViewContent');
-        const noteEditor = document.querySelector('.note-editor');
-        const noteView = document.querySelector('.note-view');
-        const searchInput = document.getElementById('searchInput');
+    const noteTitleInput = document.getElementById('noteTitleInput');
+    const noteInput = document.getElementById('noteInput');
+    const noteList = document.getElementById('noteList');
+    const noteViewTitle = document.getElementById('noteViewTitle');
+    const noteViewContent = document.getElementById('noteViewContent');
+    const noteEditor = document.querySelector('.note-editor');
+    const noteView = document.querySelector('.note-view');
+    const searchInput = document.getElementById('searchInput');
 
-        // Загрузка заметок из localStorage
-        document.addEventListener('DOMContentLoaded', () => {
-            const storedNotes = localStorage.getItem('notes');
-            if (storedNotes) {
-                notes = JSON.parse(storedNotes);
-            }
-            renderNotes();
+    document.addEventListener('DOMContentLoaded', () => {
+        const storedNotes = localStorage.getItem('notes');
+        if (storedNotes) notes = JSON.parse(storedNotes);
+        renderNotes();
+    });
+
+    searchInput.addEventListener('input', renderNotes);
+
+    function createNewNote() {
+        currentNoteId = null;
+        noteTitleInput.value = '';
+        noteInput.value = '';
+        noteEditor.style.display = 'block';
+        noteView.style.display = 'none';
+    }
+
+    function saveNote() {
+        const noteTitle = noteTitleInput.value.trim() || 'Без заголовка';
+        const noteText = noteInput.value.trim();
+        if (noteText === '') return;
+
+        if (currentNoteId === null) {
+            const newNote = {
+                id: Date.now(),
+                title: noteTitle,
+                text: noteText,
+                pinned: false,
+            };
+            notes.push(newNote);
+        } else {
+            const note = notes.find(note => note.id === currentNoteId);
+            note.title = noteTitle;
+            note.text = noteText;
+        }
+
+        saveNotesToLocalStorage();
+        noteEditor.style.display = 'none';
+        renderNotes();
+    }
+
+    function deleteNote(id) {
+        notes = notes.filter(note => note.id !== id);
+        saveNotesToLocalStorage();
+        renderNotes();
+    }
+
+    function openNote(id) {
+        currentNoteId = id;
+        const note = notes.find(note => note.id === id);
+        noteViewTitle.innerText = note.title;
+        noteViewContent.innerText = note.text;
+        noteEditor.style.display = 'none';
+        noteView.style.display = 'block';
+    }
+
+    function editNote() {
+        const note = notes.find(note => note.id === currentNoteId);
+        noteTitleInput.value = note.title;
+        noteInput.value = note.text;
+        noteEditor.style.display = 'block';
+        noteView.style.display = 'none';
+    }
+
+    function pinNote(id) {
+        const note = notes.find(note => note.id === id);
+        note.pinned = !note.pinned;
+        saveNotesToLocalStorage();
+        renderNotes();
+    }
+
+    function toggleNoteMenu(noteId) {
+        const menu = document.getElementById(`menu-${noteId}`);
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function renderNotes() {
+    const searchTerm = searchInput.value.toLowerCase();
+    noteList.innerHTML = '';
+
+    // Сортируем заметки так, чтобы закрепленные были первыми
+    const sortedNotes = notes.sort((a, b) => {
+        if (a.pinned === b.pinned) return 0; // Если оба одинаково закреплены, оставляем их местоположение
+        return a.pinned ? -1 : 1; // Закрепленные заметки идут первыми
+    });
+
+    sortedNotes
+        .filter(note => note.title.toLowerCase().includes(searchTerm) || note.text.toLowerCase().includes(searchTerm))
+        .forEach(note => {
+            const pinnedIcon = note.pinned ? '📌' : ''; // Значок закопки
+            const pinButtonText = note.pinned ? 'Открепить' : 'Закрепить'; // Текст кнопки
+            const pinIcon = note.pinned ? '❌' : '📌'; // Иконка для кнопки закрепить/открепить
+            
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <div class="note-text" onclick="openNote(${note.id})">${pinnedIcon} ${note.title}</div>
+                <div class="menu">
+                    <button class="menu-button" onclick="toggleNoteMenu(${note.id})">⋮</button>
+                    <div class="menu-options" id="menu-${note.id}">
+                        <button onclick="editNote()">✏️Ред.</button>
+                        <button onclick="deleteNote(${note.id})" style="color: red;">🗑️Удалить</button>
+                        <button onclick="pinNote(${note.id})">${pinIcon} ${pinButtonText}</button>
+                    </div>
+                </div>
+            `;
+            noteList.appendChild(li);
         });
 
-        searchInput.addEventListener('input', renderNotes);
+    noteEditor.style.display = 'none';
+    noteView.style.display = 'none';
+}
 
-        function createNewNote() {
-            currentNoteId = null; // Обнуляем ID текущей заметки
-            noteTitleInput.value = '';
-            noteInput.value = '';
-            noteEditor.style.display = 'block';
-            noteView.style.display = 'none';
-        }
+    function saveNotesToLocalStorage() {
+        localStorage.setItem('notes', JSON.stringify(notes));
+    }
 
-        function saveNote() {
-            const noteTitle = noteTitleInput.value.trim() || 'Без заголовка';
-            const noteText = noteInput.value.trim();
-            if (noteText === '') return;
-
-            if (currentNoteId === null) {
-                const newNote = {
-                    id: Date.now(),
-                    title: noteTitle,
-                    text: noteText,
-                };
-                notes.push(newNote);
-            } else {
-                const note = notes.find(note => note.id === currentNoteId);
-                note.title = noteTitle;
-                note.text = noteText;
-            }
-
-            saveNotesToLocalStorage();
-            noteEditor.style.display = 'none';
-            renderNotes();
-        }
-
-        function deleteNote(id) {
-            notes = notes.filter(note => note.id !== id);
-            saveNotesToLocalStorage();
-            renderNotes();
-        }
-
-        function openNote(id) {
-            currentNoteId = id;
-            const note = notes.find(note => note.id === id);
-            noteViewTitle.innerText = note.title;
-            noteViewContent.innerText = note.text;
-            noteEditor.style.display = 'none';
-            noteView.style.display = 'block';
-        }
-
-        function editNote() {
-            const note = notes.find(note => note.id === currentNoteId);
-            noteTitleInput.value = note.title;
-            noteInput.value = note.text;
-            noteEditor.style.display = 'block';
-            noteView.style.display = 'none';
-        }
-
-        function renderNotes() {
-            const searchTerm = searchInput.value.toLowerCase();
-            noteList.innerHTML = '';
-
-            notes
-                .filter(note => note.title.toLowerCase().includes(searchTerm) || note.text.toLowerCase().includes(searchTerm))
-                .forEach(note => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <div class="note-text" onclick="openNote(${note.id})">${note.title}</div>
-                        <button onclick="deleteNote(${note.id})">Удалить</button>
-                    `;
-                    noteList.appendChild(li);
-                });
-
-            noteEditor.style.display = 'none';
-            noteView.style.display = 'none';
-        }
-
-        function saveNotesToLocalStorage() {
-            localStorage.setItem('notes', JSON.stringify(notes));
-        }
-
-        renderNotes();
-    </script>
+    renderNotes();
+</script>
 
 </body>
 </html>
