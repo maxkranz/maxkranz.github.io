@@ -202,16 +202,16 @@
 
 <!-- Редактор заметок -->
 <div class="note-editor">
-    <input type="text" id="noteTitleInput" placeholder="Введите заголовок...">
-    <textarea id="noteInput" placeholder="Введите текст заметки..."></textarea>
-    <button onclick="saveNote()" class="btn">Сохранить</button>
+    <input type="text" id="noteTitleInput" placeholder="Enter headline...">
+    <textarea id="noteInput" placeholder="Enter text..."></textarea>
+    <button onclick="saveNote()" class="btn">Save</button>
 </div>
 
 <!-- Просмотр заметки -->
 <div class="note-view">
-    <h2 id="noteViewTitle">Заголовок</h2>
-    <p id="noteViewContent">Текст заметки будет отображаться здесь...</p>
-    <button onclick="editNote()" class="btn">Редактировать</button>
+    <h2 id="noteViewTitle">Headline</h2>
+    <p id="noteViewContent">Note text will shown here...</p>
+    <button onclick="editNote()" class="btn">Edit</button>
 </div>
 
 <!-- Список заметок -->
@@ -319,7 +319,7 @@
         .filter(note => note.title.toLowerCase().includes(searchTerm) || note.text.toLowerCase().includes(searchTerm))
         .forEach(note => {
             const pinnedIcon = note.pinned ? '📌' : ''; // Значок закопки
-            const pinButtonText = note.pinned ? 'Открепить' : 'Закрепить'; // Текст кнопки
+            const pinButtonText = note.pinned ? 'Unscramble' : 'Bookmark'; // Текст кнопки
             const pinIcon = note.pinned ? '❌' : '📌'; // Иконка для кнопки закрепить/открепить
             
             const li = document.createElement('li');
@@ -328,8 +328,8 @@
                 <div class="menu">
                     <button class="menu-button" onclick="toggleNoteMenu(${note.id})">⋮</button>
                     <div class="menu-options" id="menu-${note.id}">
-                        <button onclick="editNote()">✏️Ред.</button>
-                        <button onclick="deleteNote(${note.id})" style="color: red;">🗑️Удалить</button>
+                        <button onclick="editNote()">✏️Edit</button>
+                        <button onclick="deleteNote(${note.id})" style="color: red;">🗑️Delete</button>
                         <button onclick="pinNote(${note.id})">${pinIcon} ${pinButtonText}</button>
                     </div>
                 </div>
