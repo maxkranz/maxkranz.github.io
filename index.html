@@ -14,8 +14,8 @@
         }
 
         body {
-            color: #333;
-            background-color: #f8f8f8;
+            color: #f8f8f8;
+            background-color: #303030;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -67,7 +67,7 @@
             padding: 0 20px;
             text-align: center;
             font-size: 20px;
-            color: #555;
+            color: #f8f8f8;
             max-width: 800px;
             line-height: 1.5;
         }
@@ -274,15 +274,6 @@
             font-family: 'Arial', sans-serif;
         }
 
-        body {
-            color: #333;
-            background-color: #f8f8f8;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
         header {
             width: 100%;
             padding: 30px 20px;
@@ -309,6 +300,10 @@
             padding: 20px;
             width: 100%;
             max-width: 1200px;
+            color: #f8f8f8;
+        }
+        a{
+            color: #f8f8f8;
         }
 
         .project {
@@ -317,6 +312,7 @@
             width: 150px;
             height: 150px;
             border-radius: 10px;
+            color: #f8f8f8;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -346,9 +342,12 @@
         .project.active .project-description {
             bottom: 0;
         }
+        footer {
+            color: white;
+        }
 
         .project a {
-            color: black;
+            color: #f8f8f8;
             text-decoration: none;
             z-index: 1;
         }
@@ -385,7 +384,7 @@
         <a href="https://maxkranz.github.io/about" style="margin-right:300px">About</a>
     </nav>
 
-    <div class="intro">
+    <div class="intro" style="color: #f8f8f8;">
       I am Max Kranz! I am creating games and web apps! I would be happy to have you use my apps. Below are my projects!
     </div>
 
@@ -435,7 +434,7 @@
     </div>
 
     <div class="dropdown-container">
-        <div class="dropdown" onclick="toggleDropdown('apps')">Apps</div>
+        <div class="dropdown" onclick="toggleDropdown('apps')" style="color: white;">Apps</div>
         <div class="dropdown-content" id="apps">
             <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
             <a href="https://maxkranz.github.io/amanda">Amanda Search Engine</a>
@@ -445,7 +444,7 @@
             <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
         </div>
         <div class="dropdown-container">
-        <div class="dropdown" onclick="toggleDropdown('games')">Games</div>
+        <div class="dropdown" onclick="toggleDropdown('games')" style="color: white;">Games</div>
         <div class="dropdown-content" id="games">
             <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
              <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
@@ -455,7 +454,7 @@
             
         </div>
 
-    <footer>© Max Kranz, Inc. All rights reserved.<br><a href="https://maxkranz.github.io/ru" STYLE="color: BLACK;
+    <footer>© Max Kranz, Inc. All rights reserved.<br><a href="https://maxkranz.github.io/ru" STYLE="color: #f8f8f8;
                 text-decoration: none;
                 font-size: 15px;
              
