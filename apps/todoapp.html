@@ -27,39 +27,37 @@
             padding: 20px;
             width: 400px;
         }
-        /* Обычные стили остаются без изменений */
 
-@media (max-width: 600px) {
-    h1 {
-        font-size: 28px;
-    }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
 
-    .todo-container {
-        width: 90%; /* Увеличиваем ширину контейнера для мобильных устройств */
-        padding: 15px;
-    }
+            .todo-container {
+                width: 90%;
+                padding: 15px;
+            }
 
-    input[type="text"] {
-        width: 70%; /* Уменьшаем ширину поля ввода на мобильных устройствах */
-        padding: 8px;
-        font-size: 14px;
-    }
+            input[type="text"] {
+                width: 70%;
+                padding: 8px;
+                font-size: 14px;
+            }
 
-    button {
-        padding: 8px 12px; /* Уменьшаем размер кнопок */
-        font-size: 14px;
-    }
+            button {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
 
-    li {
-        padding: 12px; /* Уменьшаем внутренние отступы для элементов списка */
-        font-size: 14px;
-    }
+            li {
+                padding: 12px;
+                font-size: 14px;
+            }
 
-    li button {
-        font-size: 14px; /* Уменьшаем размер кнопок удаления */
-    }
-}
-
+            li button {
+                font-size: 14px;
+            }
+        }
 
         .todo-header {
             display: flex;
@@ -91,6 +89,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
         h1 {
             margin-bottom: 20px;
             font-size: 36px;
@@ -136,87 +135,204 @@
 
         li button {
             background-color: transparent;
-            color: #dc3545;
             border: none;
             font-size: 16px;
             cursor: pointer;
-            transition: color 0.3s ease;
+            margin-left: 10px;
         }
 
         li button:hover {
             color: #c82333;
         }
+
+        li .delete-btn {
+            color: #dc3545;
+        }
+
+        li .delete-btn:hover {
+            color: #c82333;
+        }
+
+        li .check-btn {
+            color: #28a745;
+        }
+
+        li .check-btn:hover {
+            color: #218838;
+        }
+
+        .completed-folder {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .completed-tasks {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .completed-task {
+            background-color: #d4edda;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body{
+            background-color: #303030;
+            
+        }
     </style>
 </head>
 <body>
-    <h1>To Do App</h1>
+    <h1 style="color: deepskyblue;">To Do App</h1>
 
-<div class="todo-container">
-    <div class="todo-header">
-        <input type="text" id="todoInput" placeholder="Enter task...">
-        <button onclick="addTodo()">Add</button>
+    <div class="todo-container">
+        <div class="todo-header">
+            <input type="text" id="todoInput" placeholder="Enter task...">
+            <button onclick="addTodo()">Add</button>
+        </div>
+        <ul id="todoList"></ul>
+
+        <div id="completedFolder" class="completed-folder" style="display: none;" onclick="toggleCompletedTasks()">
+            <span>Completed Tasks</span>
+            <span>📂</span>
+        </div>
+        <ul id="completedTasks" class="completed-tasks"></ul>
     </div>
-    <ul id="todoList"></ul>
-</div>
 
-<script>
-    let todos = [];
+    <script>
+        let todos = [];
+        let completedTodos = [];
 
-    document.addEventListener("DOMContentLoaded", () => {
-        todos = JSON.parse(localStorage.getItem('todos')) || [];
-        renderTodos();
+        document.addEventListener("DOMContentLoaded", () => {
+            todos = JSON.parse(localStorage.getItem('todos')) || [];
+            completedTodos = JSON.parse(localStorage.getItem('completedTodos')) || [];
+            renderTodos();
+            renderCompletedTodos();
 
-        // Добавляем обработчик для нажатия клавиши Enter
-        document.getElementById('todoInput').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                addTodo();
+            document.getElementById('todoInput').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    addTodo();
+                }
+            });
+        });
+
+        function addTodo() {
+    const inputField = document.getElementById('todoInput');
+    const todoText = inputField.value.trim(); // Проверяем, есть ли текст
+    if (todoText === '') return; // Не добавляем пустую задачу
+
+    const newTodo = { text: todoText, completed: false }; // Создаем новую задачу
+    todos.push(newTodo); // Добавляем ее в список задач
+    saveAndRenderTodos(); // Сохраняем и обновляем список
+
+    inputField.value = ''; // Очищаем поле ввода после добавления
+}
+
+
+        function toggleTodo(index) {
+            todos[index].completed = !todos[index].completed;
+            saveAndRenderTodos();
+        }
+
+        function deleteTodo(index) {
+            todos.splice(index, 1);
+            saveAndRenderTodos();
+        }
+
+        function completeTodo(index) {
+            const completedTask = todos.splice(index, 1)[0];
+            completedTodos.push(completedTask);
+            saveAndRenderTodos();
+            saveAndRenderCompletedTodos();
+        }
+
+        function deleteCompletedTask(index) {
+            completedTodos.splice(index, 1);
+            saveAndRenderCompletedTodos();
+        }
+
+        function restoreCompletedTask(index) {
+            const restoredTask = completedTodos.splice(index, 1)[0];
+            todos.push(restoredTask);
+            saveAndRenderTodos();
+            saveAndRenderCompletedTodos();
+        }
+
+        function toggleCompletedTasks() {
+            const completedTasks = document.getElementById('completedTasks');
+            completedTasks.style.display = completedTasks.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function deleteCompletedFolder() {
+            if (confirm("Are you sure you want to delete the Completed Tasks folder?")) {
+                completedTodos = [];
+                saveAndRenderCompletedTodos();
             }
-        });
-    });
+        }
 
-    function addTodo() {
-        const inputField = document.getElementById('todoInput');
-        const todoText = inputField.value.trim();
-        if (todoText === '') return;
+        function saveAndRenderTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+            renderTodos();
+        }
 
-        const newTodo = { text: todoText, completed: false };
-        todos.push(newTodo);
-        saveAndRenderTodos();
+        function saveAndRenderCompletedTodos() {
+            localStorage.setItem('completedTodos', JSON.stringify(completedTodos));
+            renderCompletedTodos();
+        }
 
-        inputField.value = '';
-    }
+        function renderTodos() {
+            const todoList = document.getElementById('todoList');
+            todoList.innerHTML = '';
 
-    function toggleTodo(index) {
-        todos[index].completed = !todos[index].completed;
-        saveAndRenderTodos();
-    }
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.className = todo.completed ? 'completed' : '';
+                li.innerHTML = `
+                    <span onclick="toggleTodo(${index})">${todo.text}</span>
+                    <div>
+                        <button class="check-btn" onclick="completeTodo(${index})">✔️</button>
+                        <button class="delete-btn" onclick="deleteTodo(${index})">🗑️</button>
+                    </div>
+                `;
+                todoList.appendChild(li);
+            });
+        }
 
-    function deleteTodo(index) {
-        todos.splice(index, 1);
-        saveAndRenderTodos();
-    }
+        function renderCompletedTodos() {
+            const completedFolder = document.getElementById('completedFolder');
+            const completedTasks = document.getElementById('completedTasks');
+            completedTasks.innerHTML = '';
 
-    function saveAndRenderTodos() {
-        localStorage.setItem('todos', JSON.stringify(todos));
-        renderTodos();
-    }
+            if (completedTodos.length > 0) {
+                completedFolder.style.display = 'flex';
 
-    function renderTodos() {
-        const todoList = document.getElementById('todoList');
-        todoList.innerHTML = '';
-
-        todos.forEach((todo, index) => {
-            const li = document.createElement('li');
-            li.className = todo.completed ? 'completed' : '';
-            li.innerHTML = `
-                <span onclick="toggleTodo(${index})">${todo.text}</span>
-                <button onclick="deleteTodo(${index})">Delete</button>
-            `;
-            todoList.appendChild(li);
-        });
-    }
-</script>
-
-
+                completedTodos.forEach((todo, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'completed-task';
+                    li.innerHTML = `
+                        <span>✔️ ${todo.text}</span>
+                        <div>
+                            <button class="delete-btn" onclick="deleteCompletedTask(${index})">🗑️</button>
+                            <button class="check-btn" onclick="restoreCompletedTask(${index})">↩️</button>
+                        </div>
+                    `;
+                    completedTasks.appendChild(li);
+                });
+            } else {
+                completedFolder.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
