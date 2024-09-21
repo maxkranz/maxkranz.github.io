@@ -361,6 +361,15 @@
                 width: 100%;
             }
         }
+
+
+        .auth-info {
+            color: white;
+            margin-right: 20px;
+        }
+        footer a{
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
@@ -379,90 +388,87 @@
     </div>
 </header>
 
-    <nav id="navMenu">
-        <a href="https://maxkranz.github.io">Home</a>
-        <a href="https://maxkranz.github.io/about" style="margin-right:300px">About</a>
-    </nav>
-
     <div class="intro" style="color: #f8f8f8;">
       I am Max Kranz! I am creating games and web apps! I would be happy to have you use my apps. Below are my projects!
     </div>
 
-    <div class="projects-grid">
-        <div class="project">
-            <a href="https://maxkranz.github.io/amanda">Amanda</a>
-            <div class="project-description">Search the Internet.</div>
-        </div>
-        <div class="project">
-            <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
-            <div class="project-description">Organize your tasks efficiently.</div>
-        </div>
-            
-        <div class="project">
-            <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
-            <div class="project-description">Can you guess the number?</div>
-        </div>
-        <div class="project">
-            <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
-            <div class="project-description">Enter your thoughts here.</div>
-        </div>
-        <div class="project">
-            <a href="https://maxkranz.github.io/apps/timer">Timer</a>
-            <div class="project-description">Check time.</div>
-        </div>
-        <div class="project">
-            <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
-            <div class="project-description">Get a quick quote.</div>
-        </div>
+  
+      <div class="projects-grid">
           <div class="project">
-            <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
-            <div class="project-description">Calculate.</div>
-        </div>
-        <div class="project">
-            <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
-            <div class="project-description">Lead Dino. Keep him safe.</div>
-        </div>
-        <div class="project">
-            <a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a>
-            <div class="project-description">Can you free the mouse?</div>
-        </div>
-        <div class="project">
-            <a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe</a>
-            <div class="project-description">Play Tic-Tac-Toe.</div>
-        </div>
-        </div>
-    </div>
+              <a href="https://maxkranz.github.io/amanda">Amanda</a>
+              <div class="project-description">Search the Internet.</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
+              <div class="project-description">Organize your tasks efficiently.</div>
+          </div>
+              
+          <div class="project">
+              <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
+              <div class="project-description">Can you guess the number?</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
+              <div class="project-description">Enter your thoughts here.</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/apps/timer">Timer</a>
+              <div class="project-description">Check time.</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
+              <div class="project-description">Get a quick quote.</div>
+          </div>
+            <div class="project">
+              <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
+              <div class="project-description">Calculate.</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
+              <div class="project-description">Lead Dino. Keep him safe.</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a>
+              <div class="project-description">Can you free the mouse?</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe</a>
+              <div class="project-description">Play Tic-Tac-Toe.</div>
+          </div>
+          </div>
+      </div>
+  
+      <div class="dropdown-container">
+          <div class="dropdown" onclick="toggleDropdown('apps')" style="color: white;">Apps</div>
+          <div class="dropdown-content" id="apps">
+              <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
+              <a href="https://maxkranz.github.io/amanda">Amanda Search Engine</a>
+              <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
+              <a href="https://maxkranz.github.io/apps/timer">Timer</a>
+              <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
+              <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
+          </div>
+          <div class="dropdown-container">
+          <div class="dropdown" onclick="toggleDropdown('games')" style="color: white;">Games</div>
+          <div class="dropdown-content" id="games">
+              <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
+               <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
+               <a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a>
+               <a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe PvP</a>
+              
+              
+          </div>
 
-    <div class="dropdown-container">
-        <div class="dropdown" onclick="toggleDropdown('apps')" style="color: white;">Apps</div>
-        <div class="dropdown-content" id="apps">
-            <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
-            <a href="https://maxkranz.github.io/amanda">Amanda Search Engine</a>
-            <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
-            <a href="https://maxkranz.github.io/apps/timer">Timer</a>
-            <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
-            <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
-        </div>
-        <div class="dropdown-container">
-        <div class="dropdown" onclick="toggleDropdown('games')" style="color: white;">Games</div>
-        <div class="dropdown-content" id="games">
-            <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
-             <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
-             <a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a>
-             <a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe PvP</a>
-            
-            
-        </div>
-
-    <footer>© Max Kranz, Inc. All rights reserved.<br><a href="https://maxkranz.github.io/ru" STYLE="color: #f8f8f8;
+    <footer>© Max Kranz, Inc. All rights reserved.<br><br><a href="https://maxkranz.github.io/ru" STYLE="color: #f8f8f8;
                 text-decoration: none;
                 font-size: 15px;
-             
-                transition: color 0.3s ease;">RU</a></footer>
-                
-    
+                transition: color 0.3s ease;">RU</a><a href="https://maxkranz.github.io/callback" STYLE="color: #f8f8f8;
+                text-decoration: none;
+                font-size: 15px;
+                transition: color 0.3s ease;">Account</a></footer>
+
     <script>
-        function toggleDropdown(id) {
+              function toggleDropdown(id) {
             const content = document.getElementById(id);
             content.style.display = content.style.display === 'block' ? 'none' : 'block';
         }
@@ -480,6 +486,35 @@
             description.style.visibility = description.style.visibility === 'visible' ? 'hidden' : 'visible';
         });
     });
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const clientId = 'Ov23liFQzRy9qBYLo4Pe';
+            const redirectUri = 'https://maxkranz.github.io/'; // Укажи свой домен и URL
+            const scope = 'read:user';
+            const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+            window.location.href = authUrl;
+        });
+
+        // Проверяем наличие токена
+        window.onload = () => {
+            const token = localStorage.getItem('github_access_token');
+            const authInfo = document.getElementById('auth-info');
+
+            if (token) {
+                // Если токен есть, можно получить данные о пользователе
+                fetch('https://api.github.com/user', {
+                    headers: {
+                        Authorization: `token ${token}`
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    authInfo.innerHTML = `Привет, ${data.login}`;
+                });
+            }
+        }
     </script>
 </body>
 </html>
+
+
+

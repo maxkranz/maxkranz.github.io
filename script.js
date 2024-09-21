@@ -1,9 +1,9 @@
+let nam = prompt("What is your name?");
+const names = ["Maxim", "Max"];
 
-    let nam = prompt ('What is your name?');
-    if ("Max"==nam){
-    alert("We have the same name! Horray!")
-    }
-    
-    else {
-        alert("We haven't the same names")
-    }
+if (names.includes(nam)){
+    alert("we have the same names!")
+}
+else{
+    alert("we havent the same names!")
+}
