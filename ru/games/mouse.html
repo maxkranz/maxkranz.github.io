@@ -260,6 +260,16 @@
                 link.click();
             });
         });
+        window.onload = () => {
+    const savedData = localStorage.getItem('sync_data');
+    if (savedData) {
+        const syncData = JSON.parse(savedData);
+        // Данные доступны для использования в любом приложении
+        console.log(`Синхронизированные данные: ${syncData.username}, ${syncData.data}`);
+        // Можно использовать эти данные как угодно в под-приложении
+    }
+}
+
     </script>
 </body>
 </html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Синхронизация данных - Max Kranz</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #282c34; color: #f8f8f8; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .container {
+            background-color: #444c56;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: DeepSkyBlue;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        button {
+            background-color: DeepSkyBlue;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .link {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px;
+            display: block;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+        .link:hover {
+            background-color: #003f8a;
+        }
+        .savedData, .syncLink {
+            margin-top: 20px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Синхронизация данных</h1>
+    
+    <input type="text" id="username" placeholder="Введите ваше имя" />
+    <textarea id="data" placeholder="Введите данные для синхронизации" rows="4"></textarea>
+    <button onclick="saveData()">Сохранить данные</button>
+
+    <div class="savedData" id="savedData"></div>
+    <div class="syncLink" id="syncLink"></div>
+
+    <h3>Синхронизировать данные с других устройств:</h3>
+    <input type="text" id="syncCode" placeholder="Введите код синхронизации" />
+    <button onclick="loadData()">Загрузить данные</button>
+    <h3>Код для синхронизации:</h3>
+    <div id="syncCodeLink"></div>
+</div>
+
+<script>
+    function saveData() {
+        const username = document.getElementById('username').value;
+        const data = document.getElementById('data').value;
+
+        if (!username || !data) {
+            alert('Пожалуйста, введите имя и данные для синхронизации!');
+            return;
+        }
+
+        const syncData = {
+            username: username,
+            data: data
+        };
+
+        localStorage.setItem('sync_data', JSON.stringify(syncData));
+
+        const syncLink = `https://maxkranz.github.io/sync?sync=${btoa(JSON.stringify(syncData))}`;
+        document.getElementById('syncLink').innerHTML = `<strong>Ссылка для синхронизации:</strong> <br><a href="${syncLink}" class="link" onclick="copyToClipboard('${syncLink}')">${syncLink}</a>`;
+
+        document.getElementById('savedData').innerHTML = `<strong>Сохраненные данные:</strong><br>Пользователь: ${username}<br>Данные: ${data}`;
+    }
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('Ссылка для синхронизации скопирована в буфер обмена!');
+        }).catch(err => {
+            console.error('Ошибка при копировании: ', err);
+        });
+    }
+
+    function loadData() {
+        const syncCode = document.getElementById('syncCode').value;
+
+        if (!syncCode) {
+            alert('Введите код синхронизации!');
+            return;
+        }
+
+        try {
+            const syncData = JSON.parse(atob(syncCode.split('sync=')[1]));
+            localStorage.setItem('sync_data', JSON.stringify(syncData));
+
+            alert(`Данные для ${syncData.username} успешно загружены!`);
+            document.getElementById('savedData').innerHTML = `<strong>Сохраненные данные:</strong><br>Пользователь: ${syncData.username}<br>Данные: ${syncData.data}`;
+        } catch (e) {
+            alert('Неверный код синхронизации.');
+        }
+    }
+
+    window.onload = () => {
+        const savedData = localStorage.getItem('sync_data');
+        if (savedData) {
+            const syncData = JSON.parse(savedData);
+            document.getElementById('savedData').innerHTML = `<strong>Сохраненные данные:</strong><br>Пользователь: ${syncData.username}<br>Данные: ${syncData.data}`;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const syncCode = urlParams.get('sync');
+        if (syncCode) {
+            try {
+                const syncData = JSON.parse(atob(syncCode));
+                localStorage.setItem('sync_data', JSON.stringify(syncData));
+
+                alert(`Данные для ${syncData.username} успешно загружены!`);
+                document.getElementById('savedData').innerHTML = `<strong>Сохраненные данные:</strong><br>Пользователь: ${syncData.username}<br>Данные: ${syncData.data}`;
+            } catch (e) {
+                alert('Ошибка при загрузке данных из ссылки.');
+            }
+        }
+    }
+</script>
+</body>
+</html>

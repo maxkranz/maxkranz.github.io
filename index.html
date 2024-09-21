@@ -462,7 +462,7 @@
     <footer>© Max Kranz, Inc. All rights reserved.<br><br><a href="https://maxkranz.github.io/ru" STYLE="color: #f8f8f8;
                 text-decoration: none;
                 font-size: 15px;
-                transition: color 0.3s ease;">RU</a><a href="https://maxkranz.github.io/callback" STYLE="color: #f8f8f8;
+                transition: color 0.3s ease;">RU</a><a href="https://maxkranz.github.io/sync" STYLE="color: #f8f8f8;
                 text-decoration: none;
                 font-size: 15px;
                 transition: color 0.3s ease;">Account</a></footer>
@@ -486,32 +486,7 @@
             description.style.visibility = description.style.visibility === 'visible' ? 'hidden' : 'visible';
         });
     });
-        document.getElementById('login-btn').addEventListener('click', () => {
-            const clientId = 'Ov23liFQzRy9qBYLo4Pe';
-            const redirectUri = 'https://maxkranz.github.io/'; // Укажи свой домен и URL
-            const scope = 'read:user';
-            const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
-            window.location.href = authUrl;
-        });
-
-        // Проверяем наличие токена
-        window.onload = () => {
-            const token = localStorage.getItem('github_access_token');
-            const authInfo = document.getElementById('auth-info');
-
-            if (token) {
-                // Если токен есть, можно получить данные о пользователе
-                fetch('https://api.github.com/user', {
-                    headers: {
-                        Authorization: `token ${token}`
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    authInfo.innerHTML = `Привет, ${data.login}`;
-                });
-            }
-        }
+        
     </script>
 </body>
 </html>
