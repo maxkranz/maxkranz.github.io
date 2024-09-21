@@ -7,36 +7,18 @@
 </head>
 <body>
 <script>
-    // Получаем код из URL
+    // Получаем access_token из URL
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
+    const accessToken = urlParams.get('access_token');
 
-    if (code) {
-        // Отправляем запрос на сервер для обмена кода на токен
-        fetch('https://github.com/login/oauth/access_token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-                client_id: 'Ov23liFQzRy9qBYLo4Pe',
-                client_secret: '0cf1d3b2da129f7ee16a62728c2299a80722298c',
-                code: code
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            const accessToken = data.access_token;
-            if (accessToken) {
-                // Сохраняем токен в localStorage
-                localStorage.setItem('github_access_token', accessToken);
+    if (accessToken) {
+        // Сохраняем токен в localStorage
+        localStorage.setItem('github_access_token', accessToken);
 
-                // Перенаправляем на главную страницу
-                window.location.href = '/';
-            }
-        })
-        .catch(error => console.error('Ошибка при получении токена:', error));
+        // Перенаправляем на главную страницу
+        window.location.href = 'https://maxkranz.github.io';
+    } else {
+        console.error('Токен не найден');
     }
 </script>
 </body>
