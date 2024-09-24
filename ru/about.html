@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обо мне - Max Kranz</title>
-    <link rel="shortcut icon" href="html.png">
+    <title>About Me</title>
+    <link rel="shortcut icon" href="img/html.png">
     <style>
-         * {
+              * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -26,14 +26,27 @@
             width: 100%;
             padding: 30px 20px;
             background-color: DeepSkyBlue;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             position: relative;
+        }
+      header div:nth-child(2) {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+        .nav-links {
+            display: none;
         }
 
         .burger-menu {
-            display: block;
+            display: none;
             position: absolute;
             top: 25px;
             right: 20px;
@@ -49,7 +62,310 @@
             transition: 0.4s;
         }
 
+        .intro {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project {
+            background-color: DeepSkyBlue;
+            padding: 30px;
+            width: 150px;
+    height: 150px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .project:hover {
+            background-color: #0056b3;
+        }
+
+        .project a {
+            color: #f8f8f8;
+            text-decoration: none;
+        }
+
+        .dropdown-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .dropdown {
+            background-color: DeepSkyBlue;
+            color: black;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown:hover {
+            background-color: #0056b3;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 5px 0;
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            color: #0056b3;
+        }
+
+        nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
+            background-color: DeepSkyBlue;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 9;
+            padding: 60px 20px;
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
+        }
+
+        nav.active {
+            display: block;
+            transform: translateX(0);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        nav a:hover {
+            color: #0056b3;
+        }
+
+        .burger-menu.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 5px);
+        }
+      .nav-links a {
+    padding: 100px 15px; /* Добавьте отступ сверху и снизу по 10px и слева и справа по 15px */
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+}
+
+
+        .burger-menu.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -5px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            width: 100%;
+            font-size: 14px;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: block;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+            }
+
+            .project {
+                font-size: 16px;
+                padding: 20px;
+            }
+
+            .intro {
+                font-size: 18px;
+                padding: 0 15px;
+            }
+
+            .dropdown-container {
+                max-width: 100%;
+            }
+        }
+      .burger-menu div {
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    margin: 2px 0; /* здесь можете изменить значение на 2px или меньше */
+    transition: 0.4s;
+}
+
+        @media (min-width: 769px) {
+            .nav-links {
+                display: block;
+            }
+
+            .nav-links a {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                margin-left: 20px;
+                transition: color 0.3s ease;
+            }
+
+            .nav-links a:hover {
+                color: #0056b3;
+            }
+
+            .burger-menu {
+                display: none;
+            }
+        }
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 30px 20px;
+            background-color: DeepSkyBlue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .intro {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project {
+            background-color: DeepSkyBlue;
+            padding: 30px;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        /* Эффект появления текста */
+        .project-description {
+            position: absolute;
+            bottom: -75%;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+            transition: bottom 0.3s ease;
+        }
+
+        .project:hover .project-description,
+        .project.active .project-description {
+            bottom: 0;
+        }
+
+        .project a {
+            color: #f8f8f8;
+            text-decoration: none;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .project-description {
+                font-size: 14px;
+            }
+
+            .project {
+                width: 100%;
+            }
+        }
+        body{
+            color: #f8f8f8;
+            background-color: #303030;
+        }
         .content {
+            margin-top: 50px;
             margin: 20px 0;
             padding: 20px;
             text-align: center;
@@ -68,133 +384,30 @@
             color: #333;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            width: 100%;
-            font-size: 14px;
-            color: #777;
-        }
-
-      .burger-menu {
-    display: none;
-    position: absolute;
-    top: 25px;
-    right: 20px;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.burger-menu div {
-    width: 30px;
-    height: 3px;
-    background-color: #fff;
-    margin: 5px 0;
-    transition: 0.4s;
-}
-
-.nav-menu {
-    display: none;
-    flex-direction: column;
-    background-color: DeepSkyBlue;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    width: 200px;
-    padding: 20px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 9;
-}
-
-.nav-menu a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    margin-bottom: 15px;
-    transition: color 0.3s ease;
-}
-
-.nav-menu a:hover {
-    color: #0056b3;
-}
-
-.nav-menu.active {
-    display: flex;
-}
-
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-    }
-
-    .burger-menu {
-        display: block;
-    }
-  .burger-menu.active div:nth-child(1) {
-    transform: rotate(-45deg) translate(-7px, 7px);
-}
-
-.burger-menu.active div:nth-child(2) {
-    opacity: 0;
-}
-
-.burger-menu.active div:nth-child(3) {
-    transform: rotate(45deg) translate(-7px, -7px);
-}
-}
-
-
-        @media (min-width: 769px) {
-            .nav-links {
-                display: block;
-            }
-
-            .nav-links a {
-                color: white;
-                text-decoration: none;
-                font-size: 20px;
-                margin-left: 20px;
-                transition: color 0.3s ease;
-            }
-
-            a:hover {
-                color: #0056b3;
-            }
-
-            .burger-menu {
-                display: none;
-            }
-        }
+       
 
     </style>
 </head>
 <body>
 
-<header>
-    <div class="nav-links">
-        <a href="https://maxkranz.github.io/ru" style="margin-left:300px">Главная</a>
-    </div>
-    <div>Обо мне</div>
-    <div class="nav-links">
-        <a href="https://maxkranz.github.io/ru/about" style="margin-right: 300px;">Обо мне</a>
-    </div>
-  <div class="burger-menu" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
-<nav id="navMenu" class="nav-menu">
-    <a href="https://maxkranz.github.io/ru">Главная</a>
-    <a href="https://maxkranz.github.io/ru/about">Обо Мне</a>
-</nav>
-
-  
-
-</header>
-
-
-
+    <header>
+        <div class="nav-links">
+            <a href="https://maxkranz.github.io/ru" style="margin-left:300px">Главная</a>
+        </div>
+        <div>Обо мне - Max Kranz</div>
+        <div class="nav-links">
+            <a href="https://maxkranz.github.io/ru/about" style="margin-right: 300px">Обо мне</a>
+        </div>
+        <div class="burger-menu" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="navMenu">
+            <a href="https://maxkranz.github.io/ru/">Главная</a>
+            <a href="https://maxkranz.github.io/ru/about">Обо мне</a>
+        </nav>
+    </header>
 
     <div class="content">
         <h2>Привет, я Макс Кранц!</h2>
@@ -202,24 +415,31 @@
         <p>Одним из моих достижений является написание книги под названием <strong>"История Джона Сандерса"</strong>. <a href="https://www.litres.ru/book/maks-kranc/istoriya-dzhona-sandersa-67846449/" style="text-decoration: none;">(Ее можно прочитать здесь).</a></p>
         <p>Мне нравится учиться новому и развивать свои навыки. В будущем я планирую создавать еще больше интересных проектов и делиться ими с миром!</p>
     </div>
+    
 
-    <footer>
-        © Max Kranz. Все права защищены. <br><a href="https://maxkranz.github.io" STYLE="color: BLACK;
+<footer style="color: #f8f8f8;">
+    © Max Kranz, Inc. Все права защищены. <br><a href="https://maxkranz.github.io/about" STYLE="color: #f8f8f8;
                 text-decoration: none;
                 font-size: 15px;
              
                 transition: color 0.3s ease;">EN</a>
-    </footer>
-     <script>
-           function toggleMenu() {
+</footer>
+
+<script>
+    function toggleDropdown(id) {
+        const content = document.getElementById(id);
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function toggleMenu() {
         const menu = document.getElementById('navMenu');
         const burger = document.querySelector('.burger-menu');
         menu.classList.toggle('active');
         burger.classList.toggle('active');
     }
-     </script>
-
-
+    
+</script>
 
 </body>
 </html>
+

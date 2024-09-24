@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Виселица</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+    background-color: #303030;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+#word {
+    font-size: 2em;
+    letter-spacing: 0.2em;
+    margin: 20px 0;
+}
+
+#message {
+    margin: 20px 0;
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+    width: 50px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#hangman {
+    font-size: 3em;
+    margin-top: 20px;
+}
+
+</style>
+<body>
+    <div class="container">
+        <h1>Виселица</h1>
+        <div id="game">
+            <div id="word"></div>
+            <div id="hangman"></div>
+            <div id="message"></div>
+            <input type="text" id="letterInput" maxlength="1" placeholder="Введите букву">
+            <button id="guessButton">Угадать</button>
+        </div>
+        <button id="restartButton" style="display:none;">Начать заново</button>
+    </div>
+    <script>const words = ["javascript", "programming", "hangman", "challenge", "developer"];
+        let selectedWord;
+        let guessedLetters;
+        let wrongGuesses;
+        let maxAttempts = 6;
+        
+        document.getElementById("guessButton").addEventListener("click", guessLetter);
+        document.getElementById("restartButton").addEventListener("click", startGame);
+        
+        function startGame() {
+            selectedWord = words[Math.floor(Math.random() * words.length)];
+            guessedLetters = [];
+            wrongGuesses = 0;
+            document.getElementById("word").textContent = "_ ".repeat(selectedWord.length).trim();
+            document.getElementById("message").textContent = "";
+            document.getElementById("hangman").textContent = "";
+            document.getElementById("letterInput").value = "";
+            document.getElementById("restartButton").style.display = "none";
+        }
+        
+        function guessLetter() {
+            const input = document.getElementById("letterInput").value.toLowerCase();
+            if (input && !guessedLetters.includes(input)) {
+                guessedLetters.push(input);
+                if (selectedWord.includes(input)) {
+                    updateWordDisplay();
+                } else {
+                    wrongGuesses++;
+                    updateHangman();
+                }
+                checkGameOver();
+            }
+            document.getElementById("letterInput").value = "";
+        }
+        
+        function updateWordDisplay() {
+            const displayWord = selectedWord.split('').map(letter => guessedLetters.includes(letter) ? letter : "_").join(" ");
+            document.getElementById("word").textContent = displayWord;
+        
+            if (!displayWord.includes("_")) {
+                document.getElementById("message").textContent = "Вы выиграли!";
+                document.getElementById("restartButton").style.display = "block";
+            }
+        }
+        
+        function updateHangman() {
+            const hangmanStages = [
+                "",
+                "😵", // 1
+                "😲", // 2
+                "😣", // 3
+                "😩", // 4
+                "😫", // 5
+                "😱"  // 6
+            ];
+            document.getElementById("hangman").textContent = hangmanStages[wrongGuesses];
+        
+            if (wrongGuesses === maxAttempts) {
+                document.getElementById("message").textContent = "Вы проиграли! Загаданное слово: " + selectedWord;
+                document.getElementById("restartButton").style.display = "block";
+            }
+        }
+        
+        // Начинаем игру при загрузке страницы
+        window.onload = startGame;
+        </script>
+</body>
+</html>
