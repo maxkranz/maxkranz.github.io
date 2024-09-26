@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра Виселица</title>
+    <link rel="shortcut icon" href="html.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #303030;
+            color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow-y: auto; /* Добавлено для прокрутки */
+        }
+
+        .game-container {
+            text-align: center;
+            max-width: 100%;
+            padding: 20px; /* Добавлен отступ, чтобы улучшить вид на мобильных устройствах */
+        }
+
+        h1 {
+            color: deepskyblue;
+        }
+
+        .word {
+            font-size: 2em;
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+        }
+
+        .explanation {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #f8f8f8;
+        }
+
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+            gap: 10px;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .keyboard button {
+            padding: 10px;
+            font-size: 1.2em;
+            background-color: #444;
+            color: #f8f8f8;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .keyboard button:hover {
+            background-color: deepskyblue;
+            color: #fff;
+        }
+
+        .keyboard button:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+        }
+        #keyboard{
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #hangman {
+            margin-top: 20px;
+        }
+
+        #hangman canvas {
+            background-color: #f8f8f8;
+        }
+
+        #new-game-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: deepskyblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #new-game-button:hover {
+            background-color: #007acc;
+            transform: scale(1.05);
+        }
+
+        #new-game-button:active {
+            transform: scale(0.98);
+        }
+
+        @media screen and (max-width: 600px) {
+            .word {
+                font-size: 1.5em;
+            }
+
+            body {
+                height: auto; /* Обеспечивает автоматическую высоту на мобильных устройствах */
+            }
+
+            .keyboard {
+                grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); /* Увеличена минимальная ширина кнопок для удобства */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Игра Виселица</h1><br><br>
+        <div id="explanation" class="explanation"></div>
+        <div id="word" class="word"></div>
+        <div class="keyboard" id="keyboard"></div>
+        <div id="hangman">
+            <canvas id="hangmanCanvas" width="200" height="200"></canvas>
+        </div>
+        <button id="new-game-button">Новая игра</button>
+    </div>
+
+    <script>
+        const wordsWithDefinitions = [
+            { word: 'javascript', definition: 'Язык программирования, используемый для веб-разработки.' },
+            { word: 'алгоритм', definition: 'Инструкция для какого-либо элемента/команды в коде.' },
+            { word: 'функция', definition: 'Блок кода, выполняющий определенную задачу.' },
+            { word: 'переменная', definition: 'Место для хранения данных, которое может изменяться.' },
+            { word: 'разработчик', definition: 'Человек, создающий программы или приложения.' },
+            { word: 'python', definition: 'Популярный язык программирования, известный своей простотой.' },
+            { word: 'базаданных', definition: 'Организованная коллекция данных, доступная электронно.' },
+            { word: 'react', definition: 'JavaScript библиотека для создания пользовательских интерфейсов.' },
+            { word: 'chatgpt', definition: 'Популярный AI от компании OpenAI.' },
+            { word: 'google', definition: 'Компания, известная своим поисковым сервисом.' },
+            { word: 'nodejs', definition: 'Инструмент для создания веб-приложений и серверных приложений.' },
+            { word: 'html', definition: 'Структура любого веб-сайта.' },
+            { word: 'css', definition: 'Стилизация любого веб-сайта.' },
+            { word: 'фронтенд', definition: 'Интерфейс веб-сайта.' },
+            { word: 'бэкенд', definition: 'Серверная часть программного обеспечения, управляющая логикой.' },
+            { word: 'фуллстэк', definition: 'Разработчик, который может работать как с фронтендом, так и с бэкендом.' },
+        ];
+
+        let currentGame;
+        let guessedLetters = [];
+        let mistakes = 0;
+        const maxMistakes = 6;
+
+        const wordContainer = document.getElementById('word');
+        const explanationContainer = document.getElementById('explanation');
+        const keyboardContainer = document.getElementById('keyboard');
+        const canvas = document.getElementById('hangmanCanvas');
+        const ctx = canvas.getContext('2d');
+        const newGameButton = document.getElementById('new-game-button');
+
+        // Функция для рисования частей виселицы
+        function drawHangman() {
+            switch (mistakes) {
+                case 1:
+                    ctx.beginPath();
+                    ctx.moveTo(10, 190);
+                    ctx.lineTo(190, 190); // основание
+                    ctx.stroke();
+                    break;
+                case 2:
+                    ctx.beginPath();
+                    ctx.moveTo(50, 190);
+                    ctx.lineTo(50, 20); // вертикальная стойка
+                    ctx.stroke();
+                    break;
+                case 3:
+                    ctx.beginPath();
+                    ctx.moveTo(50, 20);
+                    ctx.lineTo(150, 20); // горизонтальная стойка
+                    ctx.stroke();
+                    break;
+                case 4:
+                    ctx.beginPath();
+                    ctx.moveTo(150, 20);
+                    ctx.lineTo(150, 50); // веревка
+                    ctx.stroke();
+                    break;
+                case 5:
+                    ctx.beginPath();
+                    ctx.arc(150, 70, 20, 0, Math.PI * 2); // голова
+                    ctx.stroke();
+                    break;
+                case 6:
+                    ctx.beginPath();
+                    ctx.moveTo(150, 90);
+                    ctx.lineTo(150, 150); // тело
+                    ctx.moveTo(150, 110);
+                    ctx.lineTo(130, 140); // левая рука
+                    ctx.moveTo(150, 110);
+                    ctx.lineTo(170, 140); // правая рука
+                    ctx.moveTo(150, 150);
+                    ctx.lineTo(130, 180); // левая нога
+                    ctx.moveTo(150, 150);
+                    ctx.lineTo(170, 180); // правая нога
+                    ctx.stroke();
+                    break;
+            }
+        }
+
+        // Обновление отображения слова
+        function updateWordDisplay() {
+            wordContainer.innerHTML = currentGame.word
+                .split('')
+                .map(letter => guessedLetters.includes(letter) ? letter : '_')
+                .join(' ');
+        }
+
+        // Обработка угаданных букв
+        function handleGuess(letter) {
+            if (!guessedLetters.includes(letter)) {
+                guessedLetters.push(letter);
+                if (currentGame.word.includes(letter)) {
+                    updateWordDisplay();
+                    checkWin();
+                } else {
+                    mistakes++;
+                    drawHangman();
+                    checkLoss();
+                }
+                document.getElementById(letter).disabled = true;
+            }
+        }
+
+        // Обработка ввода с клавиатуры
+        document.addEventListener('keydown', (event) => {
+            const letter = event.key.toLowerCase();
+            if (letter.match(/[а-яa-z]/) && letter.length === 1) {
+                handleGuess(letter);
+            }
+        });
+
+        // Проверка на победу
+        function checkWin() {
+            if (currentGame.word.split('').every(letter => guessedLetters.includes(letter))) {
+                setTimeout(() => alert('Поздравляем, вы выиграли!'), 100);
+                disableAllButtons();
+            }
+        }
+
+        // Проверка на проигрыш
+        function checkLoss() {
+            if (mistakes === maxMistakes) {
+                setTimeout(() => alert(`Вы проиграли! Загаданное слово: ${currentGame.word}`), 100);
+                disableAllButtons();
+            }
+        }
+
+        // Отключение всех кнопок
+        function disableAllButtons() {
+            document.querySelectorAll('.keyboard button').forEach(button => button.disabled = true);
+        }
+
+        // Инициализация игры
+        function initGame() {
+            // Сброс переменных
+            const randomWord = wordsWithDefinitions[Math.floor(Math.random() * wordsWithDefinitions.length)];
+            currentGame = randomWord;
+            guessedLetters = [];
+            mistakes = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Обновление описания
+            explanationContainer.textContent = `Определение: ${currentGame.definition}`;
+
+            // Обновление отображения слова
+            updateWordDisplay();
+
+            // Сброс клавиатуры
+            keyboardContainer.innerHTML = '';
+            const letters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyz'.split('');
+            letters.forEach(letter => {
+                const button = document.createElement('button');
+                button.textContent = letter;
+                button.id = letter;
+                button.onclick = () => handleGuess(letter);
+                keyboardContainer.appendChild(button);
+            });
+        }
+
+        // Обработка новой игры
+        newGameButton.addEventListener('click', initGame);
+
+        // Запуск игры при первой загрузке
+        initGame();
+    </script>
+</body>
+</html>

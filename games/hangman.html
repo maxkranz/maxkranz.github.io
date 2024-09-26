@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman</title>
+    <link rel="shortcut icon" href="html.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #303030;
+            color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .game-container {
+            text-align: center;
+            max-width: 100%;
+        }
+
+        h1 {
+            color: deepskyblue;
+        }
+
+        .word {
+            font-size: 2em;
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+        }
+
+        .explanation {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #f8f8f8;
+        }
+
+        .keyboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+            gap: 10px;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .keyboard button {
+            padding: 10px;
+            font-size: 1.2em;
+            background-color: #444;
+            color: #f8f8f8;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .keyboard button:hover {
+            background-color: deepskyblue;
+            color: #fff;
+        }
+
+        .keyboard button:disabled {
+            background-color: #888;
+            cursor: not-allowed;
+        }
+
+        #hangman {
+            margin-top: 20px;
+        }
+        #keyboard{
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #hangman canvas {
+            background-color: #f8f8f8;
+        }
+
+        #new-game-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: deepskyblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #new-game-button:hover {
+            background-color: #007acc;
+            transform: scale(1.05);
+        }
+
+        #new-game-button:active {
+            transform: scale(0.98);
+        }
+
+        @media screen and (max-width: 600px) {
+            .word {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Hangman</h1><br><br>
+        <div id="explanation" class="explanation"></div>
+        <div id="word" class="word"></div>
+        <div class="keyboard" id="keyboard"></div>
+        <div id="hangman">
+            <canvas id="hangmanCanvas" width="200" height="200"></canvas>
+        </div>
+        <button id="new-game-button">New Game</button>
+    </div>
+
+    <script>
+        const wordsWithDefinitions = [
+            { word: 'javascript', definition: 'A programming language mainly used for web development.' },
+            { word: 'algorithm', definition: 'A step-by-step procedure for solving a problem.' },
+            { word: 'function', definition: 'A block of code designed to perform a particular task.' },
+            { word: 'variable', definition: 'A storage location paired with a symbolic name that contains some known or unknown quantity.' },
+            { word: 'developer', definition: 'A person who creates software or applications.' },
+            { word: 'python', definition: 'A popular high-level programming language known for its readability.' },
+            { word: 'database', definition: 'An organized collection of data, generally stored and accessed electronically.' },
+            { word: 'react', definition: 'A JavaScript library for building user interfaces.' },
+            { word: 'chatgpt', definition: 'Popular AI from OpenAI company.' },
+            { word: 'google', definition: 'Company based in Mountain View. Known for its search engine' },
+            { word: 'nodejs', definition: 'An instrument to create web apps and server-side apps.' },
+            { word: 'html', definition: 'Structure of any website.' },
+            { word: 'css', definition: 'Style of any website.' },
+            { word: 'frontend', definition: 'Interface of website.' },
+            { word: 'backend', definition: 'Server-side of software application, managing logics.' },
+            { word: 'fullstack', definition: 'A developer, that can do frontend and backend, called ... developer.' },
+            
+            
+        ];
+
+        let currentGame;
+        let guessedLetters = [];
+        let mistakes = 0;
+        const maxMistakes = 6;
+
+        const wordContainer = document.getElementById('word');
+        const explanationContainer = document.getElementById('explanation');
+        const keyboardContainer = document.getElementById('keyboard');
+        const canvas = document.getElementById('hangmanCanvas');
+        const ctx = canvas.getContext('2d');
+        const newGameButton = document.getElementById('new-game-button');
+
+        // Function to draw parts of the hangman
+        function drawHangman() {
+            switch (mistakes) {
+                case 1:
+                    ctx.beginPath();
+                    ctx.moveTo(10, 190);
+                    ctx.lineTo(190, 190); // base
+                    ctx.stroke();
+                    break;
+                case 2:
+                    ctx.beginPath();
+                    ctx.moveTo(50, 190);
+                    ctx.lineTo(50, 20); // vertical pole
+                    ctx.stroke();
+                    break;
+                case 3:
+                    ctx.beginPath();
+                    ctx.moveTo(50, 20);
+                    ctx.lineTo(150, 20); // horizontal pole
+                    ctx.stroke();
+                    break;
+                case 4:
+                    ctx.beginPath();
+                    ctx.moveTo(150, 20);
+                    ctx.lineTo(150, 50); // rope
+                    ctx.stroke();
+                    break;
+                case 5:
+                    ctx.beginPath();
+                    ctx.arc(150, 70, 20, 0, Math.PI * 2); // head
+                    ctx.stroke();
+                    break;
+                case 6:
+                    ctx.beginPath();
+                    ctx.moveTo(150, 90);
+                    ctx.lineTo(150, 150); // body
+                    ctx.moveTo(150, 110);
+                    ctx.lineTo(130, 140); // left arm
+                    ctx.moveTo(150, 110);
+                    ctx.lineTo(170, 140); // right arm
+                    ctx.moveTo(150, 150);
+                    ctx.lineTo(130, 180); // left leg
+                    ctx.moveTo(150, 150);
+                    ctx.lineTo(170, 180); // right leg
+                    ctx.stroke();
+                    break;
+            }
+        }
+
+        // Function to update the word display
+        function updateWordDisplay() {
+            wordContainer.innerHTML = currentGame.word
+                .split('')
+                .map(letter => guessedLetters.includes(letter) ? letter : '_')
+                .join(' ');
+        }
+
+        // Function to handle guesses
+        function handleGuess(letter) {
+            if (!guessedLetters.includes(letter)) {
+                guessedLetters.push(letter);
+                if (currentGame.word.includes(letter)) {
+                    updateWordDisplay();
+                    checkWin();
+                } else {
+                    mistakes++;
+                    drawHangman();
+                    checkLoss();
+                }
+                document.getElementById(letter).disabled = true;
+            }
+        }
+
+        // Function to handle keyboard input
+        document.addEventListener('keydown', (event) => {
+            const letter = event.key.toLowerCase();
+            if (letter.match(/[a-z]/) && letter.length === 1) {
+                handleGuess(letter);
+            }
+        });
+
+        // Check if player won
+        function checkWin() {
+            if (currentGame.word.split('').every(letter => guessedLetters.includes(letter))) {
+                setTimeout(() => alert('Congratulations, you won!'), 100);
+                disableAllButtons();
+            }
+        }
+
+        // Check if player lost
+        function checkLoss() {
+            if (mistakes === maxMistakes) {
+                setTimeout(() => alert(`You lost! The word was: ${currentGame.word}`), 100);
+                disableAllButtons();
+            }
+        }
+
+        // Disable all buttons
+        function disableAllButtons() {
+            document.querySelectorAll('.keyboard button').forEach(button => button.disabled = true);
+        }
+
+        // Initialize the game
+        function initGame() {
+            // Reset variables
+            const randomWord = wordsWithDefinitions[Math.floor(Math.random() * wordsWithDefinitions.length)];
+            currentGame = randomWord;
+            guessedLetters = [];
+            mistakes = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Update explanation
+            explanationContainer.textContent = `Definition: ${currentGame.definition}`;
+
+            // Update word display
+            updateWordDisplay();
+
+            // Reset keyboard
+            keyboardContainer.innerHTML = '';
+            const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+            letters.forEach(letter => {
+                const button = document.createElement('button');
+                button.textContent = letter;
+                button.id = letter;
+                button.onclick = () => handleGuess(letter);
+                keyboardContainer.appendChild(button);
+            });
+        }
+
+        // Handle new game
+        newGameButton.addEventListener('click', initGame);
+
+        // Start initial game
+        initGame();
+    </script>
+</body>
+</html>
