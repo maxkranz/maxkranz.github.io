@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Быки и коровы</title>
+    <link rel="shortcut icon" href="html.png"></link>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #303030;
+            color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: deepskyblue;
+            margin-top: 20px;
+        }
+
+        .game-container {
+            text-align: center;
+            max-width: 100%;
+            padding: 20px;
+        }
+
+        .info {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .guess-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .guess-input {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            text-align: center;
+            background-color: #444;
+            color: #f8f8f8;
+            border: 2px solid deepskyblue;
+            border-radius: 5px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #007acc;
+        }
+
+        #submit-button {
+            padding: 10px 20px;
+            background-color: deepskyblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #submit-button:hover {
+            background-color: #007acc;
+            transform: scale(1.05);
+        }
+
+        #submit-button:active {
+            transform: scale(0.98);
+        }
+
+        .results {
+            margin-top: 20px;
+            max-width: 100%;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #444;
+            border-radius: 10px;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Центрирование контента по горизонтали */
+        }
+        #results { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #444;
+            border-radius: 10px;
+            width: 300px;
+            max-width: 100%;
+            text-align: center;
+            margin-top: 30px;
+}
+
+
+        .result-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #555;
+            border-radius: 5px;
+            text-align: left;
+            width: 100%; /* Для выравнивания по всей ширине */
+        }
+
+        @media screen and (max-width: 600px) {
+            input {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2em;
+            }
+
+            #submit-button {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+
+            .results {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Быки и коровы</h1>
+    <div class="game-container">
+        <div class="info">Попрбуй угадать четырехзначное число. Оно не может начинатся с 0.</div>
+
+        <div class="guess-container">
+            <div class="guess-input" id="guess-input">
+                <input type="text" maxlength="1" id="digit1" autofocus>
+                <input type="text" maxlength="1" id="digit2">
+                <input type="text" maxlength="1" id="digit3">
+                <input type="text" maxlength="1" id="digit4">
+            </div>
+
+            <button id="submit-button">Submit Guess</button>
+        </div>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        let secretNumber = generateSecretNumber();
+        let attempts = 0;
+
+        // Generate a random 4-digit number with unique digits and ensure it doesn't start with 0
+        function generateSecretNumber() {
+            let digits = [];
+            
+            // Ensure the first digit is not 0
+            while (digits.length < 4) {
+                const randomDigit = Math.floor(Math.random() * 10);
+
+                if (digits.length === 0 && randomDigit !== 0) {
+                    digits.push(randomDigit);
+                } else if (digits.length > 0 && !digits.includes(randomDigit)) {
+                    digits.push(randomDigit);
+                }
+            }
+
+            return digits.join('');
+        }
+
+        // Handle submit button click
+        document.getElementById('submit-button').addEventListener('click', handleSubmit);
+
+        function handleSubmit() {
+            const digit1 = document.getElementById('digit1').value;
+            const digit2 = document.getElementById('digit2').value;
+            const digit3 = document.getElementById('digit3').value;
+            const digit4 = document.getElementById('digit4').value;
+
+            const guess = digit1 + digit2 + digit3 + digit4;
+
+            if (guess.length !== 4 || hasDuplicates(guess) || guess[0] === '0') {
+                alert('Пожалуйста, введите правильное число с отличающимеся друг от друга цифрами. Число не может начинатся с 0.');
+                return;
+            }
+
+            attempts++;
+            const result = checkGuess(guess);
+            displayResult(guess, result);
+
+            if (result.bulls === 4) {
+                alert(`Поздравляем! Вы угадали число  ${secretNumber} за ${attempts} попыток!!`);
+                resetGame();
+            } else {
+                resetInput();
+            }
+        }
+
+        // Check the guess for bulls and cows
+        function checkGuess(guess) {
+            let bulls = 0;
+            let cows = 0;
+
+            for (let i = 0; i < 4; i++) {
+                if (guess[i] === secretNumber[i]) {
+                    bulls++;
+                } else if (secretNumber.includes(guess[i])) {
+                    cows++;
+                }
+            }
+
+            return { bulls, cows };
+        }
+
+        // Display the result in the results container
+        function displayResult(guess, result) {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'result-item';
+            resultItem.textContent = `Guess: ${guess} | Bulls: ${result.bulls}, Cows: ${result.cows}`;
+            document.getElementById('results').prepend(resultItem);
+        }
+
+        // Check if a number has duplicate digits
+        function hasDuplicates(number) {
+            return new Set(number).size !== number.length;
+        }
+
+        // Reset input fields for a new guess
+        function resetInput() {
+            document.getElementById('digit1').value = '';
+            document.getElementById('digit2').value = '';
+            document.getElementById('digit3').value = '';
+            document.getElementById('digit4').value = '';
+            document.getElementById('digit1').focus();
+        }
+
+        // Reset the game
+        function resetGame() {
+            secretNumber = generateSecretNumber();
+            attempts = 0;
+            document.getElementById('results').innerHTML = '';
+            resetInput();
+        }
+
+    </script>
+</body>
+</html>

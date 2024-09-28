@@ -21,11 +21,13 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            overflow-y: auto;
         }
 
         .game-container {
             text-align: center;
             max-width: 100%;
+            padding: 20px;
         }
 
         h1 {
@@ -111,6 +113,9 @@
             .word {
                 font-size: 1.5em;
             }
+            h1{
+                margin-top: 20px;
+            }
         }
     </style>
 </head>
@@ -129,30 +134,28 @@
 
     <script>
         const wordsWithDefinitions = [
-            { word: 'javascript', definition: 'A programming language mainly used for web development.' },
-            { word: 'algorithm', definition: 'A step-by-step procedure for solving a problem.' },
-            { word: 'function', definition: 'A block of code designed to perform a particular task.' },
-            { word: 'variable', definition: 'A storage location paired with a symbolic name that contains some known or unknown quantity.' },
-            { word: 'developer', definition: 'A person who creates software or applications.' },
-            { word: 'python', definition: 'A popular high-level programming language known for its readability.' },
-            { word: 'database', definition: 'An organized collection of data, generally stored and accessed electronically.' },
-            { word: 'react', definition: 'A JavaScript library for building user interfaces.' },
-            { word: 'chatgpt', definition: 'Popular AI from OpenAI company.' },
-            { word: 'google', definition: 'Company based in Mountain View. Known for its search engine' },
-            { word: 'nodejs', definition: 'An instrument to create web apps and server-side apps.' },
-            { word: 'html', definition: 'Structure of any website.' },
-            { word: 'css', definition: 'Style of any website.' },
-            { word: 'frontend', definition: 'Interface of website.' },
-            { word: 'backend', definition: 'Server-side of software application, managing logics.' },
-            { word: 'fullstack', definition: 'A developer, that can do frontend and backend, called ... developer.' },
-            
-            
+            { word: 'apple', definition: 'A sweet fruit that is often red or green. ' },
+            { word: 'mountain', definition: 'A large natural elevation of the earth’s surface.' },
+            { word: 'river', definition: 'A large natural stream of water flowing in a channel to the sea.' },
+            { word: 'elephant', definition: 'A large mammal with a trunk.' },
+            { word: 'ocean', definition: 'A vast body of salt water that covers almost three-quarters of the earth.' },
+            { word: 'guitar', definition: 'A musical instrument with six strings.' },
+            { word: 'football', definition: 'A sport where players kick a ball into a goal.' },
+            { word: 'jacket', definition: 'A piece of clothing worn on the upper body for warmth.' },
+            { word: 'island', definition: 'A piece of land surrounded by water.' },
+            { word: 'coffee', definition: 'A dark, bitter drink made from roasted coffee beans.' },
+            { word: 'penguin', definition: 'A flightless bird that lives in cold regions.' },
+            { word: 'train', definition: 'A series of connected vehicles that travel along railway tracks.' },
+            { word: 'moon', definition: 'The natural satellite of the earth, visible at night.' },
+            { word: 'desert', definition: 'A barren area of land with little precipitation.' },
+            { word: 'forest', definition: 'A large area covered chiefly with trees and undergrowth.' },
+            { word: 'piano', definition: 'A large musical instrument with a keyboard.' },
         ];
 
         let currentGame;
         let guessedLetters = [];
         let mistakes = 0;
-        const maxMistakes = 6;
+        const maxMistakes = 10;
 
         const wordContainer = document.getElementById('word');
         const explanationContainer = document.getElementById('explanation');
@@ -163,6 +166,7 @@
 
         // Function to draw parts of the hangman
         function drawHangman() {
+            ctx.strokeStyle = "#000";
             switch (mistakes) {
                 case 1:
                     ctx.beginPath();
@@ -197,17 +201,33 @@
                     ctx.beginPath();
                     ctx.moveTo(150, 90);
                     ctx.lineTo(150, 150); // body
+                    ctx.stroke();
+                    break;
+                case 7:
+                    ctx.beginPath();
                     ctx.moveTo(150, 110);
                     ctx.lineTo(130, 140); // left arm
+                    ctx.stroke();
+                    break;
+                case 8:
+                    ctx.beginPath();
                     ctx.moveTo(150, 110);
                     ctx.lineTo(170, 140); // right arm
+                    ctx.stroke();
+                    break;
+                case 9:
+                    ctx.beginPath();
                     ctx.moveTo(150, 150);
                     ctx.lineTo(130, 180); // left leg
+                    ctx.stroke();
+                    break;
+                case 10:
+                    ctx.beginPath();
                     ctx.moveTo(150, 150);
                     ctx.lineTo(170, 180); // right leg
                     ctx.stroke();
                     break;
-            }
+        }
         }
 
         // Function to update the word display
