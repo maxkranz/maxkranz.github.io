@@ -259,6 +259,12 @@
             document.getElementById('results').innerHTML = '';
             resetInput();
         }
+        document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        document.getElementById('submit-button').click();
+    }
+});
+
 
     </script>
 </body>

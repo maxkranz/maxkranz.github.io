@@ -158,7 +158,7 @@
                 <input type="text" maxlength="1" id="digit4">
             </div>
 
-            <button id="submit-button">Submit Guess</button>
+            <button id="submit-button">Подтвердить</button>
         </div>
 
         <div class="results" id="results"></div>
@@ -259,6 +259,12 @@
             document.getElementById('results').innerHTML = '';
             resetInput();
         }
+        document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        document.getElementById('submit-button').click();
+    }
+});
+
 
     </script>
 </body>
