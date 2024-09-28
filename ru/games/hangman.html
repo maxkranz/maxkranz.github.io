@@ -160,7 +160,7 @@
         let currentGame;
         let guessedLetters = [];
         let mistakes = 0;
-        const maxMistakes = 6;
+        const maxMistakes = 10;
 
         const wordContainer = document.getElementById('word');
         const explanationContainer = document.getElementById('explanation');
@@ -171,51 +171,68 @@
 
         // Функция для рисования частей виселицы
         function drawHangman() {
+            ctx.strokeStyle = "#000";
             switch (mistakes) {
                 case 1:
                     ctx.beginPath();
                     ctx.moveTo(10, 190);
-                    ctx.lineTo(190, 190); // основание
+                    ctx.lineTo(190, 190); // base
                     ctx.stroke();
                     break;
                 case 2:
                     ctx.beginPath();
                     ctx.moveTo(50, 190);
-                    ctx.lineTo(50, 20); // вертикальная стойка
+                    ctx.lineTo(50, 20); // vertical pole
                     ctx.stroke();
                     break;
                 case 3:
                     ctx.beginPath();
                     ctx.moveTo(50, 20);
-                    ctx.lineTo(150, 20); // горизонтальная стойка
+                    ctx.lineTo(150, 20); // horizontal pole
                     ctx.stroke();
                     break;
                 case 4:
                     ctx.beginPath();
                     ctx.moveTo(150, 20);
-                    ctx.lineTo(150, 50); // веревка
+                    ctx.lineTo(150, 50); // rope
                     ctx.stroke();
                     break;
                 case 5:
                     ctx.beginPath();
-                    ctx.arc(150, 70, 20, 0, Math.PI * 2); // голова
+                    ctx.arc(150, 70, 20, 0, Math.PI * 2); // head
                     ctx.stroke();
                     break;
                 case 6:
                     ctx.beginPath();
                     ctx.moveTo(150, 90);
-                    ctx.lineTo(150, 150); // тело
-                    ctx.moveTo(150, 110);
-                    ctx.lineTo(130, 140); // левая рука
-                    ctx.moveTo(150, 110);
-                    ctx.lineTo(170, 140); // правая рука
-                    ctx.moveTo(150, 150);
-                    ctx.lineTo(130, 180); // левая нога
-                    ctx.moveTo(150, 150);
-                    ctx.lineTo(170, 180); // правая нога
+                    ctx.lineTo(150, 150); // body
                     ctx.stroke();
                     break;
-            }
+                case 7:
+                    ctx.beginPath();
+                    ctx.moveTo(150, 110);
+                    ctx.lineTo(130, 140); // left arm
+                    ctx.stroke();
+                    break;
+                case 8:
+                    ctx.beginPath();
+                    ctx.moveTo(150, 110);
+                    ctx.lineTo(170, 140); // right arm
+                    ctx.stroke();
+                    break;
+                case 9:
+                    ctx.beginPath();
+                    ctx.moveTo(150, 150);
+                    ctx.lineTo(130, 180); // left leg
+                    ctx.stroke();
+                    break;
+                case 10:
+                    ctx.beginPath();
+                    ctx.moveTo(150, 150);
+                    ctx.lineTo(170, 180); // right leg
+                    ctx.stroke();
+                    break;
+        }
         }
 
         // Обновление отображения слова
