@@ -234,7 +234,7 @@
         function displayResult(guess, result) {
             const resultItem = document.createElement('div');
             resultItem.className = 'result-item';
-            resultItem.textContent = `Guess: ${guess} | Bulls: ${result.bulls}, Cows: ${result.cows}`;
+            resultItem.textContent = `Догадка: ${guess} | Быки: ${result.bulls}, Коровы: ${result.cows}`;
             document.getElementById('results').prepend(resultItem);
         }
 
