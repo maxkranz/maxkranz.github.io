@@ -3,110 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Quote Generator</title>
+    <title>Генератор Цитат</title>
     <link rel="shortcut icon" href="html.png
 ">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #303030;
+        color: #f8f8f8;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 20px;
+    }
 
-        .container {
-            background: #ffffff;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-        }
+    .container {
+        background: #444;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+        color: #f8f8f8;
+    }
 
+    h1 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: deepskyblue;
+    }
+
+    select {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 2px solid #007acc;
+        margin-bottom: 20px;
+        width: 100%;
+        box-sizing: border-box;
+        background-color: #555;
+        color: #f8f8f8;
+    }
+
+    select:focus {
+        border-color: deepskyblue;
+        outline: none;
+    }
+
+    .quote {
+        font-size: 18px;
+        font-style: italic;
+        color: #f8f8f8;
+        margin-bottom: 20px;
+    }
+
+    .author {
+        font-size: 16px;
+        color: #b0c4de;
+        margin-bottom: 30px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: deepskyblue;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button:hover {
+        background-color: #007acc;
+    }
+
+    @media (max-width: 600px) {
         h1 {
-            margin-bottom: 20px;
             font-size: 24px;
-            color: #333;
         }
 
         select {
+            font-size: 14px;
             padding: 10px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 2px solid #ddd;
-            margin-bottom: 20px;
-            width: 100%;
-            box-sizing: border-box;
         }
 
         .quote {
-            font-size: 18px;
-            font-style: italic;
-            color: #555;
-            margin-bottom: 20px;
+            font-size: 16px;
         }
 
         .author {
-            font-size: 16px;
-            color: #888;
+            font-size: 14px;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            box-sizing: border-box;
+            font-size: 14px;
+            padding: 10px 15px;
         }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-   @media (max-width: 600px) {
-            h1 {
-                font-size: 24px;
-            }
-
-            select {
-                font-size: 14px;
-                padding: 10px;
-            }
-
-            .quote {
-                font-size: 18px;
-            }
-
-            .author {
-                font-size: 16px;
-            }
-
-            button {
-                font-size: 16px;
-                padding: 10px 15px;
-            }
-        }
-        body{
-            background-color: #303030;
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Генератор случайных цитат</h1>
+    <h1>Генератор цитат</h1>
     <select id="themeSelect">
         <option value="success">Успех</option>
         <option value="courage">Смелость</option>
