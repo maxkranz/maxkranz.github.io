@@ -56,8 +56,8 @@
         .search-bar input {
             width: 100%;
             max-width: 800px;
-            padding: 10px;
-            font-size: 16px;
+            padding: 8px;
+            font-size: 14px;
             border-radius: 5px;
             border: 1px solid #ddd;
         }
@@ -72,13 +72,14 @@
             margin-bottom: 20px;
         }
 
-        .note-editor input, .note-editor textarea {
+        .note-editor input, .note-editor div[contenteditable="true"] {
             width: 97%;
-            padding: 10px;
-            font-size: 16px;
+            padding: 8px;
+            font-size: 14px;
             margin-bottom: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
+            min-height: 60px;
         }
 
         .note-view h2 {
@@ -88,6 +89,7 @@
         .note-view p {
             white-space: pre-wrap;
         }
+        
 
         .note-list {
             width: 100%;
@@ -143,6 +145,7 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: none;
+            width: 150px; /* Увеличена ширина для удобства */
         }
 
         .menu-options button {
@@ -153,10 +156,15 @@
             cursor: pointer;
             text-align: left;
         }
-        .btn{
+
+        .menu-options button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn {
             background-color: #328ef0;
-            padding: 10px 15px;
-            font-size: 16px;
+            padding: 8px 12px;
+            font-size: 14px;
             cursor: pointer;
             border: none;
             background-color: #007BFF;
@@ -164,8 +172,37 @@
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
-        .menu-options button:hover {
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Стиль панели форматирования */
+        .toolbar {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 10px;
+            height: 60px;
+        }
+
+        .toolbar button {
+            padding: 5px;
+            font-size: 14px;
+            border: none;
             background-color: #f1f1f1;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            width: 70px;
+        }
+
+        .toolbar button.active {
+            background-color: deepskyblue;
+            color: white;
+        }
+
+        .toolbar button:hover {
+            background-color: #ddd;
         }
 
         @media (max-width: 600px) {
@@ -176,6 +213,9 @@
             .note-list li .note-text {
                 max-width: 100%;
             }
+            .note-editor input, .note-editor div[contenteditable="true"] {
+                width:94%;
+            }
 
             .note-editor,
             .note-view,
@@ -183,18 +223,12 @@
             h1 {
                 padding: 10px;
             }
-            .note-editor input{
-                width: 93%;
-            }
-        }
-        .note-editor textarea{
-            width: 93%;
         }
     </style>
 </head>
 <body>
 
-<h1 style="color: white;">
+<h1 style="color: deepskyblue;">
     NoteApp
     <button onclick="createNewNote()">+</button>
 </h1>
@@ -205,16 +239,25 @@
 
 <!-- Редактор заметок -->
 <div class="note-editor">
+    <div class="toolbar">
+        <button id="boldBtn" onclick="toggleFormat('bold')" style="font-style: bold;"><b>B</b></button>
+        <button id="italicBtn" onclick="toggleFormat('italic')"><i>I</i></button>
+        <button id="underlineBtn" onclick="toggleFormat('underline')"><u>U</u></button>
+        <button id="linkBtn" onclick="createLink()">🔗</button>
+        <input type="color" onchange="changeColor(this.value)">
+    </div>
     <input type="text" id="noteTitleInput" placeholder="Enter headline...">
-    <textarea id="noteInput" placeholder="Enter text..."></textarea>
-    <button onclick="saveNote()" class="btn">Save</button>
+    <div id="noteInput" contenteditable="true" placeholder="Enter text..."></div>
+    <button class="btn" onclick="saveNote()">Save</button>
+    <button class="btn" onclick="cancelEdit()" style="background-color: red;">Cancel</button>
 </div>
 
 <!-- Просмотр заметки -->
 <div class="note-view">
     <h2 id="noteViewTitle">Headline</h2>
-    <p id="noteViewContent">Note text will shown here...</p>
-    <button onclick="editNote()" class="btn">Edit</button>
+    <p id="noteViewContent">Note text will be shown here...</p>
+    <button class="btn" onclick="editNote()">Edit</button>
+    <button class="btn" onclick="cancelView()" style="background-color: red;">Cancel</button>
 </div>
 
 <!-- Список заметок -->
@@ -244,14 +287,14 @@
     function createNewNote() {
         currentNoteId = null;
         noteTitleInput.value = '';
-        noteInput.value = '';
+        noteInput.innerHTML = '';
         noteEditor.style.display = 'block';
         noteView.style.display = 'none';
     }
 
     function saveNote() {
         const noteTitle = noteTitleInput.value.trim() || 'Без заголовка';
-        const noteText = noteInput.value.trim();
+        const noteText = noteInput.innerHTML.trim();
         if (noteText === '') return;
 
         if (currentNoteId === null) {
@@ -273,6 +316,16 @@
         renderNotes();
     }
 
+    function cancelEdit() {
+        noteEditor.style.display = 'none';
+        if (currentNoteId !== null) openNote(currentNoteId);
+    }
+
+    function cancelView() {
+        noteView.style.display = 'none';
+        renderNotes();
+    }
+
     function deleteNote(id) {
         notes = notes.filter(note => note.id !== id);
         saveNotesToLocalStorage();
@@ -283,7 +336,7 @@
         currentNoteId = id;
         const note = notes.find(note => note.id === id);
         noteViewTitle.innerText = note.title;
-        noteViewContent.innerText = note.text;
+        noteViewContent.innerHTML = note.text;
         noteEditor.style.display = 'none';
         noteView.style.display = 'block';
     }
@@ -291,7 +344,7 @@
     function editNote() {
         const note = notes.find(note => note.id === currentNoteId);
         noteTitleInput.value = note.title;
-        noteInput.value = note.text;
+        noteInput.innerHTML = note.text;
         noteEditor.style.display = 'block';
         noteView.style.display = 'none';
     }
@@ -306,59 +359,77 @@
     function toggleNoteMenu(noteId) {
         const menu = document.getElementById(`menu-${noteId}`);
         menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        document.body.addEventListener('click', closeMenus);
+    }
+
+    function closeMenus(event) {
+        if (!event.target.closest('.menu')) {
+            document.querySelectorAll('.menu-options').forEach(menu => menu.style.display = 'none');
+            document.body.removeEventListener('click', closeMenus);
+        }
+    }
+
+    function toggleFormat(command) {
+        document.execCommand(command, false, null);
+        toggleButtonState(command);
+    }
+
+    function toggleButtonState(command) {
+        const button = document.getElementById(`${command}Btn`);
+        button.classList.toggle('active');
+    }
+
+    function createLink() {
+        const url = prompt('Введите URL');
+        if (url) {
+            document.execCommand('createLink', false, url);
+            document.querySelectorAll('a').forEach(link => {
+                link.style.textDecoration = 'none';  // Убираем подчеркивание
+                link.style.color = 'blue';  // Делаем ссылку синей
+            });
+            toggleButtonState('createLink');
+        }
+    }
+
+    function changeColor(color) {
+        document.execCommand('foreColor', false, color);
     }
 
     function renderNotes() {
-    const searchTerm = searchInput.value.toLowerCase();
-    noteList.innerHTML = '';
+        const searchTerm = searchInput.value.toLowerCase();
+        noteList.innerHTML = '';
 
-    // Сортируем заметки так, чтобы закрепленные были первыми
-    const sortedNotes = notes.sort((a, b) => {
-        if (a.pinned === b.pinned) return 0; // Если оба одинаково закреплены, оставляем их местоположение
-        return a.pinned ? -1 : 1; // Закрепленные заметки идут первыми
-    });
+        const sortedNotes = notes.sort((a, b) => a.pinned ? -1 : 1);
 
-    sortedNotes
-        .filter(note => note.title.toLowerCase().includes(searchTerm) || note.text.toLowerCase().includes(searchTerm))
-        .forEach(note => {
-            const pinnedIcon = note.pinned ? '📌' : ''; // Значок закопки
-            const pinButtonText = note.pinned ? 'Unscramble' : 'Bookmark'; // Текст кнопки
-            const pinIcon = note.pinned ? '❌' : '📌'; // Иконка для кнопки закрепить/открепить
-            
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <div class="note-text" onclick="openNote(${note.id})">${pinnedIcon} ${note.title}</div>
-                <div class="menu">
-                    <button class="menu-button" onclick="toggleNoteMenu(${note.id})">⋮</button>
-                    <div class="menu-options" id="menu-${note.id}">
-                        <button onclick="editNote()">✏️Edit</button>
-                        <button onclick="deleteNote(${note.id})" style="color: red;">🗑️Delete</button>
-                        <button onclick="pinNote(${note.id})">${pinIcon} ${pinButtonText}</button>
+        sortedNotes
+            .filter(note => note.title.toLowerCase().includes(searchTerm) || note.text.toLowerCase().includes(searchTerm))
+            .forEach(note => {
+                const pinnedIcon = note.pinned ? '📌' : '';
+                const pinButtonText = note.pinned ? 'Unpin' : 'Pin';
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="note-text" onclick="openNote(${note.id})">${pinnedIcon} ${note.title}</div>
+                    <div class="menu">
+                        <button class="menu-button" onclick="toggleNoteMenu(${note.id})">⋮</button>
+                        <div class="menu-options" id="menu-${note.id}">
+                            <button onclick="editNote()">✏️ Edit</button>
+                            <button onclick="deleteNote(${note.id})" style="color: red;">🗑️ Delete</button>
+                            <button onclick="pinNote(${note.id})">📌 ${pinButtonText}</button>
+                        </div>
                     </div>
-                </div>
-            `;
-            noteList.appendChild(li);
-        });
+                `;
+                noteList.appendChild(li);
+            });
 
-    noteEditor.style.display = 'none';
-    noteView.style.display = 'none';
-}
+        noteEditor.style.display = 'none';
+        noteView.style.display = 'none';
+    }
 
     function saveNotesToLocalStorage() {
         localStorage.setItem('notes', JSON.stringify(notes));
     }
 
     renderNotes();
-    window.onload = () => {
-    const savedData = localStorage.getItem('sync_data');
-    if (savedData) {
-        const syncData = JSON.parse(savedData);
-        // Данные доступны для использования в любом приложении
-        console.log(`Синхронизированные данные: ${syncData.username}, ${syncData.data}`);
-        // Можно использовать эти данные как угодно в под-приложении
-    }
-}
-
 </script>
 
 </body>
