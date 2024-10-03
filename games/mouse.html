@@ -103,6 +103,27 @@
             position: relative;
             animation: explode 1s forwards ease-out;
         }
+
+        /* Золотой текст +1 */
+        .click-text {
+            position: absolute;
+            color: gold;
+            font-size: 24px;
+            font-weight: bold;
+            pointer-events: none;
+            animation: riseAndFade 1s forwards;
+        }
+
+        @keyframes riseAndFade {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -113,7 +134,7 @@
         <div class="top-bar">
             <span id="clickCount" class="click-count">0</span> / 10000
         </div>
-        <img id="mouseImage" src="mish-Photoroom.png" alt="Mouse" class="main-mouse" onclick="incrementClicks()">
+        <img id="mouseImage" src="mish-Photoroom.png" alt="Mouse" class="main-mouse" onclick="incrementClicks(event)">
         <div class="buttons">
             <button onclick="showStory()">Story</button>
             <button onclick="confirmResetGame()" style="background-color: red;">New Game</button>
@@ -134,7 +155,10 @@
         let clickCount = 0;
         let freeModeActive = false; // Flag to track activation of free mode
         const storyTexts = [
-        "The man caged the mouse...", "The man caged the mouse. The lord of the animals saw this and told the poacher to set him free.", "The poacher got scared and went to work, but the cage was so strong he couldn't break it.", "Now he has to hit it 10,000 times to break it, and if he doesn't, it will be very bad...",
+            "The man caged the mouse...", 
+            "The man caged the mouse. The lord of the animals saw this and told the poacher to set him free.", 
+            "The poacher got scared and went to work, but the cage was so strong he couldn't break it.", 
+            "Now he has to hit it 10,000 times to break it, and if he doesn't, it will be very bad...",
         ];
         let currentStoryIndex = 0;
         let gameStarted = localStorage.getItem('gameStarted') === 'true';
@@ -175,14 +199,30 @@
             localStorage.setItem('gameStarted', 'true');
         }
 
-        function incrementClicks() {
+        function incrementClicks(event) {
             clickCount++;
             document.getElementById("clickCount").textContent = clickCount;
             localStorage.setItem('clickCount', clickCount);
 
+            // Показать текст +1
+            showClickText(event.pageX, event.pageY);
+
             if (!freeModeActive && clickCount >= 10000) {
                 endGame();
             }
+        }
+
+        function showClickText(x, y) {
+            const clickText = document.createElement('div');
+            clickText.className = 'click-text';
+            clickText.textContent = '+1';
+            clickText.style.left = `${x}px`;
+            clickText.style.top = `${y}px`;
+            document.body.appendChild(clickText);
+
+            setTimeout(() => {
+                clickText.remove();
+            }, 1000); // Удалить через 1 секунду
         }
 
         function endGame() {
@@ -257,16 +297,14 @@
                 link.click();
             });
         });
-        window.onload = () => {
-    const savedData = localStorage.getItem('sync_data');
-    if (savedData) {
-        const syncData = JSON.parse(savedData);
-        // Данные доступны для использования в любом приложении
-        console.log(`Синхронизированные данные: ${syncData.username}, ${syncData.data}`);
-        // Можно использовать эти данные как угодно в под-приложении
-    }
-}
 
+        window.onload = () => {
+            const savedData = localStorage.getItem('sync_data');
+            if (savedData) {
+                const syncData = JSON.parse(savedData);
+                console.log(`Синхронизированные данные: ${syncData.username}, ${syncData.data}`);
+            }
+        }
     </script>
 </body>
 </html>
