@@ -380,16 +380,20 @@
     }
 
     function createLink() {
-        const url = prompt('Введите URL');
-        if (url) {
-            document.execCommand('createLink', false, url);
-            document.querySelectorAll('a').forEach(link => {
-                link.style.textDecoration = 'none';  // Убираем подчеркивание
-                link.style.color = 'blue';  // Делаем ссылку синей
-            });
-            toggleButtonState('createLink');
+    let url = prompt('Enter URL');
+    if (url) {
+        // Если URL не начинается с 'http://', 'https://', или 'www.', добавляем 'https://'
+        if (!/^https?:\/\//i.test(url) && !/^www\./i.test(url)) {
+            url = 'https://' + url;
         }
+        document.execCommand('createLink', false, url);
+        document.querySelectorAll('a').forEach(link => {
+            link.style.textDecoration = 'none';  // Убираем подчеркивание
+            link.style.color = 'blue';  // Делаем ссылку синей
+        });
+        toggleButtonState('createLink');
     }
+}
 
     function changeColor(color) {
         document.execCommand('foreColor', false, color);
