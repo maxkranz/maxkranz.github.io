@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мышонок (Кликер)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
+    <title>Mouse Clicker</title>
     <link rel="shortcut icon" href="mish-Photoroom.png">
     <style>
-    
-    body, html {
+        body, html {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -126,19 +125,6 @@
                 transform: translateY(-50px);
             }
         }
-        .floating-plus {
-    position: absolute;
-    color: gold;
-    font-size: 24px;
-    font-weight: bold; /* Сделать текст жирным */
-    pointer-events: none;
-    animation: riseAndFade 1s forwards;
-}
-#endbutton{
-    color: black;
-    background-color: gold;
-}
-
 
         /* Mobile-specific animation */
         @media (max-width: 768px) {
@@ -169,7 +155,6 @@
                 100% { opacity: 0; transform: translateY(-50px); }
             }
         }
-    
     </style>
 </head>
 <body>
@@ -182,114 +167,71 @@
         </div>
         <img id="mouseImage" src="mish-Photoroom.png" alt="Mouse" class="main-mouse">
         <div class="buttons">
-            <button onclick="showStory()">Story</button>
-            <button onclick="confirmResetGame()" style="background-color: red;">New Game</button>
-            <button id="endButton" class="hidden" onclick="triggerEnding()">Ending</button>
+            <button onclick="showStory()">Сюжет</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button>
+            <button id="endButton" class="hidden" onclick="triggerEnding()">Концовка</button>
         </div>
     </div>
     <div id="endScreen" class="end-screen hidden">
         <h1 id="endText">Мышь освобождена!</h1>
         <img id="explodingMouse" src="mish-Photoroom.png" alt="Mouse" class="main-mouse hidden">
         <div class="buttons">
-            <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Free Mode</button>
-            <button onclick="confirmResetGame()" style="background-color: red;">New Game</button>
-            <button id="shareButton">Share Result</button>
+            <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Свободный режим</button>
+            <button onclick="confirmResetGame()" style="background-color: red;">Новая игра</button>ы
+            <button id="shareButton">Поделиться результатом</button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script>
-   let clickCount = 0;
-        let freeModeActive = false; // Флаг для отслеживания активации свободного режима
-        const storyTexts = [
-            "The man caged the mouse...", 
-            "The man caged the mouse. The lord of the animals saw this and told the poacher to set him free.", 
-            "The poacher got scared and went to work, but the cage was so strong he couldn't break it.", 
-            "Now he has to hit it 10,000 times to break it, and if he doesn't, it will be very bad...",
-        ];
-        let currentStoryIndex = 0;
-        let gameStarted = localStorage.getItem('gameStarted') === 'true';
-        let storyCompleted = localStorage.getItem('storyCompleted') === 'true';
+       
+let freeModeActive = false; // Флаг для отслеживания активации свободного режима
+const storyTexts = [
+"The man caged the mouse...", 
+"The man caged the mouse. The lord of the animals saw this and told the poacher to set him free.", 
+"The poacher got scared and went to work, but the cage was so strong he couldn't break it.", 
+"Now he has to hit it 10,000 times to break it, and if he doesn't, it will be very bad...",
+];
 
-        document.addEventListener("DOMContentLoaded", () => {
-            if (!gameStarted || !storyCompleted) {
-                document.getElementById("introScreen").classList.remove("hidden");
-                showNextStory();
-            } else {
-                document.getElementById("gameScreen").classList.remove("hidden");
-                clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
-                document.getElementById("clickCount").textContent = clickCount;
-            }
+let currentStoryIndex = 0;
+let gameStarted = localStorage.getItem('gameStarted') === 'true';
+let storyCompleted = localStorage.getItem('storyCompleted') === 'true';
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (!gameStarted || !storyCompleted) {
+        document.getElementById("introScreen").classList.remove("hidden");
+        showNextStory();
+    } else {
+        document.getElementById("gameScreen").classList.remove("hidden");
+        clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+        document.getElementById("clickCount").textContent = clickCount;
+    }
+});
+
+document.addEventListener("click", () => {
+    if (!storyCompleted) {
+        showNextStory();
+    }
+});
+
+function showNextStory() {
+    if (currentStoryIndex < storyTexts.length) {
+        const storyTextElement = document.getElementById("storyText");
+        storyTextElement.textContent = storyTexts[currentStoryIndex];
+        currentStoryIndex++;
+    } else {
+        storyCompleted = true;
+        localStorage.setItem('storyCompleted', 'true');
+        startGame();
+    }
+}
+
+        const mouseImage = document.getElementById('mouseImage');
+        mouseImage.addEventListener('click', (event) => {
+            incrementClicks(event); // При каждом клике добавляем +1
+            animateMouseTilt(event); // Добавляем анимацию наклона мыши
         });
 
-        document.addEventListener("click", () => {
-            if (!storyCompleted) {
-                showNextStory();
-            }
-        });
-
-        function showNextStory() {
-            if (currentStoryIndex < storyTexts.length) {
-                const storyTextElement = document.getElementById("storyText");
-                storyTextElement.textContent = storyTexts[currentStoryIndex];
-                currentStoryIndex++;
-            } else {
-                storyCompleted = true;
-                localStorage.setItem('storyCompleted', 'true');
-                startGame();
-            }
-        }
-
-        function startGame() {
-            document.getElementById("introScreen").classList.add("hidden");
-            document.getElementById("gameScreen").classList.remove("hidden");
-            localStorage.setItem('gameStarted', 'true');
-        }
-
-        function incrementClicks() {
-            clickCount++;
-            document.getElementById("clickCount").textContent = clickCount;
-            localStorage.setItem('clickCount', clickCount);
-
-            if (!freeModeActive && clickCount >= 10000) {
-                endGame();
-            }
-        }
-
-        function endGame() {
-            document.getElementById("gameScreen").classList.add("hidden");
-            document.getElementById("endScreen").classList.remove("hidden");
-            triggerExplosion();
-        }
-
-        function triggerExplosion() {
-            const mouseImage = document.getElementById("explodingMouse");
-            mouseImage.classList.remove("hidden");
-            mouseImage.classList.add("exploding");
-            setTimeout(() => {
-                mouseImage.classList.add("hidden");
-            }, 1000);
-        }
-
-        function freeMode() {
-            freeModeActive = true; // Активируем свободный режим
-            document.getElementById("endScreen").classList.add("hidden");
-            document.getElementById("gameScreen").classList.remove("hidden");
-
-            // Показать кнопку "Концовка"
-            document.getElementById("endButton").classList.remove("hidden");
-        }
-
-        function triggerEnding() {
-            endGame(); // Показываем концовку
-        }
-
-        function confirmResetGame() {
-            if (confirm("Are you sure you want to start a new game? All progress will be reset.")) {
-
-                restartGame();
-            }
-        }
-
+ 
         function startGame() {
             document.getElementById("introScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
@@ -297,16 +239,15 @@
         }
 
         function incrementClicks(event) {
-            clickCount++;
+            clickCount++; // Теперь добавляется только +1 за клик
             document.getElementById("clickCount").textContent = clickCount;
-
-            // Генерируем +1 анимацию
-            createFloatingPlus(event.clientX, event.clientY);
-            
-            if (clickCount >= 10000) {
-                document.getElementById("endButton").classList.remove("hidden");
-            }
             localStorage.setItem('clickCount', clickCount);
+
+            showClickText(event.pageX, event.pageY); // Показать текст +1
+
+            if (!freeModeActive && clickCount >= 10000) {
+                endGame();
+            }
         }
 
         function showClickText(x, y) {
@@ -370,14 +311,14 @@
         function triggerEnding() {
             endGame(); // Показать конец
         }
-  
 
+    
 
-        const mouseImage = document.getElementById('mouseImage');
-        mouseImage.addEventListener('click', (event) => {
-            incrementClicks(event); // При каждом клике добавляем +1
-            animateMouseTilt(event); // Добавляем анимацию наклона мыши
-        });
+function confirmResetGame() {
+    if (confirm("Are you sure you want to start a new game? All progress will be reset.")) {
+        restartGame();
+    }
+}
 
         function restartGame() {
             clickCount = 0;
@@ -402,13 +343,12 @@
         }
 
         function showStory() {
-    document.getElementById("gameScreen").classList.add("hidden");
-    currentStoryIndex = 0;  // Сбросить индекс перед показом истории
-    storyCompleted = false;  // Сбросить флаг завершения сюжета
-    document.getElementById("introScreen").classList.remove("hidden");
-    showNextStory();
-}
-
+            document.getElementById("gameScreen").classList.add("hidden");
+            currentStoryIndex = 0;  // Сбросить индекс перед показом истории
+            storyCompleted = false;
+            document.getElementById("introScreen").classList.remove("hidden");
+            showNextStory();
+        }
 
         document.getElementById('shareButton').addEventListener('click', () => {
             html2canvas(document.body).then(canvas => {
@@ -426,27 +366,18 @@
                 console.log(`Синхронизированные данные: ${syncData.username}, ${syncData.data}`);
             }
         }
-
-        function animateMouseTilt(event) {
-            const tiltX = (event.clientY - window.innerHeight / 2) / 20;
-            const tiltY = (event.clientX - window.innerWidth / 2) / 20;
-            mouseImage.style.setProperty('--tiltX', `${tiltX}deg`);
-            mouseImage.style.setProperty('--tiltY', `${tiltY}deg`);
-        }
-        function createFloatingPlus(x, y) {
-    const plusOne = document.createElement('div');
-    plusOne.textContent = "+1";
-    plusOne.className = "floating-plus"; // Применяем класс для анимации
-    plusOne.style.left = `${x}px`;
-    plusOne.style.top = `${y}px`;
-    document.body.appendChild(plusOne);
-
-    setTimeout(() => {
-        plusOne.remove();
-    }, 1000);  // Удаляем элемент после завершения анимации
-}
     </script>
 </body>
 </html>
 
 
+
+
+
+
+
+function confirmResetGame() {
+    if (confirm("Are you sure you want to start a new game? All progress will be reset.")) {
+        restartGame();
+    }
+}
