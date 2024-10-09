@@ -199,254 +199,258 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script>
-   let clickCount = 0;
-        let freeModeActive = false; // Флаг для отслеживания активации свободного режима
-        const storyTexts = [
-            "Человек заковал мышонка в клетку...",
-            "Человек заковал мышонка в клетку. Владыка животных увидел это и велел браконьеру освободить его.",
-            "Браконьер испугался и принялся за дело, но клетка была настолько крепкой, что он не смог её сломать.",
-            "Теперь он должен ударить по ней 10 000 раз, чтобы разбить её, а если не сможет, всё будет очень плохо...",
-        ];
-        let currentStoryIndex = 0;
-        let gameStarted = localStorage.getItem('gameStarted') === 'true';
-        let storyCompleted = localStorage.getItem('storyCompleted') === 'true';
+        let clickCount = 0;
+             let freeModeActive = false; // Флаг для отслеживания активации свободного режима
+             const storyTexts = [
+"Человек заковал мышонка в клетку...",
+"Человек заковал мышонка в клетку. Владыка животных увидел это и велел браконьеру освободить его.",
+"Браконьер испугался и принялся за дело, но клетка была настолько крепкой, что он не смог её сломать.",
+"Теперь он должен ударить по ней 10 000 раз, чтобы разбить её, а если не сможет, всё будет очень плохо...",
+];
 
-        document.addEventListener("DOMContentLoaded", () => {
-            if (!gameStarted || !storyCompleted) {
-                document.getElementById("introScreen").classList.remove("hidden");
-                showNextStory();
-            } else {
-                document.getElementById("gameScreen").classList.remove("hidden");
-                clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
-                document.getElementById("clickCount").textContent = clickCount;
-            }
-        });
-
-        document.addEventListener("click", () => {
-            if (!storyCompleted) {
-                showNextStory();
-            }
-        });
-
-        function showNextStory() {
-            if (currentStoryIndex < storyTexts.length) {
-                const storyTextElement = document.getElementById("storyText");
-                storyTextElement.textContent = storyTexts[currentStoryIndex];
-                currentStoryIndex++;
-            } else {
-                storyCompleted = true;
-                localStorage.setItem('storyCompleted', 'true');
-                startGame();
-            }
-        }
-
-        function startGame() {
-            document.getElementById("introScreen").classList.add("hidden");
-            document.getElementById("gameScreen").classList.remove("hidden");
-            localStorage.setItem('gameStarted', 'true');
-        }
-
-        function incrementClicks() {
-            clickCount++;
-            document.getElementById("clickCount").textContent = clickCount;
-            localStorage.setItem('clickCount', clickCount);
-
-            if (!freeModeActive && clickCount >= 10000) {
-                endGame();
-            }
-        }
-
-        function endGame() {
-            document.getElementById("gameScreen").classList.add("hidden");
-            document.getElementById("endScreen").classList.remove("hidden");
-            triggerExplosion();
-        }
-
-        function triggerExplosion() {
-            const mouseImage = document.getElementById("explodingMouse");
-            mouseImage.classList.remove("hidden");
-            mouseImage.classList.add("exploding");
-            setTimeout(() => {
-                mouseImage.classList.add("hidden");
-            }, 1000);
-        }
-
-        function freeMode() {
-            freeModeActive = true; // Активируем свободный режим
-            document.getElementById("endScreen").classList.add("hidden");
-            document.getElementById("gameScreen").classList.remove("hidden");
-
-            // Показать кнопку "Концовка"
-            document.getElementById("endButton").classList.remove("hidden");
-        }
-
-        function triggerEnding() {
-            endGame(); // Показываем концовку
-        }
-
-        function confirmResetGame() {
-            if (confirm("Вы уверены, что хотите начать новую игру? Все достижения будут сброшены.")) {
-                restartGame();
-            }
-        }
-
-        function startGame() {
-            document.getElementById("introScreen").classList.add("hidden");
-            document.getElementById("gameScreen").classList.remove("hidden");
-            localStorage.setItem('gameStarted', 'true');
-        }
-
-        function incrementClicks(event) {
-            clickCount++;
-            document.getElementById("clickCount").textContent = clickCount;
-
-            // Генерируем +1 анимацию
-            createFloatingPlus(event.clientX, event.clientY);
-            
-            if (clickCount >= 10000) {
-                document.getElementById("endButton").classList.remove("hidden");
-            }
-            localStorage.setItem('clickCount', clickCount);
-        }
-
-        function showClickText(x, y) {
-            const clickText = document.createElement('div');
-            clickText.className = 'click-text';
-            clickText.textContent = '+1';
-            clickText.style.left = `${x}px`;
-            clickText.style.top = `${y}px`;
-            document.body.appendChild(clickText);
-
-            setTimeout(() => {
-                clickText.remove();
-            }, 1000); // Удалить через 1 секунду
-        }
-
-        function animateMouseTilt(event) {
-            const $mouse = document.getElementById('mouseImage');
-            const rect = $mouse.getBoundingClientRect();
-
-            const offsetX = event.clientX - rect.left - rect.width / 2;
-            const offsetY = event.clientY - rect.top - rect.height / 2;
-
-            const DEG = 40;
-
-            const tiltX = (offsetY / rect.height) * DEG;
-            const tiltY = (offsetX / rect.width) * -DEG;
-
-            $mouse.style.setProperty('--tiltX', `${tiltX}deg`);
-            $mouse.style.setProperty('--tiltY', `${tiltY}deg`);
-
-            setTimeout(() => {
-                $mouse.style.setProperty('--tiltX', '0deg');
-                $mouse.style.setProperty('--tiltY', '0deg');
-            }, 300);
-        }
-
-        function endGame() {
-            document.getElementById("gameScreen").classList.add("hidden");
-            document.getElementById("endScreen").classList.remove("hidden");
-            triggerExplosion();
-        }
-
-        function triggerExplosion() {
-            const mouseImage = document.getElementById("explodingMouse");
-            mouseImage.classList.remove("hidden");
-            mouseImage.classList.add("exploding");
-            setTimeout(() => {
-                mouseImage.classList.add("hidden");
-            }, 1000);
-        }
-
-        function freeMode() {
-            freeModeActive = true; // Активировать свободный режим
-            document.getElementById("endScreen").classList.add("hidden");
-            document.getElementById("gameScreen").classList.remove("hidden");
-
-            // Показать кнопку "Конец"
-            document.getElementById("endButton").classList.remove("hidden");
-        }
-
-        function triggerEnding() {
-            endGame(); // Показать конец
-        }
-  
-
-
-        const mouseImage = document.getElementById('mouseImage');
-        mouseImage.addEventListener('click', (event) => {
-            incrementClicks(event); // При каждом клике добавляем +1
-            animateMouseTilt(event); // Добавляем анимацию наклона мыши
-        });
-
-        function restartGame() {
-            clickCount = 0;
-            freeModeActive = false; // Сбросить флаг свободного режима
-            localStorage.setItem('clickCount', clickCount);
-            document.getElementById("clickCount").textContent = clickCount;
-            document.getElementById("endScreen").classList.add("hidden");
-            document.getElementById("gameScreen").classList.remove("hidden");
-
-            // Скрыть кнопку "Конец" после перезапуска
-            document.getElementById("endButton").classList.add("hidden");
-        }
-
-        function resetGame() {
-            localStorage.removeItem('gameStarted');
-            localStorage.removeItem('clickCount');
-            localStorage.removeItem('storyCompleted');
-            document.getElementById("gameScreen").classList.add("hidden");
-            currentStoryIndex = 0;
-            storyCompleted = false;
-            showNextStory();
-        }
-
-        function showStory() {
-    document.getElementById("gameScreen").classList.add("hidden");
-    currentStoryIndex = 0;  // Сбросить индекс перед показом истории
-    storyCompleted = false;  // Сбросить флаг завершения сюжета
-    document.getElementById("introScreen").classList.remove("hidden");
-    showNextStory();
+             let currentStoryIndex = 0;
+             let gameStarted = localStorage.getItem('gameStarted') === 'true';
+             let storyCompleted = localStorage.getItem('storyCompleted') === 'true';
+     
+             document.addEventListener("DOMContentLoaded", () => {
+                 if (!gameStarted || !storyCompleted) {
+                     document.getElementById("introScreen").classList.remove("hidden");
+                     showNextStory();
+                 } else {
+                     document.getElementById("gameScreen").classList.remove("hidden");
+                     clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+                     document.getElementById("clickCount").textContent = clickCount;
+                 }
+             });
+     
+             document.addEventListener("click", () => {
+                 if (!storyCompleted) {
+                     showNextStory();
+                 }
+             });
+     
+             function showNextStory() {
+                 if (currentStoryIndex < storyTexts.length) {
+                     const storyTextElement = document.getElementById("storyText");
+                     storyTextElement.textContent = storyTexts[currentStoryIndex];
+                     currentStoryIndex++;
+                 } else {
+                     storyCompleted = true;
+                     localStorage.setItem('storyCompleted', 'true');
+                     startGame();
+                 }
+             }
+     
+             function startGame() {
+                 document.getElementById("introScreen").classList.add("hidden");
+                 document.getElementById("gameScreen").classList.remove("hidden");
+                 localStorage.setItem('gameStarted', 'true');
+             }
+     
+             function incrementClicks() {
+                 clickCount++;
+                 document.getElementById("clickCount").textContent = clickCount;
+                 localStorage.setItem('clickCount', clickCount);
+     
+                 if (!freeModeActive && clickCount >= 10000) {
+                     endGame();
+                 }
+             }
+     
+             function endGame() {
+                 document.getElementById("gameScreen").classList.add("hidden");
+                 document.getElementById("endScreen").classList.remove("hidden");
+                 triggerExplosion();
+             }
+     
+             function triggerExplosion() {
+                 const mouseImage = document.getElementById("explodingMouse");
+                 mouseImage.classList.remove("hidden");
+                 mouseImage.classList.add("exploding");
+                 setTimeout(() => {
+                     mouseImage.classList.add("hidden");
+                 }, 1000);
+             }
+     
+             function freeMode() {
+                 freeModeActive = true; // Активируем свободный режим
+                 document.getElementById("endScreen").classList.add("hidden");
+                 document.getElementById("gameScreen").classList.remove("hidden");
+     
+                 // Показать кнопку "Концовка"
+                 document.getElementById("endButton").classList.remove("hidden");
+             }
+     
+             function triggerEnding() {
+                 endGame(); // Показываем концовку
+             }
+     
+             function confirmResetGame() {
+    if (confirm("Вы уверены, что хотите начать новую игру? Все достижения будут сброшены.")) {
+        restartGame();
+    }
 }
-
-
-        document.getElementById('shareButton').addEventListener('click', () => {
-            html2canvas(document.body).then(canvas => {
-                const link = document.createElement('a');
-                link.download = 'mouse_clicker_result.png';
-                link.href = canvas.toDataURL();
-                link.click();
-            });
-        });
-
-        window.onload = () => {
-            const savedData = localStorage.getItem('sync_data');
-            if (savedData) {
-                const syncData = JSON.parse(savedData);
-                console.log(`Синхронизированные данные: ${syncData.username}, ${syncData.data}`);
-            }
-        }
-
-        function animateMouseTilt(event) {
-            const tiltX = (event.clientY - window.innerHeight / 2) / 20;
-            const tiltY = (event.clientX - window.innerWidth / 2) / 20;
-            mouseImage.style.setProperty('--tiltX', `${tiltX}deg`);
-            mouseImage.style.setProperty('--tiltY', `${tiltY}deg`);
-        }
-        function createFloatingPlus(x, y) {
-    const plusOne = document.createElement('div');
-    plusOne.textContent = "+1";
-    plusOne.className = "floating-plus"; // Применяем класс для анимации
-    plusOne.style.left = `${x}px`;
-    plusOne.style.top = `${y}px`;
-    document.body.appendChild(plusOne);
-
-    setTimeout(() => {
-        plusOne.remove();
-    }, 1000);  // Удаляем элемент после завершения анимации
-}
+     
+             function startGame() {
+                 document.getElementById("introScreen").classList.add("hidden");
+                 document.getElementById("gameScreen").classList.remove("hidden");
+                 localStorage.setItem('gameStarted', 'true');
+             }
+     
+             function incrementClicks(event) {
+                 clickCount++;
+                 document.getElementById("clickCount").textContent = clickCount;
+     
+                 // Генерируем +1 анимацию
+                 createFloatingPlus(event.clientX, event.clientY);
+                 
+                 if (clickCount >= 10000) {
+                     document.getElementById("endButton").classList.remove("hidden");
+                 }
+                 localStorage.setItem('clickCount', clickCount);
+             }
+     
+             function showClickText(x, y) {
+                 const clickText = document.createElement('div');
+                 clickText.className = 'click-text';
+                 clickText.textContent = '+1';
+                 clickText.style.left = `${x}px`;
+                 clickText.style.top = `${y}px`;
+                 document.body.appendChild(clickText);
+     
+                 setTimeout(() => {
+                     clickText.remove();
+                 }, 1000); // Удалить через 1 секунду
+             }
+     
+             function animateMouseTilt(event) {
+                 const $mouse = document.getElementById('mouseImage');
+                 const rect = $mouse.getBoundingClientRect();
+     
+                 const offsetX = event.clientX - rect.left - rect.width / 2;
+                 const offsetY = event.clientY - rect.top - rect.height / 2;
+     
+                 const DEG = 40;
+     
+                 const tiltX = (offsetY / rect.height) * DEG;
+                 const tiltY = (offsetX / rect.width) * -DEG;
+     
+                 $mouse.style.setProperty('--tiltX', `${tiltX}deg`);
+                 $mouse.style.setProperty('--tiltY', `${tiltY}deg`);
+     
+                 setTimeout(() => {
+                     $mouse.style.setProperty('--tiltX', '0deg');
+                     $mouse.style.setProperty('--tiltY', '0deg');
+                 }, 300);
+             }
+     
+             function endGame() {
+                 document.getElementById("gameScreen").classList.add("hidden");
+                 document.getElementById("endScreen").classList.remove("hidden");
+                 triggerExplosion();
+             }
+     
+             function triggerExplosion() {
+                 const mouseImage = document.getElementById("explodingMouse");
+                 mouseImage.classList.remove("hidden");
+                 mouseImage.classList.add("exploding");
+                 setTimeout(() => {
+                     mouseImage.classList.add("hidden");
+                 }, 1000);
+             }
+     
+             function freeMode() {
+                 freeModeActive = true; // Активировать свободный режим
+                 document.getElementById("endScreen").classList.add("hidden");
+                 document.getElementById("gameScreen").classList.remove("hidden");
+     
+                 // Показать кнопку "Конец"
+                 document.getElementById("endButton").classList.remove("hidden");
+             }
+     
+             function triggerEnding() {
+                 endGame(); // Показать конец
+             }
+       
+     
+     
+             const mouseImage = document.getElementById('mouseImage');
+             mouseImage.addEventListener('click', (event) => {
+                 incrementClicks(event); // При каждом клике добавляем +1
+                 animateMouseTilt(event); // Добавляем анимацию наклона мыши
+             });
+     
+             function restartGame() {
+                 clickCount = 0;
+                 freeModeActive = false; // Сбросить флаг свободного режима
+                 localStorage.setItem('clickCount', clickCount);
+                 document.getElementById("clickCount").textContent = clickCount;
+                 document.getElementById("endScreen").classList.add("hidden");
+                 document.getElementById("gameScreen").classList.remove("hidden");
+     
+                 // Скрыть кнопку "Конец" после перезапуска
+                 document.getElementById("endButton").classList.add("hidden");
+             }
+     
+             function resetGame() {
+                 localStorage.removeItem('gameStarted');
+                 localStorage.removeItem('clickCount');
+                 localStorage.removeItem('storyCompleted');
+                 document.getElementById("gameScreen").classList.add("hidden");
+                 currentStoryIndex = 0;
+                 storyCompleted = false;
+                 showNextStory();
+             }
+     
+             function showStory() {
+         document.getElementById("gameScreen").classList.add("hidden");
+         currentStoryIndex = 0;  // Сбросить индекс перед показом истории
+         storyCompleted = false;  // Сбросить флаг завершения сюжета
+         document.getElementById("introScreen").classList.remove("hidden");
+         showNextStory();
+     }
+     
+     
+             document.getElementById('shareButton').addEventListener('click', () => {
+                 html2canvas(document.body).then(canvas => {
+                     const link = document.createElement('a');
+                     link.download = 'mouse_clicker_result.png';
+                     link.href = canvas.toDataURL();
+                     link.click();
+                 });
+             });
+     
+             window.onload = () => {
+                 const savedData = localStorage.getItem('sync_data');
+                 if (savedData) {
+                     const syncData = JSON.parse(savedData);
+                     console.log(`Синхронизированные данные: ${syncData.username}, ${syncData.data}`);
+                 }
+             }
+     
+             function animateMouseTilt(event) {
+                 const tiltX = (event.clientY - window.innerHeight / 2) / 20;
+                 const tiltY = (event.clientX - window.innerWidth / 2) / 20;
+                 mouseImage.style.setProperty('--tiltX', `${tiltX}deg`);
+                 mouseImage.style.setProperty('--tiltY', `${tiltY}deg`);
+             }
+             function createFloatingPlus(x, y) {
+         const plusOne = document.createElement('div');
+         plusOne.textContent = "+1";
+         plusOne.className = "floating-plus"; // Применяем класс для анимации
+         plusOne.style.left = `${x}px`;
+         plusOne.style.top = `${y}px`;
+         document.body.appendChild(plusOne);
+     
+         setTimeout(() => {
+             plusOne.remove();
+         }, 1000);  // Удаляем элемент после завершения анимации
+     }
     </script>
 </body>
 </html>
+
+
+
 
 
