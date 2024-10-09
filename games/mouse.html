@@ -17,7 +17,7 @@
             background-color: #131313;
             font-family: Arial, sans-serif;
             color: #fff;
-            -webkit-touch-callout: none; /* Disable context menu on long tap */
+            -webkit-touch-callout: none;
             -webkit-user-select: none;   /* Disable text selection */
             user-select: none;           /* For all browsers */
             touch-action: manipulation;  /* Disable pinch and double tap gestures */
@@ -94,6 +94,7 @@
             to { opacity: 1; }
         }
 
+        /* Animation for desktop */
         @keyframes explode {
             0% { opacity: 1; transform: scale(1) translate(0, 0); }
             100% { opacity: 0; transform: scale(2) translate(100px, -100px); }
@@ -104,7 +105,7 @@
             animation: explode 1s forwards ease-out;
         }
 
-        /* Золотой текст +1 */
+        /* Golden +1 text animation */
         .click-text {
             position: absolute;
             color: gold;
@@ -124,6 +125,36 @@
                 transform: translateY(-50px);
             }
         }
+
+        /* Mobile-specific animation */
+        @media (max-width: 768px) {
+            .main-mouse {
+                transition: transform 0.2s ease;
+                --tiltX: 0deg;
+                --tiltY: 0deg;
+                transform: rotateX(var(--tiltX)) rotateY(var(--tiltY));
+            }
+
+            .plus-one {
+                position: absolute;
+                font-family: Inter;
+                text-shadow: 0px 0px 4px rgba(211, 155, 25, 0.25);
+                font-size: 24px;
+                font-weight: 800;
+                background: linear-gradient(180deg, #e8c547 0%, #ef882b 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                pointer-events: none;
+                user-select: none;
+                animation: move-up 2s forwards;
+            }
+
+            @keyframes move-up {
+                0% { opacity: 1; transform: translateY(0); }
+                100% { opacity: 0; transform: translateY(-50px); }
+            }
+        }
     </style>
 </head>
 <body>
@@ -134,7 +165,7 @@
         <div class="top-bar">
             <span id="clickCount" class="click-count">0</span> / 10000
         </div>
-        <img id="mouseImage" src="mish-Photoroom.png" alt="Mouse" class="main-mouse" onclick="incrementClicks(event)">
+        <img id="mouseImage" src="mish-Photoroom.png" alt="Mouse" class="main-mouse">
         <div class="buttons">
             <button onclick="showStory()">Story</button>
             <button onclick="confirmResetGame()" style="background-color: red;">New Game</button>
@@ -153,7 +184,7 @@
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script>
         let clickCount = 0;
-        let freeModeActive = false; // Flag to track activation of free mode
+        let freeModeActive = false; // Флаг для отслеживания активации свободного режима
         const storyTexts = [
             "The man caged the mouse...", 
             "The man caged the mouse. The lord of the animals saw this and told the poacher to set him free.", 
@@ -175,10 +206,10 @@
             }
         });
 
-        document.addEventListener("click", () => {
-            if (!storyCompleted) {
-                showNextStory();
-            }
+        const mouseImage = document.getElementById('mouseImage');
+        mouseImage.addEventListener('click', (event) => {
+            incrementClicks(event); // При каждом клике добавляем +1
+            animateMouseTilt(event); // Добавляем анимацию наклона мыши
         });
 
         function showNextStory() {
@@ -200,12 +231,11 @@
         }
 
         function incrementClicks(event) {
-            clickCount++;
+            clickCount++; // Теперь добавляется только +1 за клик
             document.getElementById("clickCount").textContent = clickCount;
             localStorage.setItem('clickCount', clickCount);
 
-            // Показать текст +1
-            showClickText(event.pageX, event.pageY);
+            showClickText(event.pageX, event.pageY); // Показать текст +1
 
             if (!freeModeActive && clickCount >= 10000) {
                 endGame();
@@ -225,6 +255,27 @@
             }, 1000); // Удалить через 1 секунду
         }
 
+        function animateMouseTilt(event) {
+            const $mouse = document.getElementById('mouseImage');
+            const rect = $mouse.getBoundingClientRect();
+
+            const offsetX = event.clientX - rect.left - rect.width / 2;
+            const offsetY = event.clientY - rect.top - rect.height / 2;
+
+            const DEG = 40;
+
+            const tiltX = (offsetY / rect.height) * DEG;
+            const tiltY = (offsetX / rect.width) * -DEG;
+
+            $mouse.style.setProperty('--tiltX', `${tiltX}deg`);
+            $mouse.style.setProperty('--tiltY', `${tiltY}deg`);
+
+            setTimeout(() => {
+                $mouse.style.setProperty('--tiltX', '0deg');
+                $mouse.style.setProperty('--tiltY', '0deg');
+            }, 300);
+        }
+
         function endGame() {
             document.getElementById("gameScreen").classList.add("hidden");
             document.getElementById("endScreen").classList.remove("hidden");
@@ -241,16 +292,16 @@
         }
 
         function freeMode() {
-            freeModeActive = true; // Activate free mode
+            freeModeActive = true; // Активировать свободный режим
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
 
-            // Show "Ending" button
+            // Показать кнопку "Конец"
             document.getElementById("endButton").classList.remove("hidden");
         }
 
         function triggerEnding() {
-            endGame(); // Show ending
+            endGame(); // Показать конец
         }
 
         function confirmResetGame() {
@@ -261,13 +312,13 @@
 
         function restartGame() {
             clickCount = 0;
-            freeModeActive = false; // Reset the free mode flag
+            freeModeActive = false; // Сбросить флаг свободного режима
             localStorage.setItem('clickCount', clickCount);
             document.getElementById("clickCount").textContent = clickCount;
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
 
-            // Hide the "Ending" button after restarting
+            // Скрыть кнопку "Конец" после перезапуска
             document.getElementById("endButton").classList.add("hidden");
         }
 
@@ -283,7 +334,7 @@
 
         function showStory() {
             document.getElementById("gameScreen").classList.add("hidden");
-            currentStoryIndex = 0;  // Reset index before showing the story
+            currentStoryIndex = 0;  // Сбросить индекс перед показом истории
             storyCompleted = false;
             document.getElementById("introScreen").classList.remove("hidden");
             showNextStory();
