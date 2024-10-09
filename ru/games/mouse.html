@@ -244,17 +244,18 @@
         }
 
         function showClickText(x, y) {
-            const clickText = document.createElement('div');
-            clickText.className = 'click-text';
-            clickText.textContent = '+1';
-            clickText.style.left = `${x}px`;
-            clickText.style.top = `${y}px`;
-            document.body.appendChild(clickText);
+    const clickText = document.createElement('div');
+    clickText.className = 'click-text';
+    clickText.textContent = '+1';
+    clickText.style.left = `${x}px`;
+    clickText.style.top = `${y - 50}px`; // Сдвиньте текст выше
+    document.body.appendChild(clickText);
 
-            setTimeout(() => {
-                clickText.remove();
-            }, 1000); // Удалить через 1 секунду
-        }
+    setTimeout(() => {
+        clickText.remove();
+    }, 1000); // Удалить через 1 секунду
+}
+
 
         function animateMouseTilt(event) {
             const $mouse = document.getElementById('mouseImage');
@@ -306,7 +307,7 @@
         }
 
         function confirmResetGame() {
-    if (confirm("Вы уверены, что хотите начать новую игру? Все прогрессы будут сброшены.")) {
+    if (confirm("Вы уверены, что хотите начать новую игру? Весь прогресс будет сброшен.")) {
         restartGame();
     }
 }
