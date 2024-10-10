@@ -131,100 +131,103 @@
 
 	<script>
 		let game = document.querySelector('.game'),
-			res = document.querySelector('.res'),
-			btnGame = document.querySelector('.new-game'),
-			fields = document.querySelectorAll('.field'),
-			step = false,
-			count = 0,
-			circle = `<svg class="circle">
-						<circle r="45" cx="58" cy="58" stroke="#00BFFF" stroke-width="10" fill="none" stroke-linecap="round" />
-					</svg>`,
-			cross = `<svg class="cross">
-						<line class="first" x1="15" y1="15" x2="100" y2="100" stroke="#FF4500" stroke-width="10" stroke-linecap="round" />
-						<line class="second" x1="100" y1="15" x2="15" y2="100" stroke="#FF4500" stroke-width="10" stroke-linecap="round" />
-					</svg>`;
+	res = document.querySelector('.res'),
+	btnGame = document.querySelector('.new-game'),
+	fields = document.querySelectorAll('.field'),
+	step = false,
+	count = 0,
+	circle = `<svg class="circle">
+				<circle r="45" cx="58" cy="58" stroke="#00BFFF" stroke-width="10" fill="none" stroke-linecap="round" />
+			</svg>`,
+	cross = `<svg class="cross">
+				<line class="first" x1="15" y1="15" x2="100" y2="100" stroke="#FF4500" stroke-width="10" stroke-linecap="round" />
+				<line class="second" x1="100" y1="15" x2="15" y2="100" stroke="#FF4500" stroke-width="10" stroke-linecap="round" />
+			</svg>`;
 
-		function stepCross(target) {
-			target.innerHTML = cross;
-			target.classList.add('x');
-			let crossAudio = new Audio('audio/cross.mp3');
-			crossAudio.play();
-			count++;
+function placeCross(target) {
+	target.innerHTML = cross;
+	target.classList.add('x');
+	let crossAudio = new Audio('audio/cross.mp3');
+	crossAudio.play();
+	count++;
+}
+
+function placeCircle(target) {
+	target.innerHTML = circle;
+	target.classList.add('o');
+	let circleAudio = new Audio('audio/zero.mp3');
+	circleAudio.play();
+	count++;
+}
+
+function handleClick(event) {
+	if (!step) {
+		placeCross(event.target);
+	} else {
+		placeCircle(event.target);
+	}
+	step = !step;
+	checkWinner();
+}
+
+function resetGame() {
+	step = false;
+	count = 0;
+	res.innerText = '';
+	fields.forEach(item => {
+		item.innerHTML = '';
+		item.classList.remove('x', 'o', 'active');
+	});
+	game.addEventListener('click', handleClick);
+}
+
+function checkWinner() {
+	const winningCombinations = [
+		[0, 1, 2],
+		[3, 4, 5],
+		[6, 7, 8],
+		[0, 3, 6],
+		[1, 4, 7],
+		[2, 5, 8],
+		[0, 4, 8],
+		[2, 4, 6]
+	];
+
+	winningCombinations.forEach(combination => {
+		const [a, b, c] = combination;
+
+		if (fields[a].classList.contains('x') && fields[b].classList.contains('x') && fields[c].classList.contains('x')) {
+			setTimeout(() => {
+				highlightWinningCombo(a, b, c);
+				res.innerText = 'X wins';
+			}, 500);
+			game.removeEventListener('click', handleClick);
 		}
 
-		function stepZero(target) {
-			target.innerHTML = circle;
-			target.classList.add('o');
-			let circleAudio = new Audio('audio/zero.mp3');
-			circleAudio.play();
-			count++;
+		if (fields[a].classList.contains('o') && fields[b].classList.contains('o') && fields[c].classList.contains('o')) {
+			setTimeout(() => {
+				highlightWinningCombo(a, b, c);
+				res.innerText = 'O wins';
+			}, 500);
+			game.removeEventListener('click', handleClick);
 		}
+	});
 
-		function init(e) {
-			if (!step) stepCross(e.target);
-			else stepZero(e.target);
-			step = !step;
-			win();
-		}
+	if (count === 9 && res.innerText === '') {
+		res.innerText = 'Draw';
+		game.removeEventListener('click', handleClick);
+	}
+}
 
-		function newGame() {
-			step = false;
-			count = 0;
-			res.innerText = '';
-			fields.forEach(item => {
-				item.innerHTML = '';
-				item.classList.remove('x', 'o', 'active');
-			});
-			game.addEventListener('click', init);
-		}
+function highlightWinningCombo(a, b, c) {
+	fields[a].classList.add('active');
+	fields[b].classList.add('active');
+	fields[c].classList.add('active');
+}
 
-		function win() {
-			let comb = [
-				[0, 1, 2],
-				[3, 4, 5],
-				[6, 7, 8],
-				[0, 3, 6],
-				[1, 4, 7],
-				[2, 5, 8],
-				[0, 4, 8],
-				[2, 4, 6]
-			];
+btnGame.addEventListener('click', resetGame);
+game.addEventListener('click', handleClick);
 
-			for (let i = 0; i < comb.length; i++) {
-
-				if (fields[comb[i][0]].classList.contains('x') &&
-					fields[comb[i][1]].classList.contains('x') &&
-					fields[comb[i][2]].classList.contains('x')) {
-					setTimeout(() => {
-						fields[comb[i][0]].classList.add('active');
-						fields[comb[i][1]].classList.add('active');
-						fields[comb[i][2]].classList.add('active');
-						res.innerText = 'Выиграли X';
-					}, 500);
-					game.removeEventListener('click', init);
-				}
-
-				else if (fields[comb[i][0]].classList.contains('o') &&
-					fields[comb[i][1]].classList.contains('o') &&
-					fields[comb[i][2]].classList.contains('o')) {
-					setTimeout(() => {
-						fields[comb[i][0]].classList.add('active');
-						fields[comb[i][1]].classList.add('active');
-						fields[comb[i][2]].classList.add('active');
-						res.innerText = 'Выиграли O';
-					}, 500);
-					game.removeEventListener('click', init);
-				}
-
-				else if (count == 9) {
-					res.innerText = 'Ничья';
-					game.removeEventListener('click', init);
-				}
-			}
-		}
-
-		btnGame.addEventListener('click', newGame);
-		game.addEventListener('click', init);
 	</script>
 
 </body>
