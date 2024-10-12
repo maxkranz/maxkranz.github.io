@@ -199,9 +199,10 @@
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script>
        
-let freeModeActive = false; // Флаг для отслеживания активации свободного режима
+let freeModeActive = false; 
 const storyTexts = [
-"Это был//", "Это был вечер Хэллоуина. Король Хэллоуина сидел на своем диване и ел... летучих мышей.", "Он очень любил лакомится ими, а особенно в его праздник! В Хэллоуин он устраивал пир и ловил всевозможных летучих мышей и брал их в плен, а потом и съедал.", "Вас отправили на миссию по спасению летучих мышей. Вам нужно ударить по их клетке /// раз, чтобы спасти их.", "Связь обрывается, д//житесь, удачи!//", 
+"Это был//",
+ "Это был вечер Хэллоуина. Король Хэллоуина сидел на своем диване и ел... летучих мышей.", "Он очень любил лакомится ими, а особенно в его праздник! В Хэллоуин он устраивал пир и ловил всевозможных летучих мышей и брал их в плен, а потом и съедал.", "Вас отправили на миссию по спасению летучих мышей. Вам нужно ударить по их клетке /// раз, чтобы спасти их.", "Связь обрывается, д//житесь, удачи!//", 
 ];
 
 let currentStoryIndex = 0;
@@ -239,8 +240,8 @@ function showNextStory() {
 
         const mouseImage = document.getElementById('mouseImage');
         mouseImage.addEventListener('click', (event) => {
-            incrementClicks(event); // При каждом клике добавляем +1
-            animateMouseTilt(event); // Добавляем анимацию наклона мыши
+            incrementClicks(event); 
+            animateMouseTilt(event); 
         });
 
  
@@ -251,11 +252,11 @@ function showNextStory() {
         }
 
         function incrementClicks(event) {
-            clickCount++; // Теперь добавляется только +1 за клик
+            clickCount++; 
             document.getElementById("clickCount").textContent = clickCount;
             localStorage.setItem('clickCount', clickCount);
 
-            showClickText(event.pageX, event.pageY); // Показать текст +1
+            showClickText(event.pageX, event.pageY); 
 
             if (!freeModeActive && clickCount >= 10000) {
                 endGame();
@@ -266,12 +267,12 @@ function showNextStory() {
     clickText.className = 'click-text';
     clickText.textContent = '+1';
     clickText.style.left = `${x}px`;
-    clickText.style.top = `${y - 50}px`; // Сдвиньте текст выше
+    clickText.style.top = `${y - 50}px`; 
     document.body.appendChild(clickText);
 
     setTimeout(() => {
         clickText.remove();
-    }, 1000); // Удалить через 1 секунду
+    }, 1000); 
 }
 
 
@@ -312,16 +313,15 @@ function showNextStory() {
         }
 
         function freeMode() {
-            freeModeActive = true; // Активировать свободный режим
+            freeModeActive = true;
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
 
-            // Показать кнопку "Конец"
             document.getElementById("endButton").classList.remove("hidden");
         }
 
         function triggerEnding() {
-            endGame(); // Показать конец
+            endGame();
         }
 
     
@@ -334,13 +334,13 @@ function confirmResetGame() {
 
         function restartGame() {
             clickCount = 0;
-            freeModeActive = false; // Сбросить флаг свободного режима
+            freeModeActive = false; 
             localStorage.setItem('clickCount', clickCount);
             document.getElementById("clickCount").textContent = clickCount;
             document.getElementById("endScreen").classList.add("hidden");
             document.getElementById("gameScreen").classList.remove("hidden");
 
-            // Скрыть кнопку "Конец" после перезапуска
+           
             document.getElementById("endButton").classList.add("hidden");
         }
 
@@ -356,7 +356,7 @@ function confirmResetGame() {
 
         function showStory() {
             document.getElementById("gameScreen").classList.add("hidden");
-            currentStoryIndex = 0;  // Сбросить индекс перед показом истории
+            currentStoryIndex = 0;  
             storyCompleted = false;
             document.getElementById("introScreen").classList.remove("hidden");
             showNextStory();
@@ -365,7 +365,7 @@ function confirmResetGame() {
         document.getElementById('shareButton').addEventListener('click', () => {
             html2canvas(document.body).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'deardeer_result.png';
+                link.download = 'deardeer.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
