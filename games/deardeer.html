@@ -365,19 +365,13 @@ function confirmResetGame() {
         document.getElementById('shareButton').addEventListener('click', () => {
             html2canvas(document.body).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'mouse_clicker_result.png';
+                link.download = 'deardeer_result.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
         });
 
-        window.onload = () => {
-            const savedData = localStorage.getItem('sync_data');
-            if (savedData) {
-                const syncData = JSON.parse(savedData);
-                console.log(`Синхронизированные данные: ${syncData.username}, ${syncData.data}`);
-            }
-        }
+ 
     </script>
 </body>
 </html>
