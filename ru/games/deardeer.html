@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+"It was//",
+ "Это был вечер Хэллоуина. Король Хэллоуина сидел на своем диване и ел... летучих мышей.", 
+ "Он очень любил лакомится ими, а особенно в его праздник! В Хэллоуин он устраивал пир и ловил всевозможных летучих мышей и брал их в плен, а потом и съедал.",
+  "Вас отправили на миссию по спасению летучих мышей. Вам нужно ударить по их клетке 15000 раз, чтобы спасти их.",
+ "Связь обрывается, д//житесь, удачи!//", 
+
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -197,21 +204,21 @@
         <img id="batImage" src="mishl-Photoroom.png" alt="Bat" class="main-bat">
         <div class="buttons">
             <button onclick="showStory()" class="story-button">
-                <i style="color: rgb(139, 79, 1); font-size: 15px;" >New</i> Story
+                <i style="color: rgb(139, 79, 1); font-size: 15px;" >New</i> Сюжет
             </button>
             
             </button>            
-            <button class="newgame" onclick="confirmResetGame()"  >New Game</button>
-            <button id="endButton" class="hidden" onclick="triggerEnding()" style="color: gold;">Ending</button>
+            <button class="newgame" onclick="confirmResetGame()"  >Новая игра</button>
+            <button id="endButton" class="hidden" onclick="triggerEnding()" style="color: gold;">Концовка</button>
         </div>
     </div>
     <div id="endScreen" class="end-screen hidden">
-        <h1 id="endText">Bats are freed!</h1>
+        <h1 id="endText">Летучие мыши освобождены!</h1>
         <img id="explodingBat" src="mishl-Photoroom.png" alt="Bat" class="main-bat hidden">
         <div class="buttons">
-            <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Free Mode</button>
-            <button onclick="confirmResetGame()" class="newgame">New Game</button>
-            <button id="shareButton">Share Result</button>
+            <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Свободный режим</button>
+            <button onclick="confirmResetGame()" class="newgame">Новая игра</button>
+            <button id="shareButton">Поделиться результатом</button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -220,10 +227,11 @@
 let freeModeActive = false; 
 const storyTexts = [
 "It was//",
- "It was Halloween night. The King of Halloween was sitting on his sofa eating..... bats.", 
- "He loved to eat them, and especially on his holiday! On Halloween he would have a feast and catch all kinds of bats and capture and eat them.",
-  "You have been sent on a mission to save the bats. You need to hit their cage 15000 times to save them.",
- "The connec//on's breakin/, hang in there, good luck!//", 
+ "Это был вечер Хэллоуина. Король Хэллоуина сидел на своем диване и ел... летучих мышей.", 
+ "Он очень любил лакомится ими, а особенно в его праздник! В Хэллоуин он устраивал пир и ловил всевозможных летучих мышей и брал их в плен, а потом и съедал.",
+  "Вас отправили на миссию по спасению летучих мышей. Вам нужно ударить по их клетке 15000 раз, чтобы спасти их.",
+ "Связь обрывается, д//житесь, удачи!//", 
+
 ];
 
 let currentStoryIndex = 0;
@@ -348,7 +356,7 @@ function showNextStory() {
     
 
 function confirmResetGame() {
-    if (confirm("Are you sure you want to start a new game? All progress will be reset.")) {
+    if (confirm("Вы уверены, что хотите начать новую игру? Все достижения будут сброшены.")) {
         restartGame();
     }
 }
