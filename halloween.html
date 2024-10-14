@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Kranz</title>
+    <link rel="shortcut icon" href="img/html.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 30px 20px;
+            background-color: DeepSkyBlue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+      header div:nth-child(2) {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+        .nav-links {
+            display: none;
+        }
+
+        .burger-menu {
+            display: none;
+            position: absolute;
+            top: 25px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .burger-menu div {
+            width: 30px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+
+        .intro {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project {
+            background-color: DeepSkyBlue;
+            padding: 30px;
+            width: 150px;
+    height: 150px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .project:hover {
+            background-color: #0056b3;
+        }
+
+        .project a {
+            color: #f8f8f8;
+            text-decoration: none;
+        }
+
+        .dropdown-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .dropdown {
+            background-color: orange;
+            color: black;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown:hover {
+            background-color: rgb(212, 147, 26);
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 5px 0;
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            color: #0056b3;
+        }
+
+        nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
+            background-color: orange;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 9;
+            padding: 60px 20px;
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
+        }
+
+        nav.active {
+            display: block;
+            transform: translateX(0);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        nav a:hover {
+            color: #0056b3;
+        }
+
+        .burger-menu.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 5px);
+        }
+      .nav-links a {
+    padding: 100px 15px; /* Добавьте отступ сверху и снизу по 10px и слева и справа по 15px */
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+}
+
+
+        .burger-menu.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -5px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            width: 100%;
+            font-size: 14px;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: block;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+            }
+
+            .project {
+                font-size: 16px;
+                padding: 20px;
+            }
+
+            .intro {
+                font-size: 18px;
+                padding: 0 15px;
+            }
+
+            .dropdown-container {
+                max-width: 100%;
+            }
+        }
+      .burger-menu div {
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    margin: 2px 0; /* здесь можете изменить значение на 2px или меньше */
+    transition: 0.4s;
+}
+
+        @media (min-width: 769px) {
+            .nav-links {
+                display: block;
+            }
+
+            .nav-links a {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                margin-left: 20px;
+                transition: color 0.3s ease;
+            }
+
+            .nav-links a:hover {
+                color: #0056b3;
+            }
+
+            .burger-menu {
+                display: none;
+            }
+        }
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 30px 20px;
+            background-color: orange;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .intro {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project {
+            background-color: orange;
+            padding: 30px;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+
+        }
+
+        /* Эффект появления текста */
+        .project-description {
+            position: absolute;
+            bottom: -75%;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+            transition: bottom 0.3s ease;
+        }
+
+        .project:hover .project-description,
+        .project.active .project-description {
+            bottom: 0;
+        }
+        .project:hover{
+            background-color: rgb(212, 147, 26);
+        }
+        footer a{
+            margin: 5px;
+        }
+
+        .project a {
+            color: #f8f8f8;
+            text-decoration: none;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .project-description {
+                font-size: 14px;
+            }
+
+            .project {
+                width: 100%;
+            }
+        }
+        body{
+            color: #f8f8f8;
+            background-color: #303030;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="nav-links">
+        <a href="https://maxkranz.github.io/" style="margin-left:300px">Home</a>
+    </div>
+    <div>Max Kranz🎃</div>
+    <div class="nav-links">
+        <a href="https://maxkranz.github.io/about" style="margin-right: 300px">About</a>
+    </div>
+    <div class="burger-menu" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <nav id="navMenu">
+        <a href="https://maxkranz.github.io/">Home</a>
+        <a href="https://maxkranz.github.io/about">About</a>
+    </nav>
+</header>
+
+    <div class="intro" style="color: #f8f8f8;">
+      I am Max Kranz! I am creating games and web apps! I would be happy to have you use my apps. Below are my projects!
+    </div>
+
+  
+      <div class="projects-grid">
+          <div class="project">
+              <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
+              <div class="project-description">Organize your tasks efficiently.</div>
+          </div>
+              
+          <div class="project">
+              <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
+              <div class="project-description">Can you guess the number?</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
+              <div class="project-description">Enter your thoughts here.</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/apps/timer">Timer</a>
+              <div class="project-description">Check time.</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
+              <div class="project-description">Get a quick quote.</div>
+          </div>
+            <div class="project">
+              <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
+              <div class="project-description">Calculate.</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
+              <div class="project-description">Lead Dino. Keep him safe.</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a>
+              <div class="project-description">Can you free the mouse?</div>
+          </div>
+          <div class="project">
+              <a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe</a>
+              <div class="project-description">Play Tic-Tac-Toe.</div>
+          </div>
+          <div class="project">
+            <a href="https://maxkranz.github.io/games/hangman">Hangman</a>
+            <div class="project-description">Guess the word!</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/games/bullsandcows">Bulls and Cows</a>
+            <div class="project-description">Guess the 4-digit number!</div>
+        </div>
+        <div class="project">
+            <a href="https://maxkranz.github.io/games/deardeer">Dear Deer</a>
+            <div class="project-description">Rescue the bats!</div>
+        </div>
+          </div>
+      </div>
+  
+      <div class="dropdown-container">
+          <div class="dropdown" onclick="toggleDropdown('apps')" style="color: white;">Apps</div>
+          <div class="dropdown-content" id="apps">
+              <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
+              <a href="https://maxkranz.github.io/amanda">Amanda Search Engine</a>
+              <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
+              <a href="https://maxkranz.github.io/apps/timer">Timer</a>
+              <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
+              <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
+          </div>
+          <div class="dropdown-container">
+          <div class="dropdown" onclick="toggleDropdown('games')" style="color: white;">Games</div>
+          <div class="dropdown-content" id="games">
+              <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
+               <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
+               <a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a>
+               <a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe</a>
+               <a href="https://maxkranz.github.io/games/bullsandcows">Bulls and Cows</a>
+               <a href="https://maxkranz.github.io/games/hangman">Hangman</a>
+               <a href="https://maxkranz.github.io/games/deerdear">Dear Deer</a>
+
+              
+              
+          </div>
+          
+
+    <footer style="color: #f8f8f8;">© Max Kranz Inc. All rights reserved.<br><br><a href="https://maxkranz.github.io/ru" STYLE="color: #f8f8f8;
+                text-decoration: none;
+                font-size: 15px;
+                transition: color 0.3s ease; margin-top: 0;">RU</a>
+                <a href="https://t.me/maxkranzofficial" STYLE="color: #f8f8f8;
+                text-decoration: none;
+                font-size: 15px;
+                transition: color 0.3s ease; margin-top: 0;">Telegram</a>
+    <script>
+        function toggleDropdown(id) {
+            const content = document.getElementById(id);
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const burger = document.querySelector('.burger-menu');
+            menu.classList.toggle('active');
+            burger.classList.toggle('active');
+        }
+        
+    </script>
+</body>
+</html>
