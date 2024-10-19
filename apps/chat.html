@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online | Chat</title>
-  <link rel="icon" href="images/icon.png" type="image/png">
+  <link rel="icon" href="html.png" type="image/png">
   <meta name="description" content="An online chat room for live conversations with people. Join our online-chat and connect instantly.">
   <meta name="keywords" content="chat, onlinechat, online-chat, chat-room, online-chat, onlinechat, online, chatroom">
   <meta name="author" content="Online chat room">
@@ -175,11 +175,6 @@
       cursor: pointer;
       color: white;
     }
-
-    .reaction-buttons {
-      display: flex;
-      gap: 5px;
-    }
   </style>
 </head>
 
@@ -234,7 +229,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
-    import { getDatabase, ref, set, onValue, push, remove, off } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js';
+    import { getDatabase, ref, set, get, push, remove } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js';
 
     const firebaseConfig = {
       apiKey: "AIzaSyCYtFLM3aRDtfE4zql-L_3poTwrq8yZUxs",
@@ -256,64 +251,53 @@
       const usernameInput = document.getElementById('username-input');
       const messageInput = document.getElementById('message-input');
       const messagesDiv = document.getElementById('messages');
-      const themeSelect = document.getElementById('theme-select');
       const logoutButton = document.getElementById('logout-button');
       
-      // Switch Theme
-      themeSelect.addEventListener('change', () => {
-        document.body.className = themeSelect.value;
-      });
-
       // Register User
-      document.getElementById('register-button').addEventListener('click', () => {
+      document.getElementById('register-button').addEventListener('click', async () => {
         const username = document.getElementById('register-username').value.trim();
         const password = document.getElementById('register-password').value.trim();
 
         if (username && password) {
           const usersRef = ref(database, 'users/' + username);
-          onValue(usersRef, (snapshot) => {
-            if (snapshot.exists()) {
-              document.getElementById('registration-message').textContent = 'Username already exists.';
-            } else {
-              const hashedPassword = CryptoJS.SHA256(password).toString();
-              set(ref(database, 'users/' + username), {
-                password: hashedPassword
-              }).then(() => {
-                document.getElementById('registration-message').textContent = 'Registration successful!';
-                registrationContainer.style.display = 'none';
-                loginContainer.style.display = 'block';
-              });
-            }
-          });
+          const snapshot = await get(usersRef);
+          if (snapshot.exists()) {
+            document.getElementById('registration-message').textContent = 'Username already exists.';
+          } else {
+            const hashedPassword = CryptoJS.SHA256(password).toString();
+            await set(ref(database, 'users/' + username), { password: hashedPassword });
+            document.getElementById('registration-message').textContent = 'Registration successful!';
+            registrationContainer.style.display = 'none';
+            loginContainer.style.display = 'block';
+          }
         } else {
           document.getElementById('registration-message').textContent = 'Fill in both fields.';
         }
       });
 
       // Login User
-      document.getElementById('login-button').addEventListener('click', () => {
+      document.getElementById('login-button').addEventListener('click', async () => {
         const username = document.getElementById('login-username').value.trim();
         const password = document.getElementById('login-password').value.trim();
 
         if (username && password) {
           const usersRef = ref(database, 'users/' + username);
-          onValue(usersRef, (snapshot) => {
-            if (snapshot.exists()) {
-              const hashedPassword = snapshot.val().password;
-              const inputHashedPassword = CryptoJS.SHA256(password).toString();
-              if (hashedPassword === inputHashedPassword) {
-                usernameInput.value = username;
-                localStorage.setItem('username', username);
-                chatContainer.style.display = 'block';
-                loginContainer.style.display = 'none';
-                loadMessages();
-              } else {
-                document.getElementById('login-message').textContent = 'Incorrect password.';
-              }
+          const snapshot = await get(usersRef);
+          if (snapshot.exists()) {
+            const hashedPassword = snapshot.val().password;
+            const inputHashedPassword = CryptoJS.SHA256(password).toString();
+            if (hashedPassword === inputHashedPassword) {
+              usernameInput.value = username;
+              localStorage.setItem('username', username);
+              chatContainer.style.display = 'block';
+              loginContainer.style.display = 'none';
+              loadMessages();
             } else {
-              document.getElementById('login-message').textContent = 'User not found.';
+              document.getElementById('login-message').textContent = 'Incorrect password.';
             }
-          });
+          } else {
+            document.getElementById('login-message').textContent = 'User not found.';
+          }
         } else {
           document.getElementById('login-message').textContent = 'Fill in both fields.';
         }
@@ -330,9 +314,9 @@
       // Load Messages
       function loadMessages() {
         const messagesRef = ref(database, 'messages/');
-        onValue(messagesRef, (snapshot) => {
+        get(messagesRef).then(snapshot => {
           messagesDiv.innerHTML = '';
-          snapshot.forEach((childSnapshot) => {
+          snapshot.forEach(childSnapshot => {
             const messageData = childSnapshot.val();
             const messageId = childSnapshot.key;
             const messageElement = document.createElement('div');
@@ -372,10 +356,7 @@
         if (message) {
           const username = usernameInput.value;
           const messagesRef = ref(database, 'messages/');
-          push(messagesRef, {
-            username: username,
-            message: message
-          });
+          push(messagesRef, { username: username, message: message });
           messageInput.value = '';
         }
       }
