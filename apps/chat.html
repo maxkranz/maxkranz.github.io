@@ -103,6 +103,202 @@
       padding: 0;
       line-height: 1;
     }
+    /* Общие стили */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#theme-switcher {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#theme-select {
+  margin-left: 10px;
+}
+
+input, button, select {
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+#chat-container {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
+  height: 500px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+#messages-container {
+  height: 300px; /* Установите высоту по своему усмотрению */
+  overflow-y: auto; /* Добавьте вертикальную прокрутку */
+  border: 1px solid #ddd; /* Обрамление для визуализации */
+}
+
+#messages {
+  word-wrap: break-word;
+}
+
+#message-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#message-input {
+  flex: 1;
+}
+
+#send-button {
+  flex: 0 0 100px;
+}
+
+/* Стили для форм регистрации и входа */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.form-container input {
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-container button {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.form-container button:hover {
+  background-color: #45a049;
+}
+
+.form-container p {
+  margin-top: 10px;
+  color: red;
+}
+
+/* Стили для чекбокса Remember Me */
+.form-container input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  accent-color: green;
+}
+
+.form-container label {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+/* Темные и светлые темы */
+body.light {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+body.dark {
+  background-color: #333;
+  color: #fff;
+}
+
+body.dark input, body.dark button, body.dark select {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+body.dark .form-container {
+  background-color: #444;
+  border-color: #555;
+}
+
+body.dark #messages-container {
+  background-color: #333;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark #messages {
+  color: #fff;
+}
+
+body.dark #chat-container {
+  background-color: #444;
+  border-color: #555;
+}
+
+body.dark #theme-switcher {
+  background-color: #444;
+  color: #fff;
+}
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script type="module">
