@@ -3,88 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amanda Chat</title>
-  <link rel="icon" href="html.png" type="image/png">
+  <title>Online | Chat</title>
+  <link rel="stylesheet" href="styl.css">
   <meta name="description" content="An online chat room for live conversations with people. Join our online-chat and connect instantly.">
   <meta name="keywords" content="chat, onlinechat, online-chat, chat-room, online-chat, onlinechat, online, chatroom">
   <meta name="author" content="Online chat room">
   <meta name="robots" content="index, follow">
-  <style>
-    /* Оформление страницы */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f0f0f0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    #theme-switcher {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    input, button, select {
-      padding: 10px;
-      font-size: 16px;
-    }
-
-    button {
-      background-color: deepskyblue;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
-    #chat-container {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 400px;
-      height: 500px;
-      border: 1px solid #ccc;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      border-radius: 5px;
-    }
-
-    #messages-container {
-      height: 300px;
-      overflow-y: auto;
-      border: 1px solid #ddd;
-    }
-
-    .message-wrapper {
-      padding: 5px;
-      border-bottom: 1px solid #ddd;
-      position: relative;
-    }
-
-    .delete-button {
-      position: absolute;
-      right: 10px;
-      background-color: red;
-      border: none;
-      padding: 5px;
-      border-radius: 5px;
-      cursor: pointer;
-      color: white;
-    }
-  </style>
 </head>
-
 <body class="light">
-  <!-- Theme Switcher -->
+  <audio id="notification-sound" src="pop.wav"></audio>
+
   <div id="theme-switcher">
     <label for="theme-select">Theme:</label>
     <select id="theme-select">
@@ -93,8 +21,7 @@
     </select>
   </div>
 
-  <!-- Registration Form -->
-  <div id="registration-container" class="form-container">
+  <div id="registration-container" class="form-container" style="display: none;">
     <h2>Register</h2>
     <input type="text" id="register-username" placeholder="Username">
     <input type="password" id="register-password" placeholder="Password">
@@ -103,7 +30,6 @@
     <button id="show-login-button">Already have an account? Log in</button>
   </div>
 
-  <!-- Login Form -->
   <div id="login-container" class="form-container" style="display: none;">
     <h2>Login</h2>
     <input type="text" id="login-username" placeholder="Username">
@@ -113,7 +39,6 @@
     <button id="show-register-button">Don't have an account? Register</button>
   </div>
 
-  <!-- Chat Application -->
   <div id="chat-container" style="display: none;">
     <div id="user-section">
       <input type="text" id="username-input" placeholder="Enter your name" disabled>
@@ -127,19 +52,65 @@
       <input type="text" id="message-input" placeholder="Enter your message">
       <button id="send-button">Send</button>
     </div>
-
-    <button class="logout-button" id="logout-button">Logout</button>
   </div>
+ <style>
+    body[data-theme="dark"] {
+      background-color: #333;
+      color: white;
+    }
 
-  <!-- Firebase Script -->
+    body[data-theme="light"] {
+      background-color: white;
+      color: black;
+    }
+
+    #chat-container {
+      width: 60%;
+      height: 80vh;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    #messages-container {
+      height: calc(80vh - 150px);
+      overflow-y: auto;
+    }
+    #messages {
+      padding: 10px;
+    }
+    .message-wrapper {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+    }
+    .message-wrapper img {
+      float: left;
+      margin-right: 10px;
+    }
+    .delete-button {
+      margin-left: 10px;
+      background: none;
+      border: none;
+      color: red;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0;
+      line-height: 1;
+    }
+  </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script type="module">
-    // Import the Firebase functions we need
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
-    import { getDatabase, ref, set, get, push, remove } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js';
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
+    import { getDatabase, ref, set, onValue, push, remove } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js';
+    import { getStorage } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js';
 
-    // Firebase configuration
-    const firebaseConfig = {
+    const firebaseConfig = { 
       apiKey: "AIzaSyAzPCOSSqUTNDZ8z2UAHYhnN7nMjg_2UR4",
       authDomain: "xryaxo.firebaseapp.com",
       databaseURL: "https://xryaxo-default-rtdb.firebaseio.com",
@@ -151,132 +122,128 @@
 
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
+    const storage = getStorage(app);
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const registrationContainer = document.getElementById('registration-container');
-      const loginContainer = document.getElementById('login-container');
-      const chatContainer = document.getElementById('chat-container');
-      const usernameInput = document.getElementById('username-input');
-      const messageInput = document.getElementById('message-input');
-      const messagesDiv = document.getElementById('messages');
-      const logoutButton = document.getElementById('logout-button');
-      
-      // Register User
-      document.getElementById('register-button').addEventListener('click', async () => {
-        const username = document.getElementById('register-username').value.trim();
-        const password = document.getElementById('register-password').value.trim();
+    const registrationContainer = document.getElementById('registration-container');
+    const registerUsername = document.getElementById('register-username');
+    const registerPassword = document.getElementById('register-password');
+    const registerButton = document.getElementById('register-button');
+    const registrationMessage = document.getElementById('registration-message');
+    const showLoginButton = document.getElementById('show-login-button');
 
-        if (username && password) {
-          const usersRef = ref(database, 'users/' + username);
-          const snapshot = await get(usersRef);
-          if (snapshot.exists()) {
-            document.getElementById('registration-message').textContent = 'Username already exists.';
-          } else {
-            const hashedPassword = CryptoJS.SHA256(password).toString();
-            await set(usersRef, { password: hashedPassword });
-            document.getElementById('registration-message').textContent = 'Registration successful!';
-            registrationContainer.style.display = 'none';
-            loginContainer.style.display = 'block';
-          }
-        } else {
-          document.getElementById('registration-message').textContent = 'Fill in both fields.';
-        }
-      });
+    const loginContainer = document.getElementById('login-container');
+    const loginUsername = document.getElementById('login-username');
+    const loginPassword = document.getElementById('login-password');
+    const loginButton = document.getElementById('login-button');
+    const loginMessage = document.getElementById('login-message');
+    const showRegisterButton = document.getElementById('show-register-button');
 
-      // Login User
-      document.getElementById('login-button').addEventListener('click', async () => {
-        const username = document.getElementById('login-username').value.trim();
-        const password = document.getElementById('login-password').value.trim();
+    const chatContainer = document.getElementById('chat-container');
+    const usernameInput = document.getElementById('username-input');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    const messagesDiv = document.getElementById('messages');
+    const notificationSound = document.getElementById('notification-sound');
 
-        if (username && password) {
-          const usersRef = ref(database, 'users/' + username);
-          const snapshot = await get(usersRef);
-          if (snapshot.exists()) {
-            const hashedPassword = snapshot.val().password;
-            const inputHashedPassword = CryptoJS.SHA256(password).toString();
-            if (hashedPassword === inputHashedPassword) {
-              usernameInput.value = username;
-              localStorage.setItem('username', username);
-              chatContainer.style.display = 'block';
-              loginContainer.style.display = 'none';
-              loadMessages();
-            } else {
-              document.getElementById('login-message').textContent = 'Incorrect password.';
-            }
-          } else {
-            document.getElementById('login-message').textContent = 'User not found.';
-          }
-        } else {
-          document.getElementById('login-message').textContent = 'Fill in both fields.';
-        }
-      });
+    const themeSelect = document.getElementById('theme-select');
 
-      // Logout User
-      logoutButton.addEventListener('click', () => {
-        localStorage.removeItem('username');
-        chatContainer.style.display = 'none';
+    function checkRegistrationStatus() {
+      if (localStorage.getItem('registered')) {
+        registrationContainer.style.display = 'none';
         loginContainer.style.display = 'block';
-        usernameInput.value = '';
-      });
-
-      // Load Messages
-      function loadMessages() {
-        const messagesRef = ref(database, 'messages/');
-        get(messagesRef).then(snapshot => {
-          messagesDiv.innerHTML = '';
-          snapshot.forEach(childSnapshot => {
-            const messageData = childSnapshot.val();
-            const messageId = childSnapshot.key;
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message-wrapper');
-            messageElement.innerHTML = `<strong>${messageData.username}:</strong> <div>${messageData.message}</div>`;
-
-            if (messageData.username === usernameInput.value) {
-              const deleteButton = document.createElement('button');
-              deleteButton.textContent = 'Delete';
-              deleteButton.classList.add('delete-button');
-              deleteButton.onclick = () => deleteMessage(messageId);
-              messageElement.appendChild(deleteButton);
-            }
-
-            messagesDiv.appendChild(messageElement);
-          });
-          messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        });
-      }
-
-      // Delete Message
-      function deleteMessage(messageId) {
-        const messageRef = ref(database, 'messages/' + messageId);
-        remove(messageRef);
-      }
-
-      // Send Message
-      document.getElementById('send-button').addEventListener('click', sendMessage);
-      messageInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-          sendMessage();
-        }
-      });
-
-      function sendMessage() {
-        const message = messageInput.value.trim();
-        if (message) {
-          const username = usernameInput.value;
-          const messagesRef = ref(database, 'messages/');
-          push(messagesRef, { username: username, message: message });
-          messageInput.value = '';
-        }
-      }
-
-      // Auto-login if session exists
-      if (localStorage.getItem('username')) {
-        usernameInput.value = localStorage.getItem('username');
-        chatContainer.style.display = 'block';
+      } else {
+        registrationContainer.style.display = 'block';
         loginContainer.style.display = 'none';
-        loadMessages();
+      }
+    }
+
+    function loadMessages() {
+      const messagesRef = ref(database, 'messages/');
+      onValue(messagesRef, (snapshot) => {
+        messagesDiv.innerHTML = '';
+        snapshot.forEach((childSnapshot) => {
+          const messageData = childSnapshot.val();
+          const messageElement = document.createElement('div');
+          messageElement.classList.add('message-wrapper');
+
+          const formattedContent = `${messageData.username}: ${messageData.message}`;
+          messageElement.innerHTML = `<div style="margin-left: 10px;">${formattedContent}</div>`; 
+
+          if (messageData.username === usernameInput.value) {
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = '✖';
+            deleteButton.classList.add('delete-button');
+            deleteButton.addEventListener('click', () => {
+              remove(ref(database, 'messages/' + childSnapshot.key));
+            });
+            messageElement.appendChild(deleteButton);
+          }
+
+          messagesDiv.appendChild(messageElement);
+        });
+      });
+    }
+
+    sendButton.addEventListener('click', () => {
+      const messageText = messageInput.value;
+      const username = usernameInput.value;
+
+      if (messageText.trim() && username) {
+        const messagesRef = ref(database, 'messages/');
+        const newMessageRef = push(messagesRef);
+        set(newMessageRef, {
+          username: username,
+          message: messageText
+        });
+
+        messageInput.value = '';
+        notificationSound.play();
       }
     });
+
+    themeSelect.addEventListener('change', (event) => {
+      document.body.className = event.target.value; // Изменение класса для смены темы
+    });
+
+    registerButton.addEventListener('click', () => {
+      const username = registerUsername.value;
+      const password = registerPassword.value;
+
+      if (username && password) {
+        localStorage.setItem('registered', true);
+        registrationContainer.style.display = 'none';
+        loginContainer.style.display = 'block';
+        usernameInput.value = username;
+      } else {
+        registrationMessage.textContent = 'Please fill out all fields';
+      }
+    });
+
+    loginButton.addEventListener('click', () => {
+      const username = loginUsername.value;
+      const password = loginPassword.value;
+
+      if (username && password) {
+        loginContainer.style.display = 'none';
+        chatContainer.style.display = 'block';
+        usernameInput.value = username;
+        loadMessages();
+      } else {
+        loginMessage.textContent = 'Please fill out all fields';
+      }
+    });
+
+    showLoginButton.addEventListener('click', () => {
+      registrationContainer.style.display = 'none';
+      loginContainer.style.display = 'block';
+    });
+
+    showRegisterButton.addEventListener('click', () => {
+      loginContainer.style.display = 'none';
+      registrationContainer.style.display = 'block';
+    });
+
+    checkRegistrationStatus();
   </script>
 </body>
 </html>
