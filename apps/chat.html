@@ -10,6 +10,7 @@
   <meta name="author" content="Online chat room">
   <meta name="robots" content="index, follow">
   <style>
+    /* Оформление страницы */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -31,10 +32,6 @@
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    #theme-select {
-      margin-left: 10px;
-    }
-
     input, button, select {
       padding: 10px;
       font-size: 16px;
@@ -46,22 +43,6 @@
       border: none;
       cursor: pointer;
       border-radius: 5px;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    input {
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: deepskyblue;
     }
 
     #chat-container {
@@ -81,82 +62,6 @@
       height: 300px;
       overflow-y: auto;
       border: 1px solid #ddd;
-    }
-
-    #messages {
-      word-wrap: break-word;
-    }
-
-    #message-section {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    #message-input {
-      flex: 1;
-    }
-
-    #send-button {
-      flex: 0 0 100px;
-    }
-
-    .form-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-container h2 {
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-
-    .form-container input {
-      margin-bottom: 10px;
-      padding: 10px;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .form-container button {
-      width: 100%;
-      background-color: deepskyblue;
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-
-    .form-container button:hover {
-      background-color: #0056b3;
-    }
-
-    .form-container p {
-      margin-top: 10px;
-      color: red;
-    }
-
-    .logout-button {
-      margin-top: 10px;
-      background-color: red;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      color: white;
-      border: none;
     }
 
     .message-wrapper {
@@ -226,24 +131,26 @@
     <button class="logout-button" id="logout-button">Logout</button>
   </div>
 
+  <!-- Firebase Script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    // Import the Firebase functions we need
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+    import { getDatabase, ref, set, get, push, remove } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js';
 
-  const firebaseConfig = {
-  apiKey: "AIzaSyAzPCOSSqUTNDZ8z2UAHYhnN7nMjg_2UR4",
-  authDomain: "xryaxo.firebaseapp.com",
-  databaseURL: "https://xryaxo-default-rtdb.firebaseio.com",
-  projectId: "xryaxo",
-  storageBucket: "xryaxo.appspot.com",
-  messagingSenderId: "227982058274",
-  appId: "1:227982058274:web:57bf90e9ba9b849f983b7b",
-  measurementId: "G-GH3QG7VNH5"
-};
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzPCOSSqUTNDZ8z2UAHYhnN7nMjg_2UR4",
+      authDomain: "xryaxo.firebaseapp.com",
+      databaseURL: "https://xryaxo-default-rtdb.firebaseio.com",
+      projectId: "xryaxo",
+      storageBucket: "xryaxo.appspot.com",
+      messagingSenderId: "227982058274",
+      appId: "1:227982058274:web:57bf90e9ba9b849f983b7b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
 
     document.addEventListener('DOMContentLoaded', () => {
       const registrationContainer = document.getElementById('registration-container');
@@ -266,7 +173,7 @@
             document.getElementById('registration-message').textContent = 'Username already exists.';
           } else {
             const hashedPassword = CryptoJS.SHA256(password).toString();
-            await set(ref(database, 'users/' + username), { password: hashedPassword });
+            await set(usersRef, { password: hashedPassword });
             document.getElementById('registration-message').textContent = 'Registration successful!';
             registrationContainer.style.display = 'none';
             loginContainer.style.display = 'block';
