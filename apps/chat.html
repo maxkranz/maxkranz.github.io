@@ -4,14 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Amanda Chat</title>
-  <link rel="stylesheet" href="styl.css">
   <meta name="description" content="An online chat room for live conversations with people. Join our online-chat and connect instantly.">
   <meta name="keywords" content="chat, onlinechat, online-chat, chat-room, online-chat, onlinechat, online, chatroom">
   <meta name="author" content="Online chat room">
   <meta name="robots" content="index, follow">
 </head>
 <body class="light">
-  <audio id="notification-sound" src="pop.wav"></audio>
 
   <div id="theme-switcher">
     <label for="theme-select">Theme:</label>
@@ -53,7 +51,9 @@
       <button id="send-button">Send</button>
     </div>
   </div>
- <style>
+
+
+  <style>
     body[data-theme="dark"] {
       background-color: #333;
       color: white;
@@ -65,20 +65,23 @@
     }
 
     #chat-container {
-      width: 60%;
+      width: 80%; /* Увеличиваем ширину для компьютера */
       height: 80vh;
       margin: 0 auto;
       border: 1px solid #ccc;
       padding: 20px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
+
     #messages-container {
       height: calc(80vh - 150px);
       overflow-y: auto;
     }
+
     #messages {
       padding: 10px;
     }
+
     .message-wrapper {
       margin-bottom: 10px;
       padding: 10px;
@@ -89,10 +92,7 @@
       align-items: center;
       text-align: left;
     }
-    .message-wrapper img {
-      float: left;
-      margin-right: 10px;
-    }
+
     .delete-button {
       margin-left: 10px;
       background: none;
@@ -103,62 +103,149 @@
       padding: 0;
       line-height: 1;
     }
+
     /* Общие стили */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-#theme-switcher {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+    #theme-switcher {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-#theme-select {
-  margin-left: 10px;
-}
+    #theme-select {
+      margin-left: 10px;
+    }
 
-input, button, select {
-  padding: 10px;
-  font-size: 16px;
-}
+    input, button, select {
+      padding: 10px;
+      font-size: 16px;
+    }
 
-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
+    button {
+      background-color: deepskyblue;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
 
-button:hover {
-  background-color: rgb(42, 157, 196);
-}
+    button:hover {
+      background-color: rgb(42, 157, 196);
+    }
 
-input {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-input:focus {
-  outline: none;
-  border-color: #4CAF50;
-}
+    input:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
 
-#chat-container {
+    #chat-container {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 60%;
+      height: 500px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    #messages-container {
+      height: 300px; /* Установите высоту по своему усмотрению */
+      overflow-y: auto; /* Добавьте вертикальную прокрутку */
+      border: 1px solid #ddd; /* Обрамление для визуализации */
+    }
+
+    #messages {
+      word-wrap: break-word;
+    }
+
+    #message-section {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    #message-input {
+      flex: 1;
+    }
+
+    #send-button {
+      flex: 0 0 100px;
+    }
+
+    /* Стили для форм регистрации и входа */
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .form-container input {
+      margin-bottom: 10px;
+      padding: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-container button {
+      width: 100%;
+      background-color: deepskyblue;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .form-container button:hover {
+      background-color: rgb(42, 157, 196);
+    }
+
+    .form-container p {
+      margin-top: 10px;
+      color: red;
+    }
+    @media  (max-width: 769px){
+        #chat-container {
   display: none;
   flex-direction: column;
   justify-content: space-between;
@@ -170,141 +257,13 @@ input:focus {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
-
-#messages-container {
-  height: 300px; /* Установите высоту по своему усмотрению */
-  overflow-y: auto; /* Добавьте вертикальную прокрутку */
-  border: 1px solid #ddd; /* Обрамление для визуализации */
-}
-
-#messages {
-  word-wrap: break-word;
-}
-
-#message-section {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-#message-input {
-  flex: 1;
-}
-
-#send-button {
-  flex: 0 0 100px;
-}
-
-/* Стили для форм регистрации и входа */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.form-container h2 {
-  margin-bottom: 20px;
-  font-size: 24px;
-}
-
-.form-container input {
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-container button {
-  width: 100%;
-  background-color: deepskyblue;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-.form-container button:hover {
-  background-color: rgb(42, 157, 196);
-}
-
-.form-container p {
-  margin-top: 10px;
-  color: red;
-}
-
-/* Стили для чекбокса Remember Me */
-.form-container input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  accent-color: green;
-}
-
-.form-container label {
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-}
-
-/* Темные и светлые темы */
-body.light {
-  background-color: #f0f0f0;
-  color: #000;
-}
-
-body.dark {
-  background-color: #333;
-  color: #fff;
-}
-
-body.dark input, body.dark button, body.dark select {
-  background-color: #444;
-  color: #fff;
-  border: 1px solid #555;
-}
-
-body.dark .form-container {
-  background-color: #444;
-  border-color: #555;
-}
-
-body.dark #messages-container {
-  background-color: #333;
-  color: #fff;
-  border-color: #555;
-}
-
-body.dark #messages {
-  color: #fff;
-}
-
-body.dark #chat-container {
-  background-color: #444;
-  border-color: #555;
-}
-
-body.dark #theme-switcher {
-  background-color: #444;
-  color: #fff;
-}
+    }
   </style>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
     import { getDatabase, ref, set, onValue, push, remove } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js';
-    import { getStorage } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js';
 
     const firebaseConfig = {
   apiKey: "AIzaSyCYtFLM3aRDtfE4zql-L_3poTwrq8yZUxs",
@@ -315,10 +274,9 @@ body.dark #theme-switcher {
   messagingSenderId: "681104149938",
   appId: "1:681104149938:web:8ace379b4b6d408dc168ab"
 };
-    
+
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
-    const storage = getStorage(app);
 
     const registrationContainer = document.getElementById('registration-container');
     const registerUsername = document.getElementById('register-username');
@@ -343,6 +301,16 @@ body.dark #theme-switcher {
 
     const themeSelect = document.getElementById('theme-select');
 
+    const badWords = ["badword1", "badword2", "badword3"]; // Массив с запрещёнными словами
+
+    function filterBadWords(text) {
+      badWords.forEach((badWord) => {
+        const regex = new RegExp(badWord, 'gi');
+        text = text.replace(regex, '###');
+      });
+      return text;
+    }
+
     function checkRegistrationStatus() {
       if (localStorage.getItem('registered')) {
         registrationContainer.style.display = 'none';
@@ -362,7 +330,7 @@ body.dark #theme-switcher {
           const messageElement = document.createElement('div');
           messageElement.classList.add('message-wrapper');
 
-          const formattedContent = `${messageData.username}: ${messageData.message}`;
+          const formattedContent = `${messageData.username}: ${filterBadWords(messageData.message)}`;
           messageElement.innerHTML = `<div style="margin-left: 10px;">${formattedContent}</div>`; 
 
           if (messageData.username === usernameInput.value) {
@@ -377,14 +345,23 @@ body.dark #theme-switcher {
 
           messagesDiv.appendChild(messageElement);
         });
+        // Автопрокрутка вниз при новых сообщениях
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
       });
     }
 
-    sendButton.addEventListener('click', () => {
-      const messageText = messageInput.value;
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+    function sendMessage() {
+      const messageText = filterBadWords(messageInput.value.trim());
       const username = usernameInput.value;
 
-      if (messageText.trim() && username) {
+      if (messageText && username) {
         const messagesRef = ref(database, 'messages/');
         const newMessageRef = push(messagesRef);
         set(newMessageRef, {
@@ -395,7 +372,7 @@ body.dark #theme-switcher {
         messageInput.value = '';
         notificationSound.play();
       }
-    });
+    }
 
     themeSelect.addEventListener('change', (event) => {
       document.body.className = event.target.value; // Изменение класса для смены темы
