@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
-    <title>Dear Deer</title>
+    <title>Mouse Clicker Halloween Season</title>
     <link rel="shortcut icon" href="mishl-Photoroom.png">
     <style>
         body, html {
@@ -192,7 +192,7 @@
     </div>
     <div id="gameScreen" class="game-screen hidden">
         <div class="top-bar">
-            <span id="clickCount" class="click-count">0</span> / 15000
+            <span id="clickCount" class="click-count">0</span> / 10000
         </div>
         <img id="batImage" src="mishl-Photoroom.png" alt="Bat" class="main-bat">
         <div class="buttons">
@@ -279,7 +279,7 @@ function showNextStory() {
 
             showClickText(event.pageX, event.pageY); 
 
-            if (!freeModeActive && clickCount >= 11000) {
+            if (!freeModeActive && clickCount >= 10000) {
                 endGame();
             }
         }

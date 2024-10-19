@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online | Chat</title>
+  <link rel="icon" href="images/icon.png" type="image/png">
+  <meta name="description" content="An online chat room for live conversations with people. Join our online-chat and connect instantly.">
+  <meta name="keywords" content="chat, onlinechat, online-chat, chat-room, online-chat, onlinechat, online, chatroom">
+  <meta name="author" content="Online chat room">
+  <meta name="robots" content="index, follow">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #theme-switcher {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #theme-select {
+      margin-left: 10px;
+    }
+
+    input, button, select {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: deepskyblue;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: deepskyblue;
+    }
+
+    #chat-container {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 400px;
+      height: 500px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    #messages-container {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+    }
+
+    #messages {
+      word-wrap: break-word;
+    }
+
+    #message-section {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    #message-input {
+      flex: 1;
+    }
+
+    #send-button {
+      flex: 0 0 100px;
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .form-container input {
+      margin-bottom: 10px;
+      padding: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-container button {
+      width: 100%;
+      background-color: deepskyblue;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+
+    .form-container p {
+      margin-top: 10px;
+      color: red;
+    }
+
+    .logout-button {
+      margin-top: 10px;
+      background-color: red;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+      border: none;
+    }
+
+    .message-wrapper {
+      padding: 5px;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
+
+    .delete-button {
+      position: absolute;
+      right: 10px;
+      background-color: red;
+      border: none;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .reaction-buttons {
+      display: flex;
+      gap: 5px;
+    }
+  </style>
+</head>
+
+<body class="light">
+  <!-- Theme Switcher -->
+  <div id="theme-switcher">
+    <label for="theme-select">Theme:</label>
+    <select id="theme-select">
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+
+  <!-- Registration Form -->
+  <div id="registration-container" class="form-container">
+    <h2>Register</h2>
+    <input type="text" id="register-username" placeholder="Username">
+    <input type="password" id="register-password" placeholder="Password">
+    <button id="register-button">Register</button>
+    <p id="registration-message"></p>
+    <button id="show-login-button">Already have an account? Log in</button>
+  </div>
+
+  <!-- Login Form -->
+  <div id="login-container" class="form-container" style="display: none;">
+    <h2>Login</h2>
+    <input type="text" id="login-username" placeholder="Username">
+    <input type="password" id="login-password" placeholder="Password">
+    <button id="login-button">Login</button>
+    <p id="login-message"></p>
+    <button id="show-register-button">Don't have an account? Register</button>
+  </div>
+
+  <!-- Chat Application -->
+  <div id="chat-container" style="display: none;">
+    <div id="user-section">
+      <input type="text" id="username-input" placeholder="Enter your name" disabled>
+    </div>
+
+    <div id="messages-container">
+      <div id="messages"></div>
+    </div>
+
+    <div id="message-section">
+      <input type="text" id="message-input" placeholder="Enter your message">
+      <button id="send-button">Send</button>
+    </div>
+
+    <button class="logout-button" id="logout-button">Logout</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
+    import { getDatabase, ref, set, onValue, push, remove, off } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js';
+    
+    const firebaseConfig = {
+  apiKey: "AIzaSyCYtFLM3aRDtfE4zql-L_3poTwrq8yZUxs",
+  authDomain: "maxkranz.firebaseapp.com",
+  databaseURL: "https://maxkranz-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "maxkranz",
+  storageBucket: "maxkranz.appspot.com",
+  messagingSenderId: "681104149938",
+  appId: "1:681104149938:web:8ace379b4b6d408dc168ab"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const registrationContainer = document.getElementById('registration-container');
+      const loginContainer = document.getElementById('login-container');
+      const chatContainer = document.getElementById('chat-container');
+      const usernameInput = document.getElementById('username-input');
+      const messageInput = document.getElementById('message-input');
+      const messagesDiv = document.getElementById('messages');
+      const themeSelect = document.getElementById('theme-select');
+      const logoutButton = document.getElementById('logout-button');
+      
+      // Switch Theme
+      themeSelect.addEventListener('change', () => {
+        document.body.className = themeSelect.value;
+      });
+
+      // Register User
+      document.getElementById('register-button').addEventListener('click', async () => {
+        const username = document.getElementById('register-username').value.trim();
+        const password = document.getElementById('register-password').value.trim();
+
+        if (username && password) {
+          const usersRef = ref(database, 'users/' + username);
+          off(usersRef);
+          onValue(usersRef, (snapshot) => {
+            if (snapshot.exists()) {
+              document.getElementById('registration-message').textContent = 'Username already exists. Please choose a different one.';
+            } else {
+              const hashedPassword = CryptoJS.SHA256(password).toString();
+              set(ref(database, 'users/' + username), {
+                password: hashedPassword,
+                canChat: true
+              });
+              document.getElementById('registration-message').textContent = 'Registration successful!';
+              localStorage.setItem('username', username);
+              registrationContainer.style.display = 'none';
+              loginContainer.style.display = 'block';
+            }
+          });
+        } else {
+          document.getElementById('registration-message').textContent = 'Please fill in both fields.';
+        }
+      });
+
+      // Login User
+      document.getElementById('login-button').addEventListener('click', async () => {
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value.trim();
+
+        if (username && password) {
+          const usersRef = ref(database, 'users/' + username);
+          off(usersRef);
+          onValue(usersRef, (snapshot) => {
+            if (snapshot.exists()) {
+              const hashedPassword = snapshot.val().password;
+              const inputHashedPassword = CryptoJS.SHA256(password).toString();
+              if (hashedPassword === inputHashedPassword) {
+                document.getElementById('login-message').textContent = 'Login successful!';
+                usernameInput.value = username;
+                localStorage.setItem('username', username);
+                loadMessages();
+                chatContainer.style.display = 'block';
+                loginContainer.style.display = 'none';
+              } else {
+                document.getElementById('login-message').textContent = 'Incorrect password. Please try again.';
+              }
+            } else {
+              document.getElementById('login-message').textContent = 'User not found. Please register first.';
+            }
+          });
+        } else {
+          document.getElementById('login-message').textContent = 'Please fill in both fields.';
+        }
+      });
+
+      // Logout User
+      logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('username');
+        chatContainer.style.display = 'none';
+        loginContainer.style.display = 'block';
+        usernameInput.value = '';
+      });
+
+      // Load Messages
+      function loadMessages() {
+        const messagesRef = ref(database, 'messages/');
+        off(messagesRef);
+        onValue(messagesRef, (snapshot) => {
+          messagesDiv.innerHTML = '';
+          snapshot.forEach((childSnapshot) => {
+            const messageData = childSnapshot.val();
+            const messageId = childSnapshot.key;
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message-wrapper');
+            messageElement.innerHTML = `<strong>${messageData.username}:</strong> <div>${messageData.message}</div>`;
+
+            // Delete button for user's messages
+            if (messageData.username === usernameInput.value) {
+              const deleteButton = document.createElement('button');
+              deleteButton.textContent = 'Delete';
+              deleteButton.classList.add('delete-button');
+              deleteButton.onclick = () => deleteMessage(messageId);
+              messageElement.appendChild(deleteButton);
+            }
+
+            // Append message
+            messagesDiv.appendChild(messageElement);
+          });
+          messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+      }
+
+      // Delete Message
+      function deleteMessage(messageId) {
+        const messageRef = ref(database, 'messages/' + messageId);
+        remove(messageRef);
+      }
+
+      // Send Message
+      document.getElementById('send-button').addEventListener('click', sendMessage);
+      messageInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          sendMessage();
+        }
+      });
+
+      function sendMessage() {
+        const message = messageInput.value.trim();
+        if (message) {
+          const username = usernameInput.value;
+          const messagesRef = ref(database, 'messages/');
+          push(messagesRef, {
+            username: username,
+            message: message
+          });
+          messageInput.value = '';
+        }
+      }
+
+      // Auto-login if session exists
+      if (localStorage.getItem('username')) {
+        usernameInput.value = localStorage.getItem('username');
+        loadMessages();
+        chatContainer.style.display = 'block';
+        loginContainer.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

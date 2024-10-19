@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="admin-login-container">
+    <h2>Admin Login</h2>
+    <input type="password" id="admin-password" placeholder="Enter admin password">
+    <button id="admin-login-button">Login</button>
+    <p id="admin-login-message"></p>
+  </div>
+
+  <div id="admin-panel" style="display: none;">
+    <h2>Admin Panel</h2>
+    <button id="download-chat-history">Download Chat History</button>
+    <h3>Users:</h3>
+    <div id="user-list"></div>
+  </div>
+
+  <script type="module" >import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
+    import { getDatabase, ref, onValue, set, update, remove, get } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js';
+    import { firebaseConfig } from 'firebaseConfig.js';
+    
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const adminPassword = "maxkranzmegaprogrammeryesss";
+      const adminLoginContainer = document.getElementById('admin-login-container');
+      const adminPanel = document.getElementById('admin-panel');
+      const userList = document.getElementById('user-list');
+      const adminLoginButton = document.getElementById('admin-login-button');
+      const adminPasswordInput = document.getElementById('admin-password');
+      const chatHistoryButton = document.getElementById('download-chat-history');
+      
+      adminLoginButton.addEventListener('click', () => {
+        const enteredPassword = adminPasswordInput.value.trim();
+        if (enteredPassword === adminPassword) {
+          adminLoginContainer.style.display = 'none';
+          adminPanel.style.display = 'block';
+          loadUsers();
+        } else {
+          document.getElementById('admin-login-message').textContent = 'Incorrect password';
+        }
+      });
+    
+      // Загрузка пользователей для админ-панели
+      function loadUsers() {
+        const usersRef = ref(database, 'users/');
+        onValue(usersRef, (snapshot) => {
+          userList.innerHTML = ''; // Очищаем список пользователей
+          snapshot.forEach((childSnapshot) => {
+            const userData = childSnapshot.val();
+            const username = childSnapshot.key;
+    
+            const userElement = document.createElement('div');
+            userElement.innerHTML = `
+              <strong>${username}</strong> - Can Chat: ${userData.canChat}
+              <button data-username="${username}" class="block-user-button">Toggle Block</button>
+            `;
+    
+            const blockButton = userElement.querySelector('.block-user-button');
+            blockButton.addEventListener('click', () => toggleBlockUser(username, userData.canChat));
+    
+            userList.appendChild(userElement);
+          });
+        });
+      }
+    
+      // Переключение блокировки пользователя
+      function toggleBlockUser(username, canChat) {
+        const userRef = ref(database, `users/${username}`);
+        update(userRef, { canChat: !canChat });
+      }
+    
+      // Скачивание истории чата
+      chatHistoryButton.addEventListener('click', async () => {
+        const messagesRef = ref(database, 'messages/');
+        const snapshot = await get(messagesRef);
+        const messagesData = snapshot.val();
+        const json = JSON.stringify(messagesData, null, 2);
+    
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'chat_history.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+    });
+    </script>
+</body>
+</html>
