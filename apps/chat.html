@@ -235,16 +235,16 @@
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
     import { getDatabase, ref, set, onValue, push, remove, off } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js';
-    
+
     const firebaseConfig = {
-  apiKey: "AIzaSyCYtFLM3aRDtfE4zql-L_3poTwrq8yZUxs",
-  authDomain: "maxkranz.firebaseapp.com",
-  databaseURL: "https://maxkranz-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "maxkranz",
-  storageBucket: "maxkranz.appspot.com",
-  messagingSenderId: "681104149938",
-  appId: "1:681104149938:web:8ace379b4b6d408dc168ab"
-};
+      apiKey: "AIzaSyCYtFLM3aRDtfE4zql-L_3poTwrq8yZUxs",
+      authDomain: "maxkranz.firebaseapp.com",
+      databaseURL: "https://maxkranz-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "maxkranz",
+      storageBucket: "maxkranz.appspot.com",
+      messagingSenderId: "681104149938",
+      appId: "1:681104149938:web:8ace379b4b6d408dc168ab"
+    };
 
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
@@ -265,61 +265,57 @@
       });
 
       // Register User
-      document.getElementById('register-button').addEventListener('click', async () => {
+      document.getElementById('register-button').addEventListener('click', () => {
         const username = document.getElementById('register-username').value.trim();
         const password = document.getElementById('register-password').value.trim();
 
         if (username && password) {
           const usersRef = ref(database, 'users/' + username);
-          off(usersRef);
           onValue(usersRef, (snapshot) => {
             if (snapshot.exists()) {
-              document.getElementById('registration-message').textContent = 'Username already exists. Please choose a different one.';
+              document.getElementById('registration-message').textContent = 'Username already exists.';
             } else {
               const hashedPassword = CryptoJS.SHA256(password).toString();
               set(ref(database, 'users/' + username), {
-                password: hashedPassword,
-                canChat: true
+                password: hashedPassword
+              }).then(() => {
+                document.getElementById('registration-message').textContent = 'Registration successful!';
+                registrationContainer.style.display = 'none';
+                loginContainer.style.display = 'block';
               });
-              document.getElementById('registration-message').textContent = 'Registration successful!';
-              localStorage.setItem('username', username);
-              registrationContainer.style.display = 'none';
-              loginContainer.style.display = 'block';
             }
           });
         } else {
-          document.getElementById('registration-message').textContent = 'Please fill in both fields.';
+          document.getElementById('registration-message').textContent = 'Fill in both fields.';
         }
       });
 
       // Login User
-      document.getElementById('login-button').addEventListener('click', async () => {
+      document.getElementById('login-button').addEventListener('click', () => {
         const username = document.getElementById('login-username').value.trim();
         const password = document.getElementById('login-password').value.trim();
 
         if (username && password) {
           const usersRef = ref(database, 'users/' + username);
-          off(usersRef);
           onValue(usersRef, (snapshot) => {
             if (snapshot.exists()) {
               const hashedPassword = snapshot.val().password;
               const inputHashedPassword = CryptoJS.SHA256(password).toString();
               if (hashedPassword === inputHashedPassword) {
-                document.getElementById('login-message').textContent = 'Login successful!';
                 usernameInput.value = username;
                 localStorage.setItem('username', username);
-                loadMessages();
                 chatContainer.style.display = 'block';
                 loginContainer.style.display = 'none';
+                loadMessages();
               } else {
-                document.getElementById('login-message').textContent = 'Incorrect password. Please try again.';
+                document.getElementById('login-message').textContent = 'Incorrect password.';
               }
             } else {
-              document.getElementById('login-message').textContent = 'User not found. Please register first.';
+              document.getElementById('login-message').textContent = 'User not found.';
             }
           });
         } else {
-          document.getElementById('login-message').textContent = 'Please fill in both fields.';
+          document.getElementById('login-message').textContent = 'Fill in both fields.';
         }
       });
 
@@ -334,7 +330,6 @@
       // Load Messages
       function loadMessages() {
         const messagesRef = ref(database, 'messages/');
-        off(messagesRef);
         onValue(messagesRef, (snapshot) => {
           messagesDiv.innerHTML = '';
           snapshot.forEach((childSnapshot) => {
@@ -344,7 +339,6 @@
             messageElement.classList.add('message-wrapper');
             messageElement.innerHTML = `<strong>${messageData.username}:</strong> <div>${messageData.message}</div>`;
 
-            // Delete button for user's messages
             if (messageData.username === usernameInput.value) {
               const deleteButton = document.createElement('button');
               deleteButton.textContent = 'Delete';
@@ -353,7 +347,6 @@
               messageElement.appendChild(deleteButton);
             }
 
-            // Append message
             messagesDiv.appendChild(messageElement);
           });
           messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -390,9 +383,9 @@
       // Auto-login if session exists
       if (localStorage.getItem('username')) {
         usernameInput.value = localStorage.getItem('username');
-        loadMessages();
         chatContainer.style.display = 'block';
         loginContainer.style.display = 'none';
+        loadMessages();
       }
     });
   </script>
