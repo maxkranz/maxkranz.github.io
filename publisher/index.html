@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max Kranz Rising</title>
+    <title>Max Kranz Publisher</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -119,11 +119,12 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr); /* 6 колонок */
+            grid-template-columns: repeat(6, 1fr); /* 6 колонок по умолчанию */
             gap: 20px;
             width: 100%;
             max-width: 1200px;
             padding: 20px;
+            justify-content: center;
         }
 
         .project {
@@ -136,7 +137,19 @@
             cursor: pointer;
             display: block;
             text-decoration: none;
+            width: 250px;
         }
+        @media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: repeat(1, 1fr); /* 1 колонка для телефонов */
+        justify-content: center; /* Центрирует элементы */
+    }
+
+    .project {
+        max-width: none; /* Убирает ограничение ширины */
+        width: 100%; /* Элемент занимает всю ширину родителя */
+    }
+}
 
         .project:hover {
             transform: translateY(-10px);
@@ -160,8 +173,6 @@
             text-align: center;
             padding: 20px;
             font-size: 0.9rem;
-            color: #fff;
-            background-color: #4a90e2;
             width: 100%;
         }
 
@@ -217,19 +228,19 @@
                 display: none;
             }
 
-            .projects-grid {
-                grid-template-columns: repeat(3, 1fr); /* 3 колонки для мобильных */
-            }
 
             nav {
                 width: 90%;
             }
         }
+        footer a{
+            margin: 7px;
+        }
     </style>
 </head>
 <body>
 <header>
-    <a href="https://mkrisin.github.io" class="logo">MK Rising</a>
+    <a href="https://maxkranz.github.io/publisher/" class="logo">MK Publisher</a>
     <div class="search-container">
         <input type="text" id="search" placeholder="Search...">
     </div>
@@ -246,33 +257,33 @@
 </header>
 
 <div class="intro">
-    Welcome to Max Kranz Rising! Discover amazing games and apps below.
+    Welcome to MK Publisher! Discover Top-6 games and apps for the last week.
 </div>
 
 <div class="projects-grid" id="projects-grid">
-    <a href="https://example.com/amanda" class="project" data-title="Amanda">
-        <img src="https://via.placeholder.com/200x150" alt="Amanda">
+    <a href="https:/maxkranz.github.io/publisher/app/001" class="project" data-title="Amanda">
+        <img src="amanda.png" alt="Amanda">
         <div class="project-title">Amanda</div>
     </a>
-    <a href="https://example.com/todo-app" class="project" data-title="To Do App">
-        <img src="https://via.placeholder.com/200x150" alt="To Do App">
+    <a href="https://maxkranz.github.io/publisher/app/002" class="project" data-title="To Do App">
+        <img src="Снимок экрана от 2024-11-24 20-54-01.png" alt="To Do App">
         <div class="project-title">To Do App</div>
     </a>
-    <a href="https://example.com/guess-the-number" class="project" data-title="Guess The Number">
-        <img src="https://via.placeholder.com/200x150" alt="Guess The Number">
+    <a href="https://maxkranz.github.io/publisher/app/003" class="project" data-title="Guess The Number">
+        <img src="Снимок экрана от 2024-11-24 20-58-28.png" alt="Guess The Number">
         <div class="project-title">Guess The Number</div>
     </a>
-    <a href="https://example.com/guess-the-number" class="project" data-title="Guess The Number">
-        <img src="https://via.placeholder.com/200x150" alt="Guess The Number">
-        <div class="project-title">Guess The Number</div>
+    <a href="https://maxkranz.github.io/publisher/app/004" class="project" data-title="Just an App">
+        <img src="Снимок экрана от 2024-11-24 21-06-21.png" alt="Just an App">
+        <div class="project-title">Just an App</div>
     </a>
-    <a href="https://example.com/guess-the-number" class="project" data-title="Guess The Number">
-        <img src="https://via.placeholder.com/200x150" alt="Guess The Number">
-        <div class="project-title">Guess The Number</div>
+    <a href="https://maxkranz.github.io/publisher/app/005" class="project" data-title="Gangrena">
+        <img src="Снимок экрана от 2024-11-24 21-00-44.png" alt="Gangrena">
+        <div class="project-title">Chuma</div>
     </a>
-    <a href="https://example.com/guess-the-number" class="project" data-title="Guess The Number">
-        <img src="https://via.placeholder.com/200x150" alt="Guess The Number">
-        <div class="project-title">Guess The Number</div>
+    <a href="https://maxkranz.github.io/publisher/app/006" class="project" data-title="Gangrena">
+        <img src="Снимок экрана от 2024-11-24 21-09-03.png" alt="Gangrena">
+        <div class="project-title">Pravda</div>
     </a>
 </div>
 
@@ -290,7 +301,11 @@
 </div>
 
 <footer>
-    © Max Kranz Inc. All rights reserved.
+    © Max Kranz Inc. All rights reserved. <br><br>
+    <a href="https://t.me/maxkranzofficial" STYLE="
+    text-decoration: none;
+    font-size: 15px;
+    transition: color 0.3s ease; margin-top: 0;">Telegram</a>
 </footer>
 
 <script>
