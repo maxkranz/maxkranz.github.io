@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK URL Shortener</title>
+    <link rel="shortcut icon" href="img/html.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #303030; /* Тема фона */
+            color: #f8f8f8; /* Основной текст */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #1e1e1e; /* Фон формы */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 30px 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .container h1 {
+            color: DeepSkyBlue; /* Основной цвет */
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: #2a2a2a; /* Цвет инпута */
+            color: #f8f8f8;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        .input-container input:focus {
+            border: 2px solid DeepSkyBlue; /* Акцент при фокусе */
+        }
+
+        .shorten-btn {
+            margin-top: 15px;
+            padding: 15px 20px;
+            background-color: DeepSkyBlue;
+            color: #f8f8f8;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .shorten-btn:hover {
+            background-color: #007acc; /* Темнее при наведении */
+        }
+
+        .result-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result-container p {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .result-container a {
+            color: DeepSkyBlue;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .result-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MK URL Shortener</h1>
+        <div class="input-container">
+            <input type="text" id="urlInput" placeholder="Enter your URL here..." />
+        </div>
+        <button class="shorten-btn" onclick="shortenURL()">Shorten URL</button>
+        <div class="result-container" id="resultContainer">
+            <p>Here is your shortened URL:</p>
+            <a href="#" target="_blank" id="shortenedURL"></a>
+        </div>
+    </div>
+
+    <script>
+        function shortenURL() {
+            const urlInput = document.getElementById("urlInput").value.trim();
+            const resultContainer = document.getElementById("resultContainer");
+            const shortenedURL = document.getElementById("shortenedURL");
+
+            if (urlInput === "") {
+                alert("Please enter a valid URL.");
+                return;
+            }
+
+            // Simulating the generation of a shortened URL (replace this with actual backend logic)
+            const uniqueCode = Math.random().toString(36).substring(2, 8); // Генерация случайного кода
+            const shortenedLink = `https://mkurls.web.app/${uniqueCode}`;
+
+            // Display the shortened URL
+            shortenedURL.href = shortenedLink;
+            shortenedURL.textContent = shortenedLink;
+            resultContainer.style.display = "block";
+        }
+        // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDk3hK0kidcnGPA5C4h984H2bfo0pYrwmo",
+  authDomain: "mkurls.firebaseapp.com",
+  projectId: "mkurls",
+  storageBucket: "mkurls.firebasestorage.app",
+  messagingSenderId: "73233576635",
+  appId: "1:73233576635:web:effdaa7e34791203172f9e",
+  measurementId: "G-93EZ6GZS10"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+    </script>
+</body>
+</html>
