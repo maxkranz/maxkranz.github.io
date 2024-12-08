@@ -1,13 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max Kranz Publisher</title>
-    <link rel="shortcut icon" href="Снимок экрана от 2024-11-26 16-30-44-Photoroom.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Cards</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .card .title {
+      color: #888;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .card .name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .card a {
+      display: inline-block;
+      color: #007bff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .grid {
+        gap: 15px;
+      }
+
+      .card {
+        padding: 15px;
+      }
+
+      .card img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+    * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -117,7 +192,7 @@
             font-size: 1.2rem;
         }
 
-        #projects-grid {
+        .projects-grid {
     display: grid;
     gap: 20px; /* Расстояние между квадратиками */
     padding: 20px; /* Внутренний отступ */
@@ -133,11 +208,12 @@
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+            display: block;
             text-decoration: none;
             width: 250px;
         }
         @media (max-width: 768px) {
-    #projects-grid {
+    .projects-grid {
         grid-template-columns: repeat(1, 1fr); /* 1 колонка для телефонов */
         justify-content: center; /* Центрирует элементы */
     }
@@ -241,7 +317,7 @@
             max-width: 800px;
             line-height: 1.5;
         }
-        #projects-grid {
+        .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 20px;
@@ -298,7 +374,7 @@
             color: #f8f8f8;
             background-color: #303030;
         }
-        #projects-grid {
+        .projects-grid {
     display: grid;
     gap: 20px; /* Расстояние между квадратиками */
     padding: 20px; /* Внутренний отступ */
@@ -321,7 +397,11 @@
     height: 200px; /* Фиксированная высота */
 }
 
-
+.project img {
+    width: 100%; /* Ширина изображения */
+    height: 150px; /* Высота изображения */
+    object-fit: cover; /* Обрезка изображения */
+}
 
 .project-title {
     padding: 10px; /* Отступы */
@@ -329,139 +409,45 @@
     font-weight: 600; /* Полужирный текст */
     color: #333; /* Цвет текста */
 }
-#logop{
-    height: 60px;
-}
 
 .project:hover {
     transform: translateY(-10px); /* Поднятие квадрата при наведении */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Увеличение тени */
 }
-
-
-    </style>
+  </style>
 </head>
 <body>
-<header>
-    <a href="https://maxkranz.github.io/publisher/" class="logo">
-        <img src="logop.png" id="logop">
-        
-    </a>
-    <div class="search-container">
-        <input type="text" id="search" placeholder="Search...">
+  <h1 style="text-align: center; margin-bottom: 30px;">Developers</h1>
+  <div class="grid">
+    <!-- Карточка разработчика -->
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Developer Photo">
+      <div class="title">Developer</div>
+      <div class="name">John Doe</div>
+      <a href="#about">About</a>
     </div>
-    <div class="burger-menu" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Developer Photo">
+      <div class="title">Developer</div>
+      <div class="name">Jane Smith</div>
+      <a href="#about">About</a>
     </div>
-    <nav id="navMenu">
-        <span class="close-menu" onclick="toggleMenu()">Х</span>
-        <a href="#about">About</a>
-        <a href="#post">Post Your App/Game</a>
-        <a href="https://t.me/maxkranzofficial">Telegram</a>
-    </nav>
-</header>
 
-<div class="intro">
-    Welcome to MK Publisher! Discover Top-6 games and apps for the last week.
-</div>
-
-<div id="projects-grid">
-    <a href="https://maxkranz.github.io/amanda" class="project" data-title="Amanda">
-        <img src="amanda.png" alt="Example Project">
-        <div class="project-title">Amanda</div>
-    </a>
-
-    <a href="https://maxkranz.github.io/apps/todoapp" class="project"data-title="To Do">
-        <img src="todo.png" alt="Example Project">
-        <div class="project-title">To Do</div>
-    </a>
-      
-    <a href="https://maxkranz.github.io/games/guessthenumber" class="project"data-title="Guess The Number">
-        <img src="gtn.png" alt="Example Project">
-        <div class="project-title">Guess The Number</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/noteapp" class="project"data-title="NoteApp">
-        <img src="noteapp.png" alt="Example Project">
-        <div class="project-title">NoteApp</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/timer" class="project"data-title="Timer">
-        <img src="timer.png" alt="Example Project">
-        <div class="project-title">Timer</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/quotegenerator" class="project"data-title="Quotes Generator">
-        <img src="quotes.png" alt="Example Project">
-        <div class="project-title">Quotes Generator</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/calculator" class="project"data-title="Calculator">
-        <img src="calculate.png" alt="Example Project">
-        <div class="project-title">Calculator</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/dino" class="project"data-title="Dino">
-        <img src="dino.png" alt="Example Project">
-        <div class="project-title">Dino</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/mouse" class="project"data-title="Mouse Clicker">
-        <img src="mishl-Photoroom.png" alt="Example Project">
-        <div class="project-title">Mouse Clicker</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/tictactoe" class="project"data-title="Tic-Tac-Toe">
-        <img src="tictactoe.png" alt="Example Project">
-        <div class="project-title">Tic-Tac-Toe</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/hangman" class="project"data-title="Hangman">
-        <img src="hangman.png" alt="Example Project">
-        <div class="project-title">Hangman</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/bullsandcows" class="project"data-title="Bulls And Cows">
-        <img src="cow.png" alt="Example Project">
-        <div class="project-title">Bulls And Cows</div>
-    </a>
-
-</div>
-
-<div class="dropdown-container">
-    <div class="dropdown" onclick="toggleDropdown('apps')">Apps</div>
-    <div class="dropdown-content" id="apps">
-        <a href="#">To Do App</a>
-        <a href="#">Amanda</a>
+    <!-- Больше карточек -->
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Developer Photo">
+      <div class="title">Developer</div>
+      <div class="name">Alice Johnson</div>
+      <a href="#about">About</a>
     </div>
-    <div class="dropdown" onclick="toggleDropdown('games')">Games</div>
-    <div class="dropdown-content" id="games">
-        <a href="#">Guess The Number</a>
-        <a href="#">Tic-Tac-Toe</a>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Developer Photo">
+      <div class="title">Developer</div>
+      <div class="name">Bob Brown</div>
+      <a href="#about">About</a>
     </div>
-</div>
-
-<footer>
-    © Max Kranz Inc. All rights reserved. 
-</footer>
-
-<script>
-    
-    function toggleMenu() {
-        const navMenu = document.getElementById('navMenu');
-        navMenu.classList.toggle('active');
-    }
-
-    function toggleDropdown(id) {
-        const dropdown = document.getElementById(id);
-        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-    }
-
-    const searchInput = document.getElementById('search');
-    const projectsGrid = document.getElementById('projects-grid');
-    const projects = projectsGrid.getElementsByClassName('project');
-
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        Array.from(projects).forEach(project => {
-            const title = project.getAttribute('data-title').toLowerCase();
-            project.style.display = title.includes(query) ? 'block' : 'none';
-        });
-    });
-
-</script>
+  </div>
 </body>
 </html>
