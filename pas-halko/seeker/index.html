@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pas-Halko Seeker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Основной стиль */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #131313;
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
+        }
+
+        /* История */
+        .story-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .story-text {
+            font-size: 24px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.5s forwards;
+            text-shadow: 0px 0px 10px #4a90e2;
+        }
+
+        .story-image {
+            max-width: 90%;
+            margin: 20px 0;
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            display: none;
+        }
+
+        /* Игра */
+        .game-container {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .game-image {
+            max-width: 90%;
+            margin: 20px 0;
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+        }
+
+        .game-controls {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #40556d;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4a90e2;
+        }
+
+        /* Викторина */
+        .quiz-container {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            color: black;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options li {
+            margin: 10px 0;
+        }
+
+        .results-container {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        background: linear-gradient(to right, #4a90e2, #00bfff);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+    }
+
+    button:hover {
+        background: linear-gradient(to right, #4a90e2, #1e90ff);
+        transform: scale(1.01);
+        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    button:active {
+        box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+    }
+    </style>
+</head>
+<body>
+    <!-- История -->
+    <div class="story-container" id="story-container" onclick="nextStory()">
+        <p id="story-text" class="story-text"></p>
+        <img id="story-image" class="story-image" src="" alt="Story Image">
+    </div>
+
+    <!-- Игра -->
+    <div class="game-container" id="game-container">
+        <h3 id="game-instruction">Ищите пасхалки на картинке!<h3>
+        <img id="game-image" class="game-image" src="" alt="Game Image">
+        <div class="game-controls">
+            <button id="next-game" onclick="nextGame()">Следующая картинка</button>
+        </div>
+    </div>
+
+    <!-- Викторина -->
+    <div class="quiz-container" id="quiz-container">
+        <div class="question" id="question"></div>
+        <ul class="options" id="options"></ul>
+        <button id="nextBtn" onclick="nextQuestion()" disabled>Следующий вопрос</button>
+    </div>
+
+    <!-- Результаты -->
+    <div class="results-container" id="results-container">
+        <h2>И сколько фруктов и овощей собрал Билли?</h2>
+        <p id="results-text"></p>
+        <button onclick="restartGame()">Начать заново</button>
+    </div>
+
+    <script>
+        /* История */
+        const storySteps = [
+            { text: "Обычный городской офисный работник по имени Билли решил, что ему надоела городская жизнь и отправился в горы.", image: "pashalkoseeker1.jpg" },
+            { text: "Он гулял, вдыхал свободный воздух (Америки) и наслаждался тишиной, которую у него регулярно отнимает шумный город и семья.", image: "passeek2.jpg" },
+            { text: "Но вдруг он вспомнил, что его попросили найти огурец🥒, вишню🍒, броколли🥦, яблочко🍏 и морковку🥕!", image: "goal.jpg" },
+            { text: "Найдите все 5 пасхалок, чтобы выиграть!", image: "goal.jpg" }
+        ];
+        let currentStep = 0;
+
+        function nextStory() {
+            const storyText = document.getElementById("story-text");
+            const storyImage = document.getElementById("story-image");
+
+            if (currentStep < storySteps.length) {
+                const step = storySteps[currentStep];
+                storyText.style.opacity = "0";
+                storyText.style.transform = "translateY(20px)";
+                storyImage.style.display = "none";
+
+                setTimeout(() => {
+                    storyText.innerText = step.text;
+                    storyImage.src = step.image;
+                    storyText.style.opacity = "1";
+                    storyText.style.transform = "translateY(0)";
+                    storyImage.style.display = "block";
+                }, 500);
+
+                currentStep++;
+            } else {
+                document.getElementById("story-container").style.display = "none";
+                document.getElementById("game-container").style.display = "flex";
+                loadGame();
+            }
+        }
+
+        /* Игра */
+        const gameImages = [
+            "game11.png",
+            "game22.png",
+            "game33.png",
+            "game44.png",
+            "game55.png"
+        ];
+        let currentGameIndex = 0;
+
+        function loadGame() {
+            document.getElementById("game-image").src = gameImages[currentGameIndex];
+        }
+
+        function nextGame() {
+            currentGameIndex++;
+            if (currentGameIndex < gameImages.length) {
+                loadGame();
+            } else {
+                document.getElementById("game-container").style.display = "none";
+                document.getElementById("quiz-container").style.display = "block";
+                loadQuestion();
+            }
+        }
+
+        /* Викторина */
+        const questions = [
+            { question: "Что вы нашли на первой картинке?", options: ["Морковь", "Вишня", "Броколли"], answer: 2 },
+            { question: "Что вы нашли на второй картинке?", options: ["Яблоко", "Огурец", "Броколли"], answer: 1 },
+            { question: "Что вы нашли на третьей картинке?", options: ["Огурец", "Вишня", "Морковка"], answer: 2 },
+            { question: "Что вы нашли на четвертой картинке?", options: ["Яблоко", "Морковка", "Огурец"], answer: 0 },
+            { question: "Что вы нашли на пятой картинке?", options: ["Огурец", "Вишня", "Броколли"], answer: 1 }
+        ];
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+
+        function loadQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            document.getElementById("question").textContent = currentQuestion.question;
+            const optionsElement = document.getElementById("options");
+            optionsElement.innerHTML = "";
+            currentQuestion.options.forEach((option, index) => {
+                optionsElement.innerHTML += `<li><input type="radio" name="option" value="${index}" onchange="enableNextButton()"> ${option}</li>`;
+            });
+        }
+
+        function enableNextButton() {
+            document.getElementById("nextBtn").disabled = false;
+        }
+
+        function nextQuestion() {
+            const selectedOption = document.querySelector('input[name="option"]:checked');
+            if (selectedOption) {
+                const answer = parseInt(selectedOption.value);
+                if (answer === questions[currentQuestionIndex].answer) {
+                    correctAnswers++;
+                }
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    loadQuestion();
+                    document.getElementById("nextBtn").disabled = true;
+                } else {
+                    document.getElementById("quiz-container").style.display = "none";
+                    document.getElementById("results-container").style.display = "block";
+                    showResults();
+                }
+            }
+        }
+
+        function showResults() {
+            document.getElementById("results-text").textContent = `У Билли получилось собрать ${correctAnswers} овощей и фруктов из ${questions.length}!`;
+        }
+
+        /* Перезапуск */
+        function restartGame() {
+            location.reload();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            nextStory();
+        });
+    </script>
+</body>
+</html>
