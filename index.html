@@ -20,6 +20,109 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px;
+            background-color: DeepSkyBlue;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header nav a {
+            margin-left: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .section {
+            width: 100%;
+            max-width: 1200px;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .trusted-by {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .trusted-by img {
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .partner-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-10px);
+        }
+
+        footer {
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: DeepSkyBlue;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
         }
 
@@ -204,7 +307,6 @@
             padding: 20px;
             width: 100%;
             font-size: 14px;
-            color: #777;
         }
 
         @media (max-width: 1233px) {
@@ -399,130 +501,183 @@
 .logo{
     height: 70px;
 }
+p, a, h2, h1, h6{
+    color: white;
+}
+.section{
+    color: white;
+}
+.section h2{
+    color: white;
+}
+.section p{
+    color: white;
+}
+button {
+    background-color: DEEPSKYBLUE; /* Зеленый фон */
+    color: white; /* Белый текст */
+    padding: 15px 30px; /* Отступы внутри кнопки */
+    border: none; /* Убираем рамку */
+    border-radius: 8px; /* Закругленные углы */
+    font-size: 16px; /* Размер текста */
+    font-weight: bold; /* Жирный текст */
+    cursor: pointer; /* Указатель при наведении */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+    transition: all 0.3s ease; /* Плавный переход */
+    width: 150px;
+}
 
+button:hover {
+    background-color: rgb(29, 172, 219); /* Темно-зеленый при наведении */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Увеличение тени */
+    transform: translateY(-2px); /* Легкое поднятие */
+}
+
+button:active {
+    transform: translateY(2px); /* Смещение при клике */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Меньшая тень */
+}
 
     </style>
 </head>
 <body>
-<header>
-    <div class="nav-links">
-        <a href="https://maxkranz.github.io/projects" style="margin-left:300px">Projects</a>
-    </div>
-    <div><a href="https://maxkranz.github.io"><img class="logo"src="logomk.png"></a></div>
-    <div class="nav-links">
-        <a href="https://maxkranz.github.io/about" style="margin-right: 300px">About</a>
-    </div>
-    <div class="burger-menu" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <nav id="navMenu">
-        <a href="https://maxkranz.github.io/projects">Projects</a>
-        <a href="https://maxkranz.github.io/about">About</a>
-    </nav>
-</header>
-
-    <div class="intro" style="color: #f8f8f8;">
-      I am Max Kranz! I am creating games and web apps! I would be happy to have you use my apps. Below are my projects!
-    </div>
-
-  
-      <div class="projects-grid">
-            <a href="https://maxkranz.github.io/amanda" class="project">
-                <img src="amanda.png" alt="Amanda">
-                <div class="project-title">Amanda</div>
-            </a>
-        
-            <a href="https://maxkranz.github.io/apps/todoapp" class="project">
-                <img src="todo.png" alt="To Do">
-                <div class="project-title">To Do</div>
-            </a>
-              
-            <a href="https://maxkranz.github.io/games/guessthenumber" class="project">
-                <img src="gtn.png" alt="Guess The Number">
-                <div class="project-title">Guess The Number</div>
-            </a>
-            <a href="https://maxkranz.github.io/apps/noteapp" class="project">
-                <img src="noteapp.png" alt="NoteApp">
-                <div class="project-title">NoteApp</div>
-            </a>
-            <a href="https://maxkranz.github.io/apps/timer" class="project">
-                <img src="timer.png" alt="Timer">
-                <div class="project-title">Timer</div>
-            </a>
-            <a href="https://maxkranz.github.io/apps/quotegenerator" class="project">
-                <img src="quotes.png" alt="Quotes Generator">
-                <div class="project-title">Quotes Generator</div>
-            </a>
-            <a href="https://maxkranz.github.io/apps/calculator" class="project">
-                <img src="calculate.png" alt="Calculator">
-                <div class="project-title">Calculator</div>
-            </a>
-            <a href="https://maxkranz.github.io/games/dino" class="project">
-                <img src="dino.png" alt="Dino">
-                <div class="project-title">Dino</div>
-            </a>
-            <a href="https://maxkranz.github.io/games/mouse" class="project">
-                <img src="mishl-Photoroom.png" alt="Mouse Clicker">
-                <div class="project-title">Mouse Clicker</div>
-            </a>
-            <a href="https://maxkranz.github.io/games/tictactoe" class="project">
-                <img src="tictactoe.png" alt="Tic-Tac-Toe">
-                <div class="project-title">Tic-Tac-Toe</div>
-            </a>
-            <a href="https://maxkranz.github.io/games/hangman" class="project">
-                <img src="hangman.png" alt="Hangman">
-                <div class="project-title">Hangman</div>
-            </a>
-            <a href="https://maxkranz.github.io/games/bullsandcows" class="project">
-                <img src="cow.png" alt="Bulls and Cows">
-                <div class="project-title">Bulls And Cows</div>
-            </a>
-            <a href="https://maxkranz.github.io/pas-halko/" class="project">
-                <img src="pash.png" alt="Pas-Halko">
-                <div class="project-title">Pas-Halko</div>
-            </a>
-            <a href="https://maxkranz.github.io/pas-halko/seeker/" class="project">
-                <img src="pas-halko/passeeker.png" alt="Pas-Halko Seeker">
-                <div class="project-title">Pas-Halko Seeker</div>
-            </a>
-
-      </div>
-  
-      <div class="dropdown-container">
-          <div class="dropdown" onclick="toggleDropdown('apps')" style="color: white;">Apps</div>
-          <div class="dropdown-content" id="apps">
-              <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
-              <a href="https://maxkranz.github.io/amanda">Amanda Search Engine</a>
-              <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
-              <a href="https://maxkranz.github.io/apps/timer">Timer</a>
-              <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
-              <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
+    <header>
+        <div class="nav-links">
+            <a href="https://maxkranz.github.io/projects" style="margin-left:300px">Projects</a>
+        </div>
+        <div><a href="https://maxkranz.github.io"><img class="logo"src="logomk.png"></a></div>
+        <div class="nav-links">
+            <a href="https://maxkranz.github.io/about" style="margin-right: 300px">About</a>
+        </div>
+        <div class="burger-menu" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="navMenu">
+            <a href="https://maxkranz.github.io/projects">Projects</a>
+            <a href="https://maxkranz.github.io/about">About</a>
+        </nav>
+    </header>
+    
+        <div class="intro" style="color: #f8f8f8;">
+          I am Max Kranz! I am creating games and web apps! I would be happy to have you use my apps. Below are my projects!
+        </div>
+    
+      
+          <div class="projects-grid">
+                <a href="https://maxkranz.github.io/amanda" class="project">
+                    <img src="amanda.png" alt="Amanda">
+                    <div class="project-title">Amanda</div>
+                </a>
+            
+                <a href="https://maxkranz.github.io/apps/todoapp" class="project">
+                    <img src="todo.png" alt="To Do">
+                    <div class="project-title">To Do</div>
+                </a>
+                  
+                <a href="https://maxkranz.github.io/games/guessthenumber" class="project">
+                    <img src="gtn.png" alt="Guess The Number">
+                    <div class="project-title">Guess The Number</div>
+                </a>
+                <a href="https://maxkranz.github.io/apps/noteapp" class="project">
+                    <img src="noteapp.png" alt="NoteApp">
+                    <div class="project-title">NoteApp</div>
+                </a>
+                <a href="https://maxkranz.github.io/apps/timer" class="project">
+                    <img src="timer.png" alt="Timer">
+                    <div class="project-title">Timer</div>
+                </a>
+                <a href="https://maxkranz.github.io/apps/quotegenerator" class="project">
+                    <img src="quotes.png" alt="Quotes Generator">
+                    <div class="project-title">Quotes Generator</div>
+                </a>
+                <a href="https://maxkranz.github.io/apps/calculator" class="project">
+                    <img src="calculate.png" alt="Calculator">
+                    <div class="project-title">Calculator</div>
+                </a>
+                <a href="https://maxkranz.github.io/games/dino" class="project">
+                    <img src="dino.png" alt="Dino">
+                    <div class="project-title">Dino</div>
+                </a>
+                <a href="https://maxkranz.github.io/games/mouse" class="project">
+                    <img src="mishl-Photoroom.png" alt="Mouse Clicker">
+                    <div class="project-title">Mouse Clicker</div>
+                </a>
+                <a href="https://maxkranz.github.io/games/tictactoe" class="project">
+                    <img src="tictactoe.png" alt="Tic-Tac-Toe">
+                    <div class="project-title">Tic-Tac-Toe</div>
+                </a>
+                <a href="https://maxkranz.github.io/games/hangman" class="project">
+                    <img src="hangman.png" alt="Hangman">
+                    <div class="project-title">Hangman</div>
+                </a>
+                <a href="https://maxkranz.github.io/games/bullsandcows" class="project">
+                    <img src="cow.png" alt="Bulls and Cows">
+                    <div class="project-title">Bulls And Cows</div>
+                </a>
+                <a href="https://maxkranz.github.io/pas-halko/" class="project">
+                    <img src="pash.png" alt="Pas-Halko">
+                    <div class="project-title">Pas-Halko</div>
+                </a>
+                <a href="https://maxkranz.github.io/pas-halko/seeker/" class="project">
+                    <img src="pas-halko/passeeker.png" alt="Pas-Halko Seeker">
+                    <div class="project-title">Pas-Halko Seeker</div>
+                </a>
+    
           </div>
+      
           <div class="dropdown-container">
-          <div class="dropdown" onclick="toggleDropdown('games')" style="color: white;">Games</div>
-          <div class="dropdown-content" id="games">
-              <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
-               <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
-               <a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a>
-               <a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe</a>
-               <a href="https://maxkranz.github.io/games/bullsandcows">Bulls and Cows</a>
+              <div class="dropdown" onclick="toggleDropdown('apps')" style="color: white;">Apps</div>
+              <div class="dropdown-content" id="apps">
+                  <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
+                  <a href="https://maxkranz.github.io/amanda">Amanda Search Engine</a>
+                  <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
+                  <a href="https://maxkranz.github.io/apps/timer">Timer</a>
+                  <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
+                  <a href="https://maxkranz.github.io/apps/calculator">Calculator</a>
+              </div>
+              <div class="dropdown-container">
+              <div class="dropdown" onclick="toggleDropdown('games')" style="color: white;">Games</div>
+              <div class="dropdown-content" id="games">
+                  <a href="https://maxkranz.github.io/games/guessthenumber">Guess The Number</a>
+                   <a href="https://maxkranz.github.io/games/dino">Dino Game</a>
+                   <a href="https://maxkranz.github.io/games/mouse">Mouse (Clicker)</a>
+                   <a href="https://maxkranz.github.io/games/tictactoe">Tic-Tac-Toe</a>
+                   <a href="https://maxkranz.github.io/games/bullsandcows">Bulls and Cows</a>
+                  
+                  
+              </div>
               
-              
-          </div>
-          
 
-    <footer style="color: #f8f8f8;">© Max Kranz Inc. All rights reserved.<br><br><a href="https://maxkranz.github.io/ru" STYLE="color: #f8f8f8;
-                text-decoration: none;
-                font-size: 15px;
-                transition: color 0.3s ease; margin-top: 0;">RU</a>
-                <a href="https://t.me/maxkranzofficial" STYLE="color: #f8f8f8;
-                text-decoration: none;
-                font-size: 15px;
-                transition: color 0.3s ease; margin-top: 0;">Telegram</a>
-    <script>
-        function toggleDropdown(id) {
+
+    <div class="section">
+        <h2>Who Am I</h2>
+        <p>Hey, I am Max Kranz and I make diffrent apps and games and even projects, big projects! For example MK Publisher, Pas-Halko, Max Kranz Bot, I made it. So if you want to know more, tap the button below! <br> 
+            <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/about')">About</button></p>
+    </div>
+
+    <div class="section" style="justify-content: center; text-align: center; ">
+        <h2>About Us in Video</h2>
+        <img  src="WhatsApp-Video-2024-12-14-at-7.48.06-PM.gif" alt="Trusted By GIF" style=" width: 320px; height: 220px; height: auto; display: block; margin: 0 auto; border-radius: 10px;">
+        <br>
+        <button style="margin-top: 20px;" onclick="window.open('https://maxkranz.github.io/about')">About</button>
+    </div>
+<br>    
+    </div>
+
+</div>
+
+    <footer style="color: #f8f8f8; margin-top: 0;">© Max Kranz Inc. All rights reserved.<br><br><a href="https://maxkranz.github.io/ru" STYLE="color: #f8f8f8;
+        text-decoration: none;
+        font-size: 15px;
+        transition: color 0.3s ease; margin-top: 0;">RU</a>
+        <a href="https://t.me/maxkranzofficial" STYLE="color: #f8f8f8;
+        text-decoration: none;
+        font-size: 15px;
+        transition: color 0.3s ease; margin-top: 0;">Telegram</a>
+        <script>
+                    function toggleDropdown(id) {
             const content = document.getElementById(id);
             content.style.display = content.style.display === 'block' ? 'none' : 'block';
         }
@@ -533,7 +688,6 @@
             menu.classList.toggle('active');
             burger.classList.toggle('active');
         }
-        
-    </script>
+        </script>
 </body>
 </html>
