@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Return of the Upside Down</title>
+  <link rel="shortcut icon" href="html.png">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: url('Screencast-from-2024-12-16-11-47-07.gif') no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+      color: white;
+    }
+
+    h1, p {
+      text-align: center;
+    }
+
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .game-grid {
+      display: grid;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid #870000;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    /* Адаптивная сетка */
+    @media (min-width: 600px) {
+      .game-grid {
+        grid-template-columns: repeat(4, 1fr);
+        width: 600px;
+        height: 600px;
+      }
+    }
+
+    @media (max-width: 599px) {
+      .game-grid {
+        grid-template-columns: repeat(4, 1fr);
+        width: 300px;
+        height: 300px;
+      }
+      .card-inner{
+        height: 150px;
+        width: 150px;
+      }
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      padding-bottom: 100%; /* квадратная карточка */
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+
+    .card.flip .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+    }
+
+    .card-front {
+      background: #870000; /* Красный цвет карточки */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      font-weight: bold;
+      transform: rotateY(0);
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      background-size: cover;
+      border: 2px solid #870000;
+    }
+
+    .info {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .info span {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <h1>Return of the Upside Down</h1>
+    <p>You are Johnathan, and you need to find your friends and take them from the Upside Down!</p>
+    <p class="info">Tries: <span id="attempts">0</span> | Matches: <span id="matches">0</span></p>
+    <div class="game-grid" id="gameGrid"></div>
+  </div>
+
+  <script>
+    // Массив изображений (каждое изображение по 2 раза для пары)
+    const images = [
+      'eleven.png', 'mike1.png', 'hopper.png', 'eddie.png',
+      'will.png', 'dustin.png', 'lucas.png', 'max.jpg',
+      'eleven.png', 'mike1.png', 'hopper.png', 'eddie.png',
+      'will.png', 'dustin.png', 'lucas.png', 'max.jpg'
+    ];
+
+    let attempts = 0;
+    let matches = 0;
+    let flippedCards = [];
+    let matchedCards = [];
+    const gameGrid = document.getElementById('gameGrid');
+    const attemptsDisplay = document.getElementById('attempts');
+    const matchesDisplay = document.getElementById('matches');
+
+    // Перемешивание массива
+    function shuffle(array) {
+      return array.sort(() => 0.5 - Math.random());
+    }
+
+    // Создание карточек
+    function createCards() {
+      const shuffledImages = shuffle(images);
+      shuffledImages.forEach(image => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+        const cardInner = document.createElement('div');
+        cardInner.classList.add('card-inner');
+
+        const cardFront = document.createElement('div');
+        cardFront.classList.add('card-front');
+        cardFront.textContent = 'Flip'; // Надпись на лицевой стороне
+
+        const cardBack = document.createElement('div');
+        cardBack.classList.add('card-back');
+        cardBack.style.backgroundImage = `url(${image})`;
+
+        cardInner.appendChild(cardFront);
+        cardInner.appendChild(cardBack);
+        card.appendChild(cardInner);
+
+        card.addEventListener('click', () => flipCard(card));
+        gameGrid.appendChild(card);
+      });
+    }
+
+    // Переворот карточки
+    function flipCard(card) {
+      if (flippedCards.length < 2 && !card.classList.contains('flip') && !matchedCards.includes(card)) {
+        card.classList.add('flip');
+        flippedCards.push(card);
+
+        if (flippedCards.length === 2) {
+          checkMatch();
+        }
+      }
+    }
+
+    // Проверка совпадения
+    function checkMatch() {
+      attempts++;
+      attemptsDisplay.textContent = attempts;
+
+      const [card1, card2] = flippedCards;
+      const image1 = card1.querySelector('.card-back').style.backgroundImage;
+      const image2 = card2.querySelector('.card-back').style.backgroundImage;
+
+      if (image1 === image2) {
+        matchedCards.push(card1, card2);
+        matches++;
+        matchesDisplay.textContent = matches;
+
+        if (matchedCards.length === images.length) {
+          setTimeout(() => alert('Вы нашли все пары! Победа!'), 500);
+        }
+      } else {
+        setTimeout(() => {
+          card1.classList.remove('flip');
+          card2.classList.remove('flip');
+        }, 1000);
+      }
+
+      flippedCards = [];
+    }
+
+    // Запуск игры
+    createCards();
+  </script>
+</body>
+</html>
