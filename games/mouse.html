@@ -408,6 +408,8 @@ function confirmResetGame() {
                 link.click();
             });
         });
+        let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+document.getElementById("clickCount").textContent = clickCount;
 
  
     </script>

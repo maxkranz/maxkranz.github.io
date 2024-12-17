@@ -281,6 +281,35 @@
 <ul class="note-list" id="noteList"></ul>
 
 <script>
+    // Функция безопасного чтения из localStorage
+function safeGetItem(key) {
+    try {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+    } catch (error) {
+        console.error('Failed to read from localStorage:', error);
+        return null; // Фолбэк, если чтение не удалось
+    }
+}
+
+// Функция безопасной записи в localStorage
+function safeSetItem(key, value) {
+    try {
+        localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+        console.error('Failed to write to localStorage:', error);
+    }
+}
+
+// Функция удаления элемента из localStorage
+function safeRemoveItem(key) {
+    try {
+        localStorage.removeItem(key);
+    } catch (error) {
+        console.error('Failed to remove from localStorage:', error);
+    }
+}
+
     let notes = [];
     let currentNoteId = null;
 
