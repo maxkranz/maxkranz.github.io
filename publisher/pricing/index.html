@@ -3,11 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max Kranz Publisher</title>
+    <title>Pricing - MK Publisher</title>
     <link rel="shortcut icon" href="logor.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-                * {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px;
+            background-color: DeepSkyBlue;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .section {
+            width: 100%;
+            max-width: 1200px;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .pricing-plans {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .pricing-plan {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-plan:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-plan h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #4a90e2;
+        }
+
+        .pricing-plan .price {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+
+        .pricing-plan p {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        footer {
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: DeepSkyBlue;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-plans {
+                grid-template-columns: 1fr;
+            }
+        }
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -695,7 +810,7 @@
     color: white;
 }
 button {
-    background-color: #4a90e2; /* Зеленый фон */
+    background-color: DEEPSKYBLUE; /* Зеленый фон */
     color: white; /* Белый текст */
     padding: 15px 30px; /* Отступы внутри кнопки */
     border: none; /* Убираем рамку */
@@ -718,147 +833,91 @@ button:active {
     transform: translateY(2px); /* Смещение при клике */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Меньшая тень */
 }
-
-
-
+p{
+    color: black;
+}
+.pricing-plan p{
+    color: black;
+}
+.btn{
+    background-color: #4a90e2;
+}
     </style>
 </head>
 <body>
-<header>
-    <a href="https://maxkranz.github.io/publisher/" class="logo">
-        <img src="logop.png" id="logop">
-        
-    </a>
-    <div class="search-container">
-        <input type="text" id="search" placeholder="Search...">
-    </div>
-    <div class="burger-menu" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <nav id="navMenu">
-        <span class="close-menu" onclick="toggleMenu()">Х</span>
-        <a href="https://telegra.ph/About-MK-Publisher-12-17">About</a>
-        <a href="https://telegra.ph/Post-Your-AppGame-at-MK-Publisher-12-17">Post Your App/Game</a>
-        <a href="https://maxkranz.github.io/publisher/app/">Apps</a>
-        <a href="https://maxkranz.github.io/publisher/game/">Games</a>
-        <a href="https://maxkranz.github.io/publisher/pricing/">Pricing</a>
-        <a href="https://t.me/maxkranzofficial">Telegram</a>
-    </nav>
-</header>
+    <header>
+        <a href="https://maxkranz.github.io/publisher/" class="logo">
+            <img src="logop.png" id="logop">
+            
+        </a>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search is not availiable on this page">
+        </div>
+        <div class="burger-menu" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="navMenu">
+            <span class="close-menu" onclick="toggleMenu()">X</span>
+            <a href="https://telegra.ph/About-MK-Publisher-12-17">About</a>
+            <a href="https://telegra.ph/Post-Your-AppGame-at-MK-Publisher-12-17">Post Your App/Game</a>
+            <a href="https://maxkranz.github.io/publisher/app/">Apps</a>
+            <a href="https://maxkranz.github.io/publisher/game/">Games</a>
+            <a href="https://maxkranz.github.io/publisher/pricing/">Pricing</a>
+            <a href="https://t.me/maxkranzofficial">Telegram</a>
+        </nav>
+    </header>
 
-<div class="intro">
-    Welcome to MK Publisher! Discover amazing apps and games.
-</div>
-
-<div id="projects-grid">
-    <a href="https://maxkranz.github.io/publisher/introducing/" class="project" data-title="Introducing">
-        <img src="introducing.png" alt="Example Project">
-        <div class="project-title">Introducing to Publisher</div>
-    </a>
-
-    <a href="https://maxkranz.github.io/apps/todoapp" class="project"data-title="To Do">
-        <img src="todo.png" alt="Example Project">
-        <div class="project-title">To Do</div>
-    </a>
-      
-    <a href="https://maxkranz.github.io/games/guessthenumber" class="project"data-title="Guess The Number">
-        <img src="gtn.png" alt="Example Project">
-        <div class="project-title">Guess The Number</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/noteapp" class="project"data-title="NoteApp">
-        <img src="noteapp.png" alt="Example Project">
-        <div class="project-title">NoteApp</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/timer" class="project"data-title="Timer">
-        <img src="timer.png" alt="Example Project">
-        <div class="project-title">Timer</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/quotegenerator" class="project"data-title="Quotes Generator">
-        <img src="quotes.png" alt="Example Project">
-        <div class="project-title">Quotes Generator</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/calculator" class="project"data-title="Calculator">
-        <img src="calculate.png" alt="Example Project">
-        <div class="project-title">Calculator</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/dino" class="project"data-title="Dino">
-        <img src="dino.png" alt="Example Project">
-        <div class="project-title">Dino</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/mouse" class="project"data-title="Mouse Clicker">
-        <img src="mishl-Photoroom.png" alt="Example Project">
-        <div class="project-title">Mouse Clicker</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/tictactoe" class="project"data-title="Tic-Tac-Toe">
-        <img src="tictactoe.png" alt="Example Project">
-        <div class="project-title">Tic-Tac-Toe</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/hangman" class="project"data-title="Hangman">
-        <img src="hangman.png" alt="Example Project">
-        <div class="project-title">Hangman</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/bullsandcows" class="project"data-title="Bulls And Cows">
-        <img src="cow.png" alt="Example Project">
-        <div class="project-title">Bulls And Cows</div>
-    </a>
-
-</div>
-
-<div class="dropdown-container">
-    <div class="dropdown" onclick="toggleDropdown('apps')">Trending</div>
-    <div class="dropdown-content" id="apps">
-        <a href="#">To Do App</a>
-        <a href="#">Amanda</a>
-    </div>
-</div>
-    </div>
     <div class="section">
-        <h2>What is Publisher</h2>
-        <p>Hey, I am Max Kranz and I make diffrent apps and games and even projects, big projects! For example MK Publisher, Pas-Halko, Max Kranz Bot, I made it. So if you want to know more, tap the button below! <br> 
-            <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/about')">About</button></p>
+        <h2>Pricing Plans</h2>
+        <p>Choose your plan for using Publisher.</p>
+
+        <div class="pricing-plans">
+            <div class="pricing-plan">
+                <h3>User Plan</h3>
+                <div class="price">Free</div>
+                <p>Using projects is free.</p>
+                <button onclick="window.open('https://maxkranz.github.io/publisher/')"class="btn">Use</button>
+            </div>
+
+            <div class="pricing-plan">
+                <h3>Dev Plan</h3>
+                <div class="price">⭐250/project</div>
+                <p>Publishing projects costs 250 Telegram-stars.</p>
+                <button onclick="window.open('https://telegra.ph/Post-Your-AppGame-at-MK-Publisher-12-17')" class="btn">Buy now</button>
+            </div>
+
+        </div>
     </div>
+
+    <footer>
+        © Max Kranz Inc. All rights reserved. 
+    </footer>
+    <script>
     
-    <div class="section" style="justify-content: center; text-align: center; ">
-        <h2>About in Video</h2>
-        <img  src="WhatsApp-Video-2024-12-14-at-7.48.06-PM.gif"  style=" width: 320px; height: 220px; height: auto; display: block; margin: 0 auto; border-radius: 10px;">
-        <br>
-        <button style="margin-top: 20px;" onclick="window.open('https://maxkranz.github.io/maxkranz.mp4')">Watch Video</button>
-    </div>
-    <br>    
-    </div>
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
     
-    </div>
-
-<footer>
-    © Max Kranz Inc. All rights reserved. 
-</footer>
-
-<script>
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+        }
     
-    function toggleMenu() {
-        const navMenu = document.getElementById('navMenu');
-        navMenu.classList.toggle('active');
-    }
-
-    function toggleDropdown(id) {
-        const dropdown = document.getElementById(id);
-        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-    }
-
-    const searchInput = document.getElementById('search');
-    const projectsGrid = document.getElementById('projects-grid');
-    const projects = projectsGrid.getElementsByClassName('project');
-
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        Array.from(projects).forEach(project => {
-            const title = project.getAttribute('data-title').toLowerCase();
-            project.style.display = title.includes(query) ? 'block' : 'none';
+        const searchInput = document.getElementById('search');
+        const projectsGrid = document.getElementById('pricing-plans');
+        const projects = projectsGrid.getElementsByClassName('pricing-plan');
+    
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            Array.from(projects).forEach(project => {
+                const title = project.getAttribute('data-title').toLowerCase();
+                project.style.display = title.includes(query) ? 'block' : 'none';
+            });
         });
-    });
-
-</script>
+    
+    </script>
 </body>
 </html>
