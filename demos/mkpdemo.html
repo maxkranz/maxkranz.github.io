@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Kranz Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 15px 20px;
+            background-color: #4a90e2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo {
+            margin-right: auto;
+        }
+
+        .search-container {
+            margin: 0 10px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .burger-menu {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .burger-menu div {
+            width: 30px;
+            height: 4px;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100%;
+            background-color: #4a90e2;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        nav.active {
+            transform: translateX(-100%);
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        nav .close-menu {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .intro {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .project {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+        }
+
+        .project:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .project img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .project-title {
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #fff;
+            background-color: #4a90e2;
+            width: 100%;
+        }
+
+        .dropdown-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .dropdown {
+            background-color: #4a90e2;
+            color: #fff;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown:hover {
+            background-color: #357ab7;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 5px 0;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            color: #4a90e2;
+        }
+
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            nav {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <a href="https://mkp.github.io" class="logo">Max Kranz Platform</a>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search...">
+    </div>
+    <div class="burger-menu" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <nav id="navMenu">
+        <span class="close-menu" onclick="toggleMenu()">Х</span>
+        <a href="#about">About</a>
+        <a href="#post">Post Your App/Game</a>
+    </nav>
+</header>
+
+<div class="intro">
+    Welcome to Max Kranz Platform! Discover amazing games and apps below.
+</div>
+
+<div class="projects-grid" id="projects-grid">
+    <a href="https://example.com/amanda" class="project" data-title="Amanda">
+        <img src="https://via.placeholder.com/200x150" alt="Amanda">
+        <div class="project-title">Amanda</div>
+    </a>
+    <a href="https://example.com/todo-app" class="project" data-title="To Do App">
+        <img src="https://via.placeholder.com/200x150" alt="To Do App">
+        <div class="project-title">To Do App</div>
+    </a>
+    <a href="https://example.com/guess-the-number" class="project" data-title="Guess The Number">
+        <img src="https://via.placeholder.com/200x150" alt="Guess The Number">
+        <div class="project-title">Guess The Number</div>
+    </a>
+</div>
+
+<div class="dropdown-container">
+    <div class="dropdown" onclick="toggleDropdown('apps')">Apps</div>
+    <div class="dropdown-content" id="apps">
+        <a href="#">To Do App</a>
+        <a href="#">Amanda</a>
+    </div>
+    <div class="dropdown" onclick="toggleDropdown('games')">Games</div>
+    <div class="dropdown-content" id="games">
+        <a href="#">Guess The Number</a>
+        <a href="#">Tic-Tac-Toe</a>
+    </div>
+    <div class="dropdown" onclick="toggleDropdown('trending-apps')">Trending Apps</div>
+    <div class="dropdown-content" id="trending-apps">
+        <a href="#">NoteApp</a>
+    </div>
+    <div class="dropdown" onclick="toggleDropdown('trending-games')">Trending Games</div>
+    <div class="dropdown-content" id="trending-games">
+        <a href="#">Mouse (Clicker)</a>
+    </div>
+</div>
+
+<footer>
+    © Max Kranz Inc. All rights reserved.
+</footer>
+
+<script>
+    function toggleMenu() {
+        const navMenu = document.getElementById('navMenu');
+        navMenu.classList.toggle('active');
+    }
+
+    function toggleDropdown(id) {
+        const dropdown = document.getElementById(id);
+        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    }
+</script>
+</body>
+</html>

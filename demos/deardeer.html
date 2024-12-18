@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
+    <title>Mouse Clicker Halloween Season</title>
+    <link rel="shortcut icon" href="mishl-Photoroom.png">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #131313;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;  
+            user-select: none;           
+            touch-action: manipulation;  
+        }
+
+        .intro-screen, .game-screen, .end-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .story-text {
+            font-size: 24px;
+            margin: 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .click-count {
+            font-size: 24px;
+            font-weight: bold;
+            color: orange;
+        }
+
+        .main-bat {
+            width: 200px;
+            margin: 20px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            touch-action: none; 
+        }
+
+        .main-bat:active {
+            transform: translateY(-10px);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            top: 0%;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+        .newgame:hover{
+            background-color: #c0312c;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Animation for desktop */
+        @keyframes explode {
+            0% { opacity: 1; transform: scale(1) translate(0, 0); }
+            100% { opacity: 0; transform: scale(2) translate(100px, -100px); }
+        }
+
+        .exploding {
+            position: relative;
+            animation: explode 1s forwards ease-out;
+        }
+
+     
+        .click-text {
+    position: absolute; 
+    color: gold;
+    font-size: 24px;
+    font-weight: bold;
+    pointer-events: none;
+    animation: riseAndFade 1s forwards;
+}
+
+
+        @keyframes riseAndFade {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+        }
+
+        /* Mobile-specific animation */
+        @media (max-width: 768px) {
+            .main-bat {
+                transition: transform 0.2s ease;
+                --tiltX: 0deg;
+                --tiltY: 0deg;
+                transform: rotateX(var(--tiltX)) rotateY(var(--tiltY));
+            }
+
+            .plus-one {
+                position: absolute;
+                font-family: Inter;
+                text-shadow: 0px 0px 4px rgba(211, 155, 25, 0.25);
+                font-size: 24px;
+                font-weight: 800;
+                background: linear-gradient(180deg, #e8c547 0%, #ef882b 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                pointer-events: none;
+                user-select: none;
+                animation: move-up 2s forwards;
+            }
+
+            @keyframes move-up {
+                0% { opacity: 1; transform: translateY(0); }
+                100% { opacity: 0; transform: translateY(-50px); }
+            }
+        }
+        button{
+            background-color: deepskyblue;
+            color: black;
+        }
+
+        .newgame{
+            background-color: orangered;
+            color: white;
+        }
+     
+.new-badge {
+    position: absolute;
+    top: -5px; /* Отступ от верхней части кнопки */
+    right: -10px; /* Отступ от правой части кнопки */
+    background-color: gold;
+    color: black;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Добавляет тень для лучшего визуального эффекта */
+}
+
+    </style>
+</head>
+<body>
+    <div id="introScreen" class="intro-screen hidden">
+        <div id="storyText" class="story-text"></div>
+    </div>
+    <div id="gameScreen" class="game-screen hidden">
+        <div class="top-bar">
+            <span id="clickCount" class="click-count">0</span> / 10000
+        </div>
+        <img id="batImage" src="mishl-Photoroom.png" alt="Bat" class="main-bat">
+        <div class="buttons">
+            <button onclick="showStory()" class="story-button">
+                <i style="color: rgb(139, 79, 1); font-size: 15px;" >New</i> Story
+            </button>
+            
+            </button>            
+            <button class="newgame" onclick="confirmResetGame()"  >New Game</button>
+            <button id="endButton" class="hidden" onclick="triggerEnding()" style="color: gold;">Ending</button>
+        </div>
+    </div>
+    <div id="endScreen" class="end-screen hidden">
+        <h1 id="endText">Bats are freed!</h1>
+        <img id="explodingBat" src="mishl-Photoroom.png" alt="Bat" class="main-bat hidden">
+        <div class="buttons">
+            <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Free Mode</button>
+            <button onclick="confirmResetGame()" class="newgame">New Game</button>
+            <button id="shareButton">Share Result</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script>
+       
+let freeModeActive = false; 
+const storyTexts = [
+"It was//",
+ "It was Halloween night. The King of Halloween was sitting on his sofa eating..... bats.", 
+ "He loved to eat them, and especially on his holiday! On Halloween he would have a feast and catch all kinds of bats and capture and eat them.",
+  "You have been sent on a mission to save the bats. You need to hit their cage 15000 times to save them.",
+ "The connec//on's breakin/, hang in there, good luck!//", 
+];
+
+let currentStoryIndex = 0;
+let gameStarted = localStorage.getItem('gameStarted') === 'true';
+let storyCompleted = localStorage.getItem('storyCompleted') === 'true';
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (!gameStarted || !storyCompleted) {
+        document.getElementById("introScreen").classList.remove("hidden");
+        showNextStory();
+    } else {
+        document.getElementById("gameScreen").classList.remove("hidden");
+        clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+        document.getElementById("clickCount").textContent = clickCount;
+    }
+});
+
+document.addEventListener("click", () => {
+    if (!storyCompleted) {
+        showNextStory();
+    }
+});
+
+function showNextStory() {
+    if (currentStoryIndex < storyTexts.length) {
+        const storyTextElement = document.getElementById("storyText");
+        storyTextElement.textContent = storyTexts[currentStoryIndex];
+        currentStoryIndex++;
+    } else {
+        storyCompleted = true;
+        localStorage.setItem('storyCompleted', 'true');
+        startGame();
+    }
+}
+
+        const batImage = document.getElementById('batImage');
+        batImage.addEventListener('click', (event) => {
+            incrementClicks(event); 
+            animateBatTilt(event); 
+        });
+
+ 
+        function startGame() {
+            document.getElementById("introScreen").classList.add("hidden");
+            document.getElementById("gameScreen").classList.remove("hidden");
+            localStorage.setItem('gameStarted', 'true');
+        }
+
+        function incrementClicks(event) {
+            clickCount++; 
+            document.getElementById("clickCount").textContent = clickCount;
+            localStorage.setItem('clickCount', clickCount);
+
+            showClickText(event.pageX, event.pageY); 
+
+            if (!freeModeActive && clickCount >= 10000) {
+                endGame();
+            }
+        }
+        function showClickText(x, y) {
+    const clickText = document.createElement('div');
+    clickText.className = 'click-text';
+    clickText.textContent = '+1';
+    clickText.style.left = `${x}px`;
+    clickText.style.top = `${y - 50}px`; 
+    document.body.appendChild(clickText);
+
+    setTimeout(() => {
+        clickText.remove();
+    }, 1000); 
+}
+
+
+        function animateBatTilt(event) {
+            const $bat = document.getElementById('batImage');
+            const rect = $bat.getBoundingClientRect();
+
+            const offsetX = event.clientX - rect.left - rect.width / 2;
+            const offsetY = event.clientY - rect.top - rect.height / 2;
+
+            const DEG = 40;
+
+            const tiltX = (offsetY / rect.height) * DEG;
+            const tiltY = (offsetX / rect.width) * -DEG;
+
+            $bat.style.setProperty('--tiltX', `${tiltX}deg`);
+            $bat.style.setProperty('--tiltY', `${tiltY}deg`);
+
+            setTimeout(() => {
+                $bat.style.setProperty('--tiltX', '0deg');
+                $bat.style.setProperty('--tiltY', '0deg');
+            }, 300);
+        }
+
+        function endGame() {
+            document.getElementById("gameScreen").classList.add("hidden");
+            document.getElementById("endScreen").classList.remove("hidden");
+            triggerExplosion();
+        }
+
+        function triggerExplosion() {
+            const batImage = document.getElementById("explodingBat");
+            batImage.classList.remove("hidden");
+            batImage.classList.add("exploding");
+            setTimeout(() => {
+                batImage.classList.add("hidden");
+            }, 1000);
+        }
+
+        function freeMode() {
+            freeModeActive = true;
+            document.getElementById("endScreen").classList.add("hidden");
+            document.getElementById("gameScreen").classList.remove("hidden");
+
+            document.getElementById("endButton").classList.remove("hidden");
+        }
+
+        function triggerEnding() {
+            endGame();
+        }
+
+    
+
+function confirmResetGame() {
+    if (confirm("Are you sure you want to start a new game? All progress will be reset.")) {
+        restartGame();
+    }
+}
+
+        function restartGame() {
+            clickCount = 0;
+            freeModeActive = false; 
+            localStorage.setItem('clickCount', clickCount);
+            document.getElementById("clickCount").textContent = clickCount;
+            document.getElementById("endScreen").classList.add("hidden");
+            document.getElementById("gameScreen").classList.remove("hidden");
+
+           
+            document.getElementById("endButton").classList.add("hidden");
+        }
+
+        function resetGame() {
+            localStorage.removeItem('gameStarted');
+            localStorage.removeItem('clickCount');
+            localStorage.removeItem('storyCompleted');
+            document.getElementById("gameScreen").classList.add("hidden");
+            currentStoryIndex = 0;
+            storyCompleted = false;
+            showNextStory();
+        }
+
+        function showStory() {
+            document.getElementById("gameScreen").classList.add("hidden");
+            currentStoryIndex = 0;  
+            storyCompleted = false;
+            document.getElementById("introScreen").classList.remove("hidden");
+            showNextStory();
+        }
+
+        document.getElementById('shareButton').addEventListener('click', () => {
+            html2canvas(document.body).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'deardeer.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
+
+ 
+    </script>
+</body>
+</html>
+
+
+
+
+

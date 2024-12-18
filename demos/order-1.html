@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order</title>
+    <style>       
+        .wholecode {
+        display: flex;
+        }
+        button {
+            background-color: white;
+            border: none;
+            margin-left: 5px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        #btn {
+            border: 0.5px dotted black;
+            margin-top: 95px;
+        }
+        #expanding-text {
+            margin-left: 22px;
+            max-width: 300px;
+        }
+        #more {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Заголовок</h1>
+    <div class="wholecode">
+        <button id="btn" onclick="readMore()">+</button>
+        <p id="expanding-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam recusandae <span id="dots">...</span><span id="more">voluptatibus explicabo tenetur obcaecati magni excepturi dolorem? Officiis corrupti harum laudantium sit odit perspiciatis inventore at repellat quo quasi reiciendis voluptatem modi, enim magni atque fugiat non iure. Voluptatem recusandae velit consequuntur pariatur doloremque, deleniti quia qui porro quas facilis accusantium natus sed voluptate itaque voluptatibus voluptas veritatis sapiente. Harum eum ipsum asperiores ipsa similique velit, voluptates sed atque id?</span></p>
+    </div>
+    <a href="https://github.com/maxkranz/maxkranz.github.io">Github Code</a>
+    <script>
+        function readMore() {
+            var dots = document.getElementById("dots");
+            var more = document.getElementById("more");
+            var btn = document.getElementById("btn");
+            if (more.style.display === "none") {
+                dots.style.display = "none";
+                btn.innerHTML = "-";
+                more.style.display = "inline";
+            } else {
+                dots.style.display = "inline";
+                btn.innerHTML = "+";
+                more.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
