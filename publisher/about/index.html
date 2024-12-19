@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max Kranz Publisher</title>
-    <link rel="shortcut icon" href="logor.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-                * {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About MK Publisher</title>
+  <link rel="shortcut icon" href="logor.png">
+  <style>
+    /* Общие стили */
+    * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -739,7 +739,6 @@ button:active {
             padding: 60px 20px;
             margin-bottom: 40px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            background-image: url(introducing/fon1.jpg);
             
         }
 
@@ -771,128 +770,183 @@ button:active {
             transform: translateY(-3px);
             background-color: #419aff;
         }
+        @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
 
+      .hero p {
+        font-size: 1rem;
+      }
 
+      h2 {
+        font-size: 1.8rem;
+      }
 
-    </style>
+      p {
+        font-size: 1rem;
+      }
+    }
+    section {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      color: deepskyblue;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      text-align: center;
+    }
+
+    ul li {
+      margin: 10px 0;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    ul li::before {
+      content: "✓";
+      color: #45a049;
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    .hero {
+      background: url('fon1.jpg') no-repeat center center/cover;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .hero .btn {
+      background-color: #4e8dd4;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .hero .btn:hover {
+      background-color: #4a9fff;
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+    .btn{
+        background-color: #4e8dd4;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover{
+        background-color: #4e8dd4;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #why li{
+        color: white;
+    }
+    #join{
+        text-align: center;
+    }
+
+  </style>
 </head>
 <body>
-<header>
-    <a href="https://maxkranz.github.io/publisher/" class="logo">
-        <img src="logop.png" id="logop">
-        
-    </a>
-    <div class="search-container">
-        <input type="text" id="search" placeholder="Search...">
-    </div>
-    <div class="burger-menu" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <nav id="navMenu">
-        <span class="close-menu" onclick="toggleMenu()">Х</span>
-        <a href="https://maxkranz.github.io/publisher/about/">About</a>
-        <a href="https://telegra.ph/Post-Your-AppGame-at-MK-Publisher-12-17">Post Your App/Game</a>
-        <a href="https://maxkranz.github.io/publisher/app/">Apps</a>
-        <a href="https://maxkranz.github.io/publisher/game/">Games</a>
-        <a href="https://maxkranz.github.io/publisher/pricing/">Pricing</a>
-        <a href="https://t.me/maxkranzofficial">Telegram</a>
-    </nav>
-</header>
+    <header>
+        <a href="https://maxkranz.github.io/publisher/" class="logo">
+            <img src="logop.png" id="logop">
+            
+        </a>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search...">
+        </div>
+        <div class="burger-menu" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="navMenu">
+            <span class="close-menu" onclick="toggleMenu()">Х</span>
+            <a href="https://telegra.ph/About-MK-Publisher-12-17">About</a>
+            <a href="https://telegra.ph/Post-Your-AppGame-at-MK-Publisher-12-17">Post Your App/Game</a>
+            <a href="https://maxkranz.github.io/publisher/app/">Apps</a>
+            <a href="https://maxkranz.github.io/publisher/game/">Games</a>
+            <a href="https://maxkranz.github.io/publisher/pricing/">Pricing</a>
+            <a href="https://t.me/maxkranzofficial">Telegram</a>
+        </nav>
+    </header>
+
 <section class="hero">
-    <h1>Max Kranz Publisher</h1>
-    <p>Discover and publish amazing apps and games with ease!</p>
-    <button class="cta-button" onclick="window.open('https://maxkranz.github.io/publisher/introducing/')">Get Started</button>
+  <h1>Welcome to Publisher!</h1>
+  <p>Empowering developers and users to connect, create, and collaborate on amazing projects.</p>
+  <button class="btn" onclick="window.location.href='https://maxkranz.github.io/publisher/post'">Get Started</button>
 </section>
 
-<div class="intro">
-    Welcome to MK Publisher! Discover amazing apps and games.
-</div>
+<section id="about">
+  <h2>About Us</h2>
+  <p>At MK Publisher, we believe in fostering creativity and collaboration. Our platform is built to simplify the process of sharing and discovering projects.</p>
+</section>
 
-<div id="projects-grid">
-    <a href="https://maxkranz.github.io/publisher/introducing/" class="project" data-title="Introducing">
-        <img src="introducing.png" alt="Example Project">
-        <div class="project-title">Introducing to Publisher</div>
-    </a>
+<section id="why">
+  <h2>Why Choose Us?</h2>
+  <ul>
+    <li>Minimal moderation for posting projects.</li>
+    <li>Completely free to use for developers and users.</li>
+    <li>Simple and straightforward publishing process.</li>
+    <li>Community-driven for collaborations and feedback.</li>
+  </ul>
+</section>
 
-    <a href="https://maxkranz.github.io/apps/todoapp" class="project"data-title="To Do">
-        <img src="todo.png" alt="Example Project">
-        <div class="project-title">To Do</div>
-    </a>
-      
-    <a href="https://maxkranz.github.io/games/guessthenumber" class="project"data-title="Guess The Number">
-        <img src="gtn.png" alt="Example Project">
-        <div class="project-title">Guess The Number</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/noteapp" class="project"data-title="NoteApp">
-        <img src="noteapp.png" alt="Example Project">
-        <div class="project-title">NoteApp</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/timer" class="project"data-title="Timer">
-        <img src="timer.png" alt="Example Project">
-        <div class="project-title">Timer</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/quotegenerator" class="project"data-title="Quotes Generator">
-        <img src="quotes.png" alt="Example Project">
-        <div class="project-title">Quotes Generator</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/calculator" class="project"data-title="Calculator">
-        <img src="calculate.png" alt="Example Project">
-        <div class="project-title">Calculator</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/dino" class="project"data-title="Dino">
-        <img src="dino.png" alt="Example Project">
-        <div class="project-title">Dino</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/mouse" class="project"data-title="Mouse Clicker">
-        <img src="mishl-Photoroom.png" alt="Example Project">
-        <div class="project-title">Mouse Clicker</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/tictactoe" class="project"data-title="Tic-Tac-Toe">
-        <img src="tictactoe.png" alt="Example Project">
-        <div class="project-title">Tic-Tac-Toe</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/hangman" class="project"data-title="Hangman">
-        <img src="hangman.png" alt="Example Project">
-        <div class="project-title">Hangman</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/bullsandcows" class="project"data-title="Bulls And Cows">
-        <img src="cow.png" alt="Example Project">
-        <div class="project-title">Bulls And Cows</div>
-    </a>
+<section id="vision">
+  <h2>Our Vision</h2>
+  <p>We envision a future where anyone can easily share their ideas, build projects, and collaborate with others around the globe. MK Publisher is here to make that vision a reality.</p>
+</section>
 
-</div>
-
-<div class="dropdown-container">
-    <div class="dropdown" onclick="toggleDropdown('apps')">Trending</div>
-    <div class="dropdown-content" id="apps">
-        <a href="#">To Do App</a>
-        <a href="#">Amanda</a>
-    </div>
-</div>
-    </div>
-    <div class="section">
-        <h2>What is Publisher</h2>
-        <p>MK Publisher is a platform for publishing projects and use it. For more, click the button below! <br> 
-            <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/publisher/about/')">About</button></p>
-    </div>
-    
-    <div class="section" style="justify-content: center; text-align: center; ">
-        <h2>About in Video</h2>
-        <img  src="publisher.gif"  style=" width: 320px; height: 220px; height: auto; display: block; margin: 0 auto; border-radius: 10px;">
-        <br>
-        <button style="margin-top: 20px;" onclick="window.open('https://maxkranz.github.io/publisher/publisher.mp4')">Watch Video</button>
-    </div>
-    <br>    
-    </div>
-    
-    </div>
+<section id="join">
+  <h2>Join Us Today</h2>
+  <p>Ready to start your journey with MK Publisher? Join our growing community of innovators and creators.</p>
+  <button class="btn" onclick="window.location.href='https://maxkranz.github.io/publisher/post'">Get Started</button>
+</section>
 
 <footer>
-    © Max Kranz Inc. All rights reserved. 
+  <p>© 2024 Max Kranz Publisher. All rights reserved. 
 </footer>
-
 <script>
     
     function toggleMenu() {
