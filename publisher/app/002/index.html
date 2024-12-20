@@ -3,11 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max Kranz Publisher</title>
+    <title>Pass(word) Generator by Max Kranz</title>
     <link rel="shortcut icon" href="logor.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-                * {
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #303030;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-container {
+            background-color: #4a90e2;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .game-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .game-container .game-detail {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .game-container .game-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #f0f0f0;
+        }
+
+        .play-button {
+            background-color: #4d81bd;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background-color: #4b9af5;
+            transform: translateY(-2px);
+        }
+
+        .play-button:active {
+            transform: translateY(2px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -718,67 +791,29 @@ button:active {
     transform: translateY(2px); /* Смещение при клике */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Меньшая тень */
 }
-@media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
+header {
+    position: fixed; /* Фиксируем header наверху */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #4a90e2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Поверх остальных элементов */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-        }
-        .hero {
-            width: 100%;
-            background: linear-gradient(to right, #4a90e2, #0056b3);
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            background-image: url(introducing/fon1.jpg);
-            
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        .hero .cta-button {
-            background-color: #4e8dd4;
-            padding: 15px 30px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .hero .cta-button:hover {
-            transform: translateY(-3px);
-            background-color: #2f363d;
-        }
-        
-
+body {
+    padding-top: 80px; /* Добавляем отступ, чтобы контент не скрывался за header */
+}
 
 
     </style>
 </head>
 <body>
-<header>
+    <header>
     <a href="https://maxkranz.github.io/publisher/" class="logo">
         <img src="logop.png" id="logop">
         
@@ -801,107 +836,14 @@ button:active {
         <a href="https://t.me/maxkranzofficial">Telegram</a>
     </nav>
 </header>
-<section class="hero">
-    <h1>Max Kranz Publisher</h1>
-    <p>Discover and publish amazing apps and games with ease!</p>
-    <button class="cta-button" onclick="window.open('https://maxkranz.github.io/publisher/introducing/')">Get Started</button>
-</section>
-
-<div class="intro">
-    Welcome to MK Publisher! Discover amazing apps and games.
-</div>
-
-<div id="projects-grid" >
-    <a href="https://maxkranz.github.io/publisher/introducing/" class="project" data-title="Introducing" style="background-color: rgb(216, 216, 216);">
-        <img src="introducing.png" alt="Example Project">
-        <div class="project-title">📌Introducing</div>
-    </a>
-
-    <a href="https://maxkranz.github.io/publisher/app/001/" class="project"data-title="Aries">
-        <img src="image.png" alt="Example Project">
-        <div class="project-title">Aries</div>
-    </a>
-    <a href="https://maxkranz.github.io/publisher/app/002/" class="project"data-title="Pass(word) Manager">
-        <img src="pass.png" alt="Example Project">
-        <div class="project-title">Pass(word) Generator</div>
-    </a>
-      
-    <a href="https://maxkranz.github.io/games/guessthenumber" class="project"data-title="Guess The Number">
-        <img src="gtn.png" alt="Example Project">
-        <div class="project-title">Guess The Number</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/noteapp" class="project"data-title="NoteApp">
-        <img src="noteapp.png" alt="Example Project">
-        <div class="project-title">NoteApp</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/timer" class="project"data-title="Timer">
-        <img src="timer.png" alt="Example Project">
-        <div class="project-title">Timer</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/quotegenerator" class="project"data-title="Quotes Generator">
-        <img src="quotes.png" alt="Example Project">
-        <div class="project-title">Quotes Generator</div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/calculator" class="project"data-title="Calculator">
-        <img src="calculate.png" alt="Example Project">
-        <div class="project-title">Calculator</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/dino" class="project"data-title="Dino">
-        <img src="dino.png" alt="Example Project">
-        <div class="project-title">Dino</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/mouse" class="project"data-title="Mouse Clicker">
-        <img src="mishl-Photoroom.png" alt="Example Project">
-        <div class="project-title">Mouse Clicker</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/tictactoe" class="project"data-title="Tic-Tac-Toe">
-        <img src="tictactoe.png" alt="Example Project">
-        <div class="project-title">Tic-Tac-Toe</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/hangman" class="project"data-title="Hangman">
-        <img src="hangman.png" alt="Example Project">
-        <div class="project-title">Hangman</div>
-    </a>
-    <a href="https://maxkranz.github.io/games/bullsandcows" class="project"data-title="Bulls And Cows">
-        <img src="cow.png" alt="Example Project">
-        <div class="project-title">Bulls And Cows</div>
-    </a>
-    
-
-</div>
-
-<div class="dropdown-container">
-    <div class="dropdown" onclick="toggleDropdown('apps')">Trending</div>
-    <div class="dropdown-content" id="apps">
-        <a href="#">To Do App</a>
-        <a href="#">Amanda</a>
+    <div class="game-container">
+        <h1>Pass(word) Generator</h1>
+        <p class="game-detail"><strong>Developer:</strong> <a href="https://maxkranz.github.io" style="color: black; " >Max Kranz</a> </p>
+        <p class="game-detail"><strong>Description: </strong>Password generator by Max Kranz.</p>
+        <button class="play-button" onclick="window.open('https://maxkranz.github.io/publisher/app/002/use/')">Use</button>
     </div>
-</div>
-    </div>
-    <div class="section">
-        <h2>What is Publisher</h2>
-        <p>MK Publisher is a platform for publishing projects and use it. For more, click the button below! <br> 
-            <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/publisher/about/')">About</button></p>
-    </div>
-    
-    <div class="section" style="justify-content: center; text-align: center; ">
-        <h2>About in Video</h2>
-        <img  src="publisher.gif"  style=" width: 320px; height: 220px; height: auto; display: block; margin: 0 auto; border-radius: 10px;">
-        <br>
-        <button style="margin-top: 20px;" onclick="window.open('https://maxkranz.github.io/publisher/publisher.mp4')">Watch Video</button>
-    </div>
-    <br>    
-    </div>
-    
-    </div>
-
-<footer>
-    © Max Kranz Inc. All rights reserved. 
-</footer>
-
-<script>
-    
-    function toggleMenu() {
+    <script>
+            function toggleMenu() {
         const navMenu = document.getElementById('navMenu');
         navMenu.classList.toggle('active');
     }
@@ -922,9 +864,10 @@ button:active {
             project.style.display = title.includes(query) ? 'block' : 'none';
         });
     });
-    // После поиска сбрасываем размеры картинок
+    </script>
 
-
-</script>
+    <footer>
+        © Max Kranz Inc. All rights reserved.
+    </footer>
 </body>
 </html>

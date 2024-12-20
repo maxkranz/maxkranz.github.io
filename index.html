@@ -556,9 +556,67 @@ button:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Меньшая тень */
 }
 
+@media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+        .hero {
+            width: 100%;
+            background: linear-gradient(to right, #4a90e2, #0056b3);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background-image: url(introducing/fon1.jpg);
+            
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero .cta-button {
+            background-color: #4e8dd4;
+            padding: 15px 30px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .hero .cta-button:hover {
+            transform: translateY(-3px);
+            background-color: #2f363d;
+        }
+        
+        
+
+
     </style>
 </head>
 <body>
+   
     <header>
         <div class="nav-links">
             <a href="https://maxkranz.github.io/projects" style="margin-left:300px">Projects</a>
@@ -645,6 +703,10 @@ button:active {
           <a href="https://maxkranz.github.io/games/st" class="project">
             <img src="st-Photoroom.png" alt="ST">
             <div class="project-title">Return of the Upside Down</div>
+        </a>
+        <a href="https://maxkranz.github.io/apps/pass" class="project">
+            <img src="pass.png" alt="Pass">
+            <div class="project-title">Pass(word) Generator</div>
         </a>
         <a href="https://maxkranz.github.io/publisher/" class="project">
             <img src="publisher/logopublisher.png" alt="ST">
