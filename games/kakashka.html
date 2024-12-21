@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,8 +22,8 @@
  <!-- /Yandex.Metrika counter -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
-    <title>Mouse Clicker Halloween Season</title>
-    <link rel="shortcut icon" href="mishl-Photoroom.png">
+    <title>Kakashka Clicker</title>
+    <link rel="shortcut icon" href="k.png">
     <style>
         body, html {
             margin: 0;
@@ -71,7 +73,7 @@
         .click-count {
             font-size: 24px;
             font-weight: bold;
-            color: orange;
+            color: rgb(255, 217, 0);
         }
 
         .main-bat {
@@ -108,7 +110,7 @@
             background-color: #0056b3;
         }
         .newgame:hover{
-            background-color: #c0312c;
+            background-color: #df2019;
         }
 
         @keyframes fadeIn {
@@ -179,6 +181,28 @@
             }
         }
         button{
+            background-color: deepskyblue;
+            color: black;
+        }
+
+        .newgame{
+            background-color: rgb(218, 17, 17);
+            color: white;
+        }
+     
+.new-badge {
+    position: absolute;
+    top: -5px; /* Отступ от верхней части кнопки */
+    right: -10px; /* Отступ от правой части кнопки */
+    background-color: gold;
+    color: black;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Добавляет тень для лучшего визуального эффекта */
+}
+button{
             background-color: deepskyblue;
             color: black;
         }
@@ -311,7 +335,7 @@
         <div class="top-bar">
             <span id="clickCount" class="click-count">0</span> / 10000
         </div>
-        <img id="batImage" src="mishl-Photoroom.png" alt="Bat" class="main-bat">
+        <img id="batImage" src="k.png" alt="Bat" class="main-bat">
         <div class="buttons">
             <button onclick="showStory()" class="story-button">
                 <i style="color: rgb(139, 79, 1); font-size: 15px;" >New</i> Story
@@ -334,11 +358,11 @@
         <a href="#" id="selectClickerLink" onclick="showClickerSelection()" style="margin-top: 30px;">What do you wanna tap?</a>
         
         </div>
-        
     </div>
+
     <div id="endScreen" class="end-screen hidden">
-        <h1 id="endText">Bats are freed!</h1>
-        <img id="explodingBat" src="mishl-Photoroom.png" alt="Bat" class="main-bat hidden">
+        <h1 id="endText">Kakasha fluffed!</h1>
+        <img id="explodingBat" src="k.png" alt="Bat" class="main-bat hidden">
         <div class="buttons">
             <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Free Mode</button>
             <button onclick="confirmResetGame()" class="newgame">New Game</button>
@@ -351,10 +375,10 @@
 let freeModeActive = false; 
 const storyTexts = [
 "It was//",
- "It was Halloween night. The King of Halloween was sitting on his sofa eating..... bats.", 
- "He loved to eat them, and especially on his holiday! On Halloween he would have a feast and catch all kinds of bats and capture and eat them.",
-  "You have been sent on a mission to save the bats. You need to hit their cage 10000 times to save them.",
- "The connec//on's breakin/, hang in there, good luck!//", 
+ "Buggy came into the toilet and wanted to flush the kakashka.", 
+ "But finds out that kakashka is very stopborn, so Buggy has to tap it for 10.000 times!",
+  "Help Buggy!", 
+
 ];
 
 let currentStoryIndex = 0;
@@ -426,6 +450,22 @@ function showNextStory() {
         clickText.remove();
     }, 1000); 
 }
+function showClickerSelection() {
+    document.getElementById('selectionScreen').classList.remove('hidden');
+}
+function showClickerSelection() {
+    document.getElementById('selectionScreen').classList.remove('hidden');
+}
+
+function closeClickerSelection() {
+    document.getElementById('selectionScreen').classList.add('hidden');
+}
+
+function selectClicker(name, imagePath) {
+    alert(`You selected ${name}!`);
+    document.getElementById('batImage').src = imagePath; // Меняем изображение
+    closeClickerSelection(); // Закрываем окно после выбора
+}
 
 
         function animateBatTilt(event) {
@@ -475,35 +515,11 @@ function showNextStory() {
         function triggerEnding() {
             endGame();
         }
-        function showClickerSelection() {
-    document.getElementById('selectionScreen').classList.remove('hidden');
-}
-function showClickerSelection() {
-    document.getElementById('selectionScreen').classList.remove('hidden');
-}
-
-function closeClickerSelection() {
-    document.getElementById('selectionScreen').classList.add('hidden');
-}
-
-function selectClicker(name, imagePath) {
-    alert(`You selected ${name}!`);
-    document.getElementById('batImage').src = imagePath; // Меняем изображение
-    closeClickerSelection(); // Закрываем окно после выбора
-}
-
-
-function selectClicker(name, imagePath) {
-    alert(`You selected ${name}!`);
-    document.getElementById('batImage').src = imagePath; // Replace the main bat image with the selected one
-    document.getElementById('selectionScreen').classList.add('hidden'); // Hide the selection screen
-}
-
 
     
 
 function confirmResetGame() {
-    if (confirm("Are you sure you want to start a new game? All progress will be reset.")) {
+    if (confirm("Are you sure yo want to start a new game? All progress will be lost.")) {
         restartGame();
     }
 }
@@ -541,13 +557,11 @@ function confirmResetGame() {
         document.getElementById('shareButton').addEventListener('click', () => {
             html2canvas(document.body).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'mouse_clicker_result.png';
+                link.download = 'deardeer.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
         });
-        let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
-document.getElementById("clickCount").textContent = clickCount;
 
  
     </script>

@@ -200,6 +200,118 @@
     font-weight: bold;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Добавляет тень для лучшего визуального эффекта */
 }
+#selectionScreen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #222;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 80%;
+    max-width: 500px;
+}
+
+.clicker-options {
+    display: flex;
+    flex-wrap: wrap; /* Для адаптивности */
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.clicker-option {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+}
+
+.clicker-option:hover {
+    transform: scale(1.1);
+}
+
+#selectClickerLink {
+    display: block;
+    margin-top: 10px;
+    color: gold;
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#selectClickerLink:hover {
+    color: orange;
+}
+
+.close-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: orangered;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.close-button:hover {
+    background-color: #a02620;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 768px) {
+    .clicker-option {
+        width: 120px;
+        height: 120px;
+    }
+
+    #selectionScreen h2 {
+        font-size: 18px;
+    }
+
+    .close-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+
+     
+.new-badge {
+    position: absolute;
+    top: -5px; /* Отступ от верхней части кнопки */
+    right: -10px; /* Отступ от правой части кнопки */
+    background-color: gold;
+    color: black;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Добавляет тень для лучшего визуального эффекта */
+}
+@media (max-width: 768px) {
+    .clicker-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Две колонки */
+        gap: 15px; /* Расстояние между картинками */
+    }
+
+
+    #selectionScreen h2 {
+        font-size: 18px;
+    }
+
+    .close-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
 
     </style>
 </head>
@@ -221,6 +333,17 @@
             <button class="newgame" onclick="confirmResetGame()"  >New Game</button>
             <button id="endButton" class="hidden" onclick="triggerEnding()" style="color: gold;">Ending</button>
         </div>
+        <div id="selectionScreen" class="hidden">
+            <h2>Select your clicker:</h2>
+            <div class="clicker-options">
+                <img src="mishl-Photoroom.png" alt="Mouse" class="clicker-option" onclick="window.open('https://maxkranz.github.io/games/mouse')">
+                <img src="plov.png" alt="Plov" class="clicker-option" onclick="window.open('https://maxkranz.github.io/games/plov')">
+                <img src="u.png" alt="Unicorn" class="clicker-option" onclick="window.open('https://maxkranz.github.io/games/unicorn')">
+                <img src="k.png" alt="Poop" class="clicker-option" onclick="window.open('https://maxkranz.github.io/games/kakashka')">
+            </div>
+            <button class="close-button" onclick="closeClickerSelection()">Close</button>
+        </div>
+        <a href="#" id="selectClickerLink" onclick="showClickerSelection()" style="margin-top: 30px;">What do you wanna tap?</a>
     </div>
     <div id="endScreen" class="end-screen hidden">
         <h1 id="endText">Alexander the Great took the plov with him!</h1>
@@ -257,6 +380,22 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("clickCount").textContent = clickCount;
     }
 });
+function showClickerSelection() {
+    document.getElementById('selectionScreen').classList.remove('hidden');
+}
+function showClickerSelection() {
+    document.getElementById('selectionScreen').classList.remove('hidden');
+}
+
+function closeClickerSelection() {
+    document.getElementById('selectionScreen').classList.add('hidden');
+}
+
+function selectClicker(name, imagePath) {
+    alert(`You selected ${name}!`);
+    document.getElementById('batImage').src = imagePath; // Меняем изображение
+    closeClickerSelection(); // Закрываем окно после выбора
+}
 
 document.addEventListener("click", () => {
     if (!storyCompleted) {
