@@ -420,6 +420,81 @@ function confirmResetGame() {
                 link.click();
             });
         });
+        let currentLevel = 1; // Текущий уровень
+const maxLevels = 10; // Общее количество уровней
+const clickGoals = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]; // Цели для каждого уровня
+const sigmaQuotes = [
+    "Сигма идёт своим путём, не оборачиваясь назад.",
+    "Твоя независимость — твоя сила.",
+    "Настоящий Сигма не ищет славы, она приходит сама.",
+    "Мир принадлежит тем, кто готов быть одиноким.",
+    "Сосредоточься на своих целях, а не на чужих мнениях.",
+    "Тишина — это голос настоящего Сигмы.",
+    "Каждый клик приближает тебя к величию.",
+    "Сила Сигмы — в его упорстве и дисциплине.",
+    "Ты уже на пути к настоящей независимости.",
+    "Поздравляем! Ты стал легендарным Сигмой!"
+];
+const images = [
+    "sigma1.png", "sigma2.png", "sigma3.png", "sigma4.png", "sigma5.png",
+    "sigma6.png", "sigma7.png", "sigma8.png", "sigma9.png", "sigma10.png"
+]; // Список картинок для каждого уровня
+
+// Проверка достижения уровня
+function incrementClicks(event) {
+    clickCount++;
+    document.getElementById("clickCount").textContent = clickCount;
+
+    showClickText(event.pageX, event.pageY);
+
+    if (!freeModeActive && clickCount >= clickGoals[currentLevel - 1]) {
+        levelUp();
+    }
+}
+
+// Переход на новый уровень
+function levelUp() {
+    if (currentLevel < maxLevels) {
+        currentLevel++;
+        clickCount = 0; // Сбрасываем клики для нового уровня
+        localStorage.setItem('clickCount', clickCount);
+        localStorage.setItem('currentLevel', currentLevel);
+
+        // Обновляем UI
+        updateLevel();
+        showQuote();
+    } else {
+        endGame(); // Конец игры на последнем уровне
+    }
+}
+
+// Обновление уровня
+function updateLevel() {
+    document.getElementById("clickCount").textContent = clickCount;
+    document.querySelector(".top-bar").textContent = `Уровень ${currentLevel}: ${clickGoals[currentLevel - 1]} кликов`;
+    document.getElementById("batImage").src = images[currentLevel - 1]; // Меняем картинку
+}
+
+// Показ случайной цитаты
+function showQuote() {
+    const randomQuote = sigmaQuotes[currentLevel - 1];
+    const quoteElement = document.createElement("div");
+    quoteElement.className = "click-text";
+    quoteElement.textContent = `"${randomQuote}"`;
+    document.body.appendChild(quoteElement);
+
+    setTimeout(() => {
+        quoteElement.remove();
+    }, 3000); // Удаляем цитату через 3 секунды
+}
+
+// Загрузка прогресса
+document.addEventListener("DOMContentLoaded", () => {
+    currentLevel = parseInt(localStorage.getItem('currentLevel')) || 1;
+    clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+
+    updateLevel();
+});
 
  
     </script>

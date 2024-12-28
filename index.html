@@ -609,6 +609,24 @@ button:active {
             transform: translateY(-3px);
             background-color: #459bfc;
         }
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background: #ffcc00;
+            color: #1e1e2f;
+            border: none;
+            border-radius: 50%;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .scroll-top:hover {
+            background: #ffaa00;
+        }
         
         
 
@@ -713,14 +731,6 @@ button:active {
             <img src="pass.png" alt="Pass">
             <div class="project-title">Pass(word) Generator</div>
         </a>
-        <a href="https://maxkranz.github.io/games/plov" class="project">
-            <img src="plov.png" alt="Plov">
-            <div class="project-title">Plov Clicker</div>
-        </a>
-        <a href="https://maxkranz.github.io/publisher/" class="project">
-            <img src="publisher/logopublisher.png" alt="ST">
-            <div class="project-title"><i style="color: rgb(139, 79, 1); font-size: 15px;" >New</i> Publisher</div>
-        </a>
         </div>
       
           <div class="dropdown-container">
@@ -775,6 +785,9 @@ button:active {
         text-decoration: none;
         font-size: 15px;
         transition: color 0.3s ease; margin-top: 0;">Telegram</a>
+
+        <button class="scroll-top" onclick="scrollToTop()">↑</button>
+
         <script>
                     function toggleDropdown(id) {
             const content = document.getElementById(id);
@@ -787,6 +800,10 @@ button:active {
             menu.classList.toggle('active');
             burger.classList.toggle('active');
         }
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
         </script>
 </body>
 </html>

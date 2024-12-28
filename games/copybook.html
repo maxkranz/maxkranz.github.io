@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Прописи</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #f0f8ff;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+canvas {
+  border: 2px solid #000;
+  background: #fff;
+  cursor: crosshair;
+}
+
+.message {
+  margin: 10px auto;
+  font-size: 24px;
+  font-weight: bold;
+  color: green;
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  margin-top: 20px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Прописи</h1>
+    <canvas id="drawingCanvas"></canvas>
+    <div class="message"></div>
+    <button id="nextLevelButton" style="display: none;">Следующий уровень</button>
+  </div>
+  <script>const canvas = document.getElementById("drawingCanvas");
+    const ctx = canvas.getContext("2d");
+    const messageDiv = document.querySelector(".message");
+    const nextLevelButton = document.getElementById("nextLevelButton");
+    
+    canvas.width = 600;
+    canvas.height = 400;
+    
+    let isDrawing = false;
+    let progress = 0;
+    let currentLevel = 0;
+    
+    const shapes = [
+      { name: "Circle", draw: () => drawCircle(300, 200, 100), check: checkCircle },
+      { name: "Square", draw: () => drawSquare(200, 150, 200), check: checkSquare },
+      { name: "Triangle", draw: () => drawTriangle(300, 100, 400, 300, 200, 300), check: checkTriangle },
+      // More shapes can be added here...
+    ];
+    
+    function drawCircle(x, y, radius) {
+      ctx.strokeStyle = "lightgray";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    
+    function drawSquare(x, y, size) {
+      ctx.strokeStyle = "lightgray";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.rect(x, y, size, size);
+      ctx.stroke();
+    }
+    
+    function drawTriangle(x1, y1, x2, y2, x3, y3) {
+      ctx.strokeStyle = "lightgray";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineTo(x3, y3);
+      ctx.closePath();
+      ctx.stroke();
+    }
+    
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    function loadLevel(level) {
+      clearCanvas();
+      progress = 0;
+      messageDiv.textContent = "";
+      nextLevelButton.style.display = "none";
+    
+      if (level < shapes.length) {
+        shapes[level].draw();
+      } else {
+        messageDiv.textContent = "Все уровни завершены! Начинаем заново!";
+        currentLevel = 0;
+      }
+    }
+    
+    canvas.addEventListener("mousedown", (event) => {
+      isDrawing = true;
+    });
+    
+    canvas.addEventListener("mousemove", (event) => {
+      if (!isDrawing) return;
+    
+      const { offsetX, offsetY } = event;
+    
+      if (shapes[currentLevel].check(offsetX, offsetY)) {
+        progress++;
+      }
+    
+      if (progress >= 100) {
+        messageDiv.textContent = "Well done!";
+        nextLevelButton.style.display = "block";
+        isDrawing = false;
+      }
+    });
+    
+    canvas.addEventListener("mouseup", () => {
+      isDrawing = false;
+    });
+    
+    nextLevelButton.addEventListener("click", () => {
+      currentLevel++;
+      loadLevel(currentLevel);
+    });
+    
+    function checkCircle(x, y) {
+      const dx = x - 300;
+      const dy = y - 200;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      return Math.abs(distance - 100) < 10; // Allow some tolerance
+    }
+    
+    function checkSquare(x, y) {
+      return (x >= 200 && x <= 400 && (y >= 140 && y <= 160 || y >= 340 && y <= 360)) ||
+             (y >= 150 && y <= 350 && (x >= 190 && x <= 210 || x >= 390 && x <= 410));
+    }
+    
+    function checkTriangle(x, y) {
+      // Approximate triangle edges (implement precise math for better accuracy)
+      if (y >= 100 && y <= 300 && x >= 200 && x <= 400) {
+        return true;
+      }
+      return false;
+    }
+    
+    // Start the first level
+    loadLevel(currentLevel);
+    </script>
+</body>
+</html>

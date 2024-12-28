@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Website Builder</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f7f9fc;
+        }
+        h1 {
+            margin: 20px;
+            color: deepskyblue;
+        }
+        #canvas {
+            width: 90%;
+            max-width: 800px;
+            min-height: 400px;
+            border: 2px dashed deepskyblue;
+            background-color: white;
+            margin: 20px 0;
+            border-radius: 10px;
+            padding: 10px;
+            position: relative;
+        }
+        .toolbox {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .button {
+            background: deepskyblue;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: scale(1.1);
+        }
+        .element {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            cursor: grab;
+        }
+        .draggable {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Website Builder</h1>
+    <div class="toolbox">
+        <button class="button" onclick="addElement('Header')">Add Header</button>
+        <button class="button" onclick="addElement('Text Block')">Add Text Block</button>
+        <button class="button" onclick="addElement('Image')">Add Image</button>
+    </div>
+    <div id="canvas"></div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+
+        function addElement(type) {
+            const element = document.createElement('div');
+            element.classList.add('element', 'draggable');
+            element.innerText = type;
+            element.contentEditable = type !== 'Image';
+
+            if (type === 'Image') {
+                element.innerHTML = '<img src="https://via.placeholder.com/150" alt="Placeholder" style="width: 100%;">';
+                element.contentEditable = false;
+            }
+
+            element.draggable = true;
+            element.style.left = '0px';
+            element.style.top = '0px';
+            element.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', null);
+                e.dataTransfer.setDragImage(document.createElement('div'), 0, 0);
+                element.dataset.offsetX = e.offsetX;
+                element.dataset.offsetY = e.offsetY;
+            });
+
+            element.addEventListener('dragend', (e) => {
+                const offsetX = parseInt(element.dataset.offsetX);
+                const offsetY = parseInt(element.dataset.offsetY);
+                const x = e.pageX - canvas.offsetLeft - offsetX;
+                const y = e.pageY - canvas.offsetTop - offsetY;
+                element.style.left = x + 'px';
+                element.style.top = y + 'px';
+            });
+
+            canvas.appendChild(element);
+        }
+    </script>
+</body>
+</html>

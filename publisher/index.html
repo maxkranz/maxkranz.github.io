@@ -769,8 +769,31 @@ button:active {
 
         .hero .cta-button:hover {
             transform: translateY(-3px);
-            background-color: #2f363d;
+            background-color: rgb(0, 128, 255);
         }
+        .project {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Плавный эффект для прозрачности */
+}
+
+.project img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover; /* Предотвращает изменение размеров изображения */
+}
+
+.project.hidden {
+    opacity: 0; /* Скрывем элемент, но сохраняем его размеры */
+    pointer-events: none; /* Отключаем взаимодействие */
+}
+
         
 
 
@@ -795,8 +818,7 @@ button:active {
         <span class="close-menu" onclick="toggleMenu()">Х</span>
         <a href="https://maxkranz.github.io/publisher/about/">About</a>
         <a href="https://telegra.ph/Post-Your-AppGame-at-MK-Publisher-12-17">Post Your Project</a>
-        <a href="https://maxkranz.github.io/publisher/app/">Apps</a>
-        <a href="https://maxkranz.github.io/publisher/game/">Games</a>
+
         <a href="https://maxkranz.github.io/publisher/pricing/">Pricing</a>
         <a href="https://t.me/maxkranzofficial">Telegram</a>
     </nav>
@@ -862,10 +884,6 @@ button:active {
         <img src="hangman.png" alt="Example Project">
         <div class="project-title">Hangman</div>
     </a>
-    <a href="https://maxkranz.github.io/games/bullsandcows" class="project"data-title="Bulls And Cows">
-        <img src="cow.png" alt="Example Project">
-        <div class="project-title">Bulls And Cows</div>
-    </a>
     
 
 </div>
@@ -912,16 +930,21 @@ button:active {
     }
 
     const searchInput = document.getElementById('search');
-    const projectsGrid = document.getElementById('projects-grid');
-    const projects = projectsGrid.getElementsByClassName('project');
+const projectsGrid = document.getElementById('projects-grid');
+const projects = projectsGrid.getElementsByClassName('project');
 
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        Array.from(projects).forEach(project => {
-            const title = project.getAttribute('data-title').toLowerCase();
-            project.style.display = title.includes(query) ? 'block' : 'none';
-        });
+searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+    Array.from(projects).forEach(project => {
+        const title = project.getAttribute('data-title').toLowerCase();
+        if (title.includes(query)) {
+            project.classList.remove('hidden');
+        } else {
+            project.classList.add('hidden');
+        }
     });
+});
+
     // После поиска сбрасываем размеры картинок
 
 
