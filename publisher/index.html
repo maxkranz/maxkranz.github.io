@@ -589,6 +589,12 @@
             max-width: 800px;
             line-height: 1.5;
         }
+        .ratinge {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            max-width: 800px;
+        }
         #projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -789,14 +795,69 @@ button:active {
     object-fit: cover; /* Предотвращает изменение размеров изображения */
 }
 
-.project.hidden {
-    opacity: 0; /* Скрывем элемент, но сохраняем его размеры */
-    pointer-events: none; /* Отключаем взаимодействие */
-}
+.rating {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
 
-        
+        .rating span {
+            margin-right: 5px;
+        }
 
+        .rating .stars {
+            color: rgb(0, 0, 0);
+        }
 
+        .update-feed {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #0073e6;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            background-color: #f0f8ff;
+            color: #000;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .update-feed h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #0056b3;
+            text-align: center;
+        }
+
+        .update-feed ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .update-feed ul li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #e6f7ff;
+            border: 1px solid #b3e5fc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .project.hidden {
+            display: none;
+        }
+
+        .project {
+            transition: transform 0.9s ease, opacity 0.3s ease;
+        }
+
+        .project.hidden {
+            transform: scale(0.3);
+            opacity: 0;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
 
     </style>
 </head>
@@ -837,57 +898,105 @@ button:active {
     <a href="https://maxkranz.github.io/publisher/introducing/" class="project" data-title="Introducing" style="background-color: rgb(216, 216, 216);">
         <img src="introducing.png" alt="Example Project">
         <div class="project-title">📌Introducing</div>
+
     </a>
+
 
     <a href="https://maxkranz.github.io/publisher/app/001/" class="project"data-title="Aries">
         <img src="image.png" alt="Example Project">
         <div class="project-title">Aries</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color: green;">1</I></span>
+        </div>
     </a>
     <a href="https://maxkranz.github.io/publisher/app/002/" class="project"data-title="Pass(word) Manager">
         <img src="pass.png" alt="Example Project">
         <div class="project-title">Pass(word) Generator</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color: green;">2</I></span>
+        </div>
+    </a>
     </a>
       
     <a href="https://maxkranz.github.io/games/guessthenumber" class="project"data-title="Guess The Number">
         <img src="gtn.png" alt="Example Project">
         <div class="project-title">Guess The Number</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color: rgb(90, 128, 0);">3</I></span>
+        </div>
+    </a>
     </a>
     <a href="https://maxkranz.github.io/apps/noteapp" class="project"data-title="NoteApp">
         <img src="noteapp.png" alt="Example Project">
         <div class="project-title">NoteApp</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color: rgb(90, 128, 0);">4</I></span>
+        </div>
+    </a>
     </a>
     <a href="https://maxkranz.github.io/apps/timer" class="project"data-title="Timer">
         <img src="timer.png" alt="Example Project">
         <div class="project-title">Timer</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color: rgb(255, 19, 19);">9</I></span>
+        </div>
+        
     </a>
     <a href="https://maxkranz.github.io/apps/quotegenerator" class="project"data-title="Quotes Generator">
         <img src="quotes.png" alt="Example Project">
         <div class="project-title">Quotes Generator</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color: rgb(105, 128, 0);">5</I></span>
+        </div>
     </a>
     <a href="https://maxkranz.github.io/apps/calculator" class="project"data-title="Calculator">
         <img src="calculate.png" alt="Example Project">
         <div class="project-title">Calculator</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color:  rgb(154, 165, 0);">6</I></span>
+        </div>
     </a>
     <a href="https://maxkranz.github.io/games/dino" class="project"data-title="Dino">
         <img src="dino.png" alt="Example Project">
         <div class="project-title">Dino</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color:  rgb(255, 217, 0);">7</I></span>
+        </div>
     </a>
     <a href="https://maxkranz.github.io/games/mouse" class="project"data-title="Mouse Clicker">
         <img src="mishl-Photoroom.png" alt="Example Project">
         <div class="project-title">Mouse Clicker</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color:  green">1</I></span>
+        </div>
     </a>
     <a href="https://maxkranz.github.io/games/tictactoe" class="project"data-title="Tic-Tac-Toe">
         <img src="tictactoe.png" alt="Example Project">
         <div class="project-title">Tic-Tac-Toe</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color:  rgb(255, 136, 0);">8</I></span>
+        </div>
     </a>
     <a href="https://maxkranz.github.io/games/hangman" class="project"data-title="Hangman">
         <img src="hangman.png" alt="Example Project">
         <div class="project-title">Hangman</div>
+        <div class="rating">
+            <span>Popularity:</span> <span class="stars"><I style="font-weight: bold; color:  rgb(255, 0, 0);">10</I></span>
+        </div>
     </a>
+     
+       </div>
     
-
-</div>
-
+       <div class="update-feed">
+        <h2>Recent Updates</h2>
+        <ul id="update-list">
+            <li>📅 Aries App received a UI overhaul! (01/01/2025)</li>
+            <li>📅 New game "Mouse Clicker" added! (12/30/2024)</li>
+            <li>📅 NoteApp now supports dark mode. (12/28/2024)</li>
+            <li>📅 Hangman Game updated with new word list. (12/25/2024)</li>
+        </ul>
+    </div>
+       
 <div class="dropdown-container">
     <div class="dropdown" onclick="toggleDropdown('apps')">Trending</div>
     <div class="dropdown-content" id="apps">
@@ -896,6 +1005,12 @@ button:active {
     </div>
 </div>
     </div>
+    <div class="section">
+        <h2>Popularity Rating</h2>
+        <p>The popularity of a project indicates how often it is used. The lower the number, the more the project is used, the higher the number, the less it is used. <br> 
+           </p>
+    </div>
+    
     <div class="section">
         <h2>What is Publisher</h2>
         <p>MK Publisher is a platform for publishing projects and use it. For more, click the button below! <br> 
@@ -918,6 +1033,8 @@ button:active {
 </footer>
 
 <script>
+    
+ 
     
     function toggleMenu() {
         const navMenu = document.getElementById('navMenu');
@@ -944,6 +1061,10 @@ searchInput.addEventListener('input', () => {
         }
     });
 });
+
+    // После поиска сбрасываем размеры картинок
+
+
 
     // После поиска сбрасываем размеры картинок
 
