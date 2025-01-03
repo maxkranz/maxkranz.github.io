@@ -12,7 +12,7 @@
       background: url('Screencast-from-2024-12-16-11-47-07.gif') no-repeat center center fixed;
       background-size: cover;
       color: white;
-      overflow: auto; /* Добавлено для прокрутки */
+      overflow: auto;
     }
 
     h1, p {
@@ -24,9 +24,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
       padding: 20px;
-      overflow: auto; /* Добавлено для прокрутки */
+      min-height: 100vh;
+      box-sizing: border-box;
     }
 
     .game-grid {
@@ -38,6 +38,8 @@
       border: 2px solid #870000;
       border-radius: 10px;
       padding: 10px;
+      box-sizing: border-box;
+      max-width: 100%;
     }
 
     /* Адаптивная сетка */
@@ -52,12 +54,16 @@
     @media (max-width: 599px) {
       .game-grid {
         grid-template-columns: repeat(4, 1fr);
-        width: 300px;
-        height: 300px;
+        width: 100%;
+        height: auto;
       }
-      .card-inner{
-        height: 150px;
-        width: 150px;
+      .card {
+        width: calc(25% - 10px); /* Учет отступов */
+        padding-bottom: calc(25% - 10px); /* Учет отступов */
+      }
+      .card-inner {
+        height: 100%;
+        width: 100%;
       }
     }
 
@@ -114,6 +120,50 @@
     .info span {
       font-weight: bold;
     }
+
+    /* Стили модального окна */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.3s;
+    }
+
+    .modal.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: black;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 90%;
+    }
+
+    .modal-content button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      background: #d80303;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .modal-content button:hover {
+      background: #b30000;
+    }
   </style>
 </head>
 <body>
@@ -122,6 +172,14 @@
     <p>You are Johnathan, and you need to find your friends and take them from the Upside Down!</p>
     <p class="info">Tries: <span id="attempts">0</span> | Matches: <span id="matches">0</span></p>
     <div class="game-grid" id="gameGrid"></div>
+  </div>
+
+  <!-- Модальное окно -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <p>You freed your friends! Reload the page to start again.</p>
+      <button onclick="closeModal()">Close</button>
+    </div>
   </div>
 
   <script>
@@ -140,6 +198,7 @@
     const gameGrid = document.getElementById('gameGrid');
     const attemptsDisplay = document.getElementById('attempts');
     const matchesDisplay = document.getElementById('matches');
+    const modal = document.getElementById('modal');
 
     // Перемешивание массива
     function shuffle(array) {
@@ -200,7 +259,7 @@
         matchesDisplay.textContent = matches;
 
         if (matchedCards.length === images.length) {
-          setTimeout(() => alert('You freed your friends! You are a hero now!'), 500);
+          setTimeout(() => showModal(), 500);
         }
       } else {
         setTimeout(() => {
@@ -210,6 +269,16 @@
       }
 
       flippedCards = [];
+    }
+
+    // Показать модальное окно
+    function showModal() {
+      modal.classList.add('show');
+    }
+
+    // Закрыть модальное окно
+    function closeModal() {
+      modal.classList.remove('show');
     }
 
     // Запуск игры

@@ -139,6 +139,48 @@
                 grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); /* Увеличена минимальная ширина кнопок для удобства */
             }
         }
+        .modal {
+            display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000;
+    width: 300px;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal h2 {
+            margin-bottom: 15px;
+        }
+
+        .modal .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .modal .buttons button {
+            padding: 10px 20px;
+            background-color: deepskyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal .buttons button:hover {
+            background-color: #007acc;
+        }
     </style>
 </head>
 <body>
@@ -153,18 +195,29 @@
         </div>
         <button id="new-game-button">New Game</button>
     </div>
+    <div id="winModal" class="modal">
+        <p>Congratulations, you won!</p>
+        <div class="buttons">
+            <button onclick="closeWinModal()">OK</button>
+        </div>
+    </div>
+
+    <div id="loseModal" class="modal">
+        <p id="loseText"></p>
+        <div class="buttons">
+            <button onclick="closeLoseModal()">OK</button>
+        </div>
+    </div>
 
     <script>
         const wordsWithDefinitions = [
             { word: 'apple', definition: 'A sweet fruit that is often red or green. ' },
-            { word: 'mountain', definition: 'A large natural elevation of the earth’s surface.' },
             { word: 'river', definition: 'A large natural stream of water flowing in a channel to the sea.' },
             { word: 'elephant', definition: 'A large mammal with a trunk.' },
             { word: 'ocean', definition: 'A vast body of salt water that covers almost three-quarters of the earth.' },
             { word: 'guitar', definition: 'A musical instrument with six strings.' },
             { word: 'football', definition: 'A sport where players kick a ball into a goal.' },
             { word: 'jacket', definition: 'A piece of clothing worn on the upper body for warmth.' },
-            { word: 'google', defenition: 'A company based in Mountain View. Known for its search engine.'},
             { word: 'island', definition: 'A piece of land surrounded by water.' },
             { word: 'coffee', definition: 'A dark, bitter drink made from roasted coffee beans.' },
             { word: 'penguin', definition: 'A flightless bird that lives in cold regions.' },
@@ -286,20 +339,9 @@
         });
 
         // Check if player won
-        function checkWin() {
-            if (currentGame.word.split('').every(letter => guessedLetters.includes(letter))) {
-                setTimeout(() => alert('Congratulations, you won!'), 100);
-                disableAllButtons();
-            }
-        }
 
-        // Check if player lost
-        function checkLoss() {
-            if (mistakes === maxMistakes) {
-                setTimeout(() => alert(`You lost! The word was: ${currentGame.word}`), 100);
-                disableAllButtons();
-            }
-        }
+
+
 
         // Disable all buttons
         function disableAllButtons() {
@@ -338,6 +380,26 @@
 
         // Start initial game
         initGame();
+        function checkWin() {
+            if (currentGame.word.split('').every(letter => guessedLetters.includes(letter))) {
+                document.getElementById('winModal').classList.add('show');
+            }
+        }
+
+        function checkLoss() {
+            if (mistakes === maxMistakes) {
+                document.getElementById('loseText').textContent = `You lost! The word was: ${currentGame.word}`;
+                document.getElementById('loseModal').classList.add('show');
+            }
+        }
+
+        function closeWinModal() {
+            document.getElementById('winModal').classList.remove('show');
+        }
+
+        function closeLoseModal() {
+            document.getElementById('loseModal').classList.remove('show');
+        }
     </script>
 </body>
 </html>

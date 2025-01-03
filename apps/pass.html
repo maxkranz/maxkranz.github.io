@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pass(word) Generator</title>
-    <lick rel="shortcut icon" href="html.png"></lick>
+    <link rel="shortcut icon" href="html.png">
     <style>
         * {
             margin: 0;
@@ -21,6 +21,7 @@
             height: 100vh;
             color: #fff;
             margin: 0;
+            background-color: #303030;
         }
 
         .container {
@@ -163,42 +164,45 @@
             transform: scale(1.05);
         }
 
-        .password-modal {
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
             z-index: 999;
-            backdrop-filter: blur(10px);
+        }
+
+        .modal.show {
+            display: flex;
         }
 
         .modal-content {
-            background-color: white;
+            background-color: black;
+            color: white;
             padding: 25px;
             border-radius: 15px;
-            width: 400px;
             text-align: center;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            width: 300px;
         }
 
-        #closeModal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
+        .modal-content button {
+            background-color: deepskyblue;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            color: #333;
+            margin-top: 15px;
         }
 
-        #closeModal:hover {
-            color: #f44336;
+        .modal-content button:hover {
+            background-color: dodgerblue;
         }
-
     </style>
 </head>
 <body>
@@ -231,15 +235,15 @@
                 <ul id="savedPasswords"></ul>
             </div>
         </section>
+    </div>
 
-        <div class="password-modal" id="passwordModal">
-            <div class="modal-content">
-                <span id="closeModal" class="close-btn">&times;</span>
-                <h3>Details</h3>
-                <p id="passwordDetails"></p>
-            </div>
+    <div class="modal" id="copyModal">
+        <div class="modal-content">
+            <p>Password copied.</p>
+            <button id="closeCopyModal">OK</button>
         </div>
     </div>
+
     <script>
         function generatePassword() {
             const length = document.getElementById("length").value;
@@ -300,18 +304,17 @@
             const passwordField = document.getElementById("password");
             passwordField.select();
             document.execCommand("copy");
-            alert("Password copied.");
+            showCopyModal();
         }
 
-        function showPasswordDetails(password) {
-            const passwordModal = document.getElementById("passwordModal");
-            const passwordDetails = document.getElementById("passwordDetails");
-            passwordDetails.innerText = `Пароль: ${password}`;
-            passwordModal.style.display = 'flex';
+        function showCopyModal() {
+            const copyModal = document.getElementById("copyModal");
+            copyModal.classList.add("show");
         }
 
-        function closePasswordModal() {
-            document.getElementById("passwordModal").style.display = 'none';
+        function closeCopyModal() {
+            const copyModal = document.getElementById("copyModal");
+            copyModal.classList.remove("show");
         }
 
         document.getElementById("generatePassword").addEventListener("click", () => {
@@ -321,8 +324,7 @@
         });
 
         document.getElementById("copyPassword").addEventListener("click", copyPassword);
-
-        document.getElementById("closeModal").addEventListener("click", closePasswordModal);
+        document.getElementById("closeCopyModal").addEventListener("click", closeCopyModal);
 
         renderPasswords();
     </script>

@@ -9,27 +9,31 @@
     body {
       margin: 0;
       background: linear-gradient(to bottom, #001f3f, #0074D9);
-      overflow: hidden;
       height: 100vh;
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
     canvas {
       display: block;
     }
 
-    .characters {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+    .characters-container {
       display: flex;
       align-items: center;
       gap: 40px;
+      overflow-x: auto;
+      padding: 20px;
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-left: 1000px;
     }
+    
 
     .character {
       position: relative;
@@ -38,6 +42,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      cursor: pointer;
+    }
+    @media (max-width: 1130px) {
+      .characters-container{
+        margin-left: 0;
+      }
     }
 
     .head {
@@ -137,33 +147,33 @@
       color: white;
       opacity: 0;
       transition: opacity 0.5s;
+      pointer-events: none;
     }
 
     .character:hover .thought {
       opacity: 1;
     }
 
-    /* Add a container for the cafe image */
+    .thought.visible {
+      opacity: 1 !important;
+    }
+
     .cafe-container {
-      position: absolute;
-      right: 20px;
-      bottom: 20px;
-      z-index: 10;
+      flex-shrink: 0;
     }
 
     .cafe-container img {
-      width: 350px; /* Adjust the size of the cafe image */
-      height: auto;
-      border-radius: 10px;
+      width: 350px;
       height: 350px;
+      border-radius: 10px;
     }
   </style>
 </head>
 <body>
   <canvas id="snowCanvas"></canvas>
 
-  <div class="characters">
-    <div class="character boy">
+  <div class="characters-container">
+    <div class="character boy" onclick="showThought(this)">
       <div class="head">
         <div class="hair boy"></div>
         <div class="eye left"></div>
@@ -176,9 +186,9 @@
         <div class="leg"></div>
         <div class="leg"></div>
       </div>
-      <div class="thought" style="top: -200px;">Ok, let's call it a date. I see a cafe nearby, shall we go there and have a romantic dinner?</div>
+      <div class="thought">Ok, let's call it a date. I see a cafe nearby, shall we go there and have a romantic dinner?</div>
     </div>
-    <div class="character girl">
+    <div class="character girl" onclick="showThought(this)">
       <div class="head">
         <div class="hair girl"></div>
         <div class="eye left"></div>
@@ -191,13 +201,11 @@
         <div class="leg"></div>
         <div class="leg"></div>
       </div>
-      <div class="thought" style="top: -100px;">Oh finally! Yes, I want! Let's go!</div>
+      <div class="thought">Oh finally! Yes, I want! Let's go!</div>
     </div>
-  </div>
-
-  <!-- Cafe image -->
-  <div class="cafe-container">
-    <img src="cafe.png" alt="Cafe Image"> <!-- Replace with your actual image URL -->
+    <div class="cafe-container">
+      <img src="cafe.png" alt="Cafe Image"> <!-- Replace with your actual image URL -->
+    </div>
   </div>
 
   <script>
@@ -294,6 +302,16 @@
       snowflakes.length = 0; // Clear snowflakes
       createSnowflakes(200); // Recreate snowflakes
     });
+
+    // Show thought bubble on tap for mobile devices
+    function showThought(character) {
+      const thoughtBubble = character.querySelector(".thought");
+      thoughtBubble.classList.add("visible");
+
+      setTimeout(() => {
+        thoughtBubble.classList.remove("visible");
+      }, 2000);
+    }
   </script>
 </body>
 </html>
