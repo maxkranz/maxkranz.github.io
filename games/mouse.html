@@ -376,10 +376,10 @@
         <div id="selectionScreen" class="hidden">
             <h2>Select your clicker:</h2>
             <div class="clicker-options">
-                <img src="mishl-Photoroom.png" alt="Mouse" class="clicker-option" onclick="window.open('https://maxkranz.github.io/games/mouse')">
-                <img src="plov.png" alt="Plov" class="clicker-option" onclick="window.open('https://maxkranz.github.io/games/plov')">
-                <img src="u.png" alt="Unicorn" class="clicker-option" onclick="window.open('https://maxkranz.github.io/games/unicorn')">
-                <img src="k.png" alt="Poop" class="clicker-option" onclick="window.open('https://maxkranz.github.io/games/kakashka')">
+                <img src="mishl-Photoroom.png" alt="Mouse" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/games/mouse'">
+                <img src="plov.png" alt="Plov" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/games/plov'">
+                <img src="u.png" alt="Unicorn" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/games/unicorn'">
+                <img src="k.png" alt="Poop" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/games/kakashka'">
             </div>
             <button class="close-button" onclick="closeClickerSelection()">Close</button>
         </div>
@@ -400,7 +400,7 @@
     <div id="confirmModal">
         <p>Are you sure you want to start a new game? All progress will be reset.</p>
         <div class="modal-buttons">
-            <button class="confirm" onclick="restartGame()">Yes</button>
+            <button class="confirm" onclick="restartGame(),closeConfirmModal()">Yes</button>
             <button class="cancel" onclick="closeConfirmModal()">Cancel</button>
         </div>
     </div>
