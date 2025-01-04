@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+ 
+    ym(98959916, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true
+    });
+ </script>
+ <noscript><div><img src="https://mc.yandex.ru/watch/98959916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+ <!-- /Yandex.Metrika counter -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Kranz</title>
+    <link rel="shortcut icon" href="html.png">
+    <meta name="description" content="Откройте для себя классные веб-приложения, игры и проекты">
+    <meta property="og:image" content="html.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px;
+            background-color: DeepSkyBlue;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .section {
+            width: 100%;
+            max-width: 1200px;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        .trusted-by {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .trusted-by img {
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .partner-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .partner-card:hover {
+            transform: translateY(-10px);
+        }
+
+        footer {
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        footer a {
+            color: DeepSkyBlue;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 30px 20px;
+            background-color: DeepSkyBlue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+      header div:nth-child(2) {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 0.83em;
+    margin-bottom: 0.83em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+        .nav-links {
+            display: none;
+        }
+
+        .burger-menu {
+            display: none;
+            position: absolute;
+            top: 25px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .burger-menu div {
+            width: 30px;
+            height: 3px;
+            background-color: #fff;
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+
+        .intro {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project {
+            background-color: DeepSkyBlue;
+            padding: 30px;
+            width: 150px;
+    height: 150px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+
+
+        .project a {
+            color: #f8f8f8;
+            text-decoration: none;
+        }
+
+        .dropdown-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .dropdown {
+            background-color: DeepSkyBlue;
+            color: black;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown:hover {
+            background-color: #0056b3;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 5px 0;
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            color: #0056b3;
+        }
+
+        nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
+            background-color: DeepSkyBlue;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 9;
+            padding: 60px 20px;
+            transition: transform 0.3s ease;
+            transform: translateX(100%);
+        }
+
+        nav.active {
+            display: block;
+            transform: translateX(0);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        nav a:hover {
+            color: #0056b3;
+        }
+
+        .burger-menu.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 5px);
+        }
+      .nav-links a {
+    padding: 100px 15px; /* Добавьте отступ сверху и снизу по 10px и слева и справа по 15px */
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    margin-left: 20px;
+    transition: color 0.3s ease;
+}
+
+
+        .burger-menu.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -5px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        @media (max-width: 1233px) {
+            .burger-menu {
+                display: block;
+                margin-top: 30px;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+            }
+
+            .project {
+                font-size: 16px;
+                padding: 20px;
+            }
+
+            .intro {
+                font-size: 18px;
+                padding: 0 15px;
+            }
+
+            .dropdown-container {
+                max-width: 100%;
+            }
+        }
+      .burger-menu div {
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    margin: 2px 0; /* здесь можете изменить значение на 2px или меньше */
+    transition: 0.4s;
+}
+
+        @media (min-width: 1233px) {
+            .nav-links {
+                display: block;
+            }
+
+            .nav-links a {
+                color: white;
+                text-decoration: none;
+                font-size: 20px;
+                margin-left: 20px;
+                transition: color 0.3s ease;
+            }
+
+            .nav-links a:hover {
+                color: #0056b3;
+            }
+
+            .burger-menu {
+                display: none;
+            }
+        }
+       
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            color: #333;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 30px 20px;
+            background-color: DeepSkyBlue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .intro {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project {
+            background-color: DeepSkyBlue;
+            padding: 30px;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        /* Эффект появления текста */
+
+
+        .project:hover .project-description,
+        .project.active .project-description {
+            bottom: 0;
+        }
+        footer a{
+            margin: 5px;
+        }
+
+        .project a {
+            color: #f8f8f8;
+            text-decoration: none;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .project-description {
+                font-size: 14px;
+            }
+
+            .project {
+                width: 100%;
+            }
+
+        }
+        body{
+            color: #f8f8f8;
+            background-color: #303030;
+        }
+        .projects-grid {
+    display: grid;
+    gap: 20px; /* Расстояние между квадратиками */
+    padding: 20px; /* Внутренний отступ */
+    width: 100%;
+    max-width: 1200px;
+}
+
+.project {
+    background-color: #fff; /* Белый фон */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень */
+    text-align: center;
+    overflow: hidden; /* Убираем выход за границы */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Эффект при наведении */
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение */
+    align-items: center;
+    text-decoration: none;
+    height: 200px; /* Фиксированная высота */
+}
+
+.project img {
+    width: 100%; /* Ширина изображения */
+    height: 150px; /* Высота изображения */
+    object-fit: cover; /* Обрезка изображения */
+}
+
+.project-title {
+    padding: 10px; /* Отступы */
+    font-size: 1rem; /* Размер текста */
+    font-weight: 600; /* Полужирный текст */
+    color: #333; /* Цвет текста */
+}
+
+.project:hover {
+    transform: translateY(-10px); /* Поднятие квадрата при наведении */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Увеличение тени */
+}
+.logo{
+    height: 70px;
+}
+p, a, h2, h1, h6{
+    color: white;
+}
+.section{
+    color: white;
+}
+.section h2{
+    color: white;
+}
+.section p{
+    color: white;
+}
+button {
+    background-color: DEEPSKYBLUE; /* Зеленый фон */
+    color: white; /* Белый текст */
+    padding: 15px 20px; /* Отступы внутри кнопки */
+    border: none; /* Убираем рамку */
+    border-radius: 8px; /* Закругленные углы */
+    font-size: 16px; /* Размер текста */
+    font-weight: bold; /* Жирный текст */
+    cursor: pointer; /* Указатель при наведении */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень */
+    transition: all 0.3s ease; /* Плавный переход */
+    width: 150px;
+}
+
+button:hover {
+    background-color: rgb(29, 172, 219); /* Темно-зеленый при наведении */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Увеличение тени */
+    transform: translateY(-2px); /* Легкое поднятие */
+}
+
+button:active {
+    transform: translateY(2px); /* Смещение при клике */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Меньшая тень */
+}
+
+@media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+        .hero {
+            width: 100%;
+            background: linear-gradient(to right, #00254e, #000000);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero .cta-button {
+            background-color: #4e8dd4;
+            padding: 15px 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .hero .cta-button:hover {
+            transform: translateY(-3px);
+            background-color: #459bfc;
+        }
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background: #ffcc00;
+            color: #1e1e2f;
+            border: none;
+            border-radius: 50%;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .scroll-top:hover {
+            background: #ffaa00;
+        }
+        .rating {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .rating span {
+            margin-right: 5px;
+        }
+
+        .rating .stars {
+            color: rgb(0, 0, 0);
+        }
+
+        .update-feed {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #0073e6;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            background-color: #f0f8ff;
+            color: #000;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .update-feed h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #0056b3;
+            text-align: center;
+        }
+
+        .update-feed ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .update-feed ul li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #e6f7ff;
+            border: 1px solid #b3e5fc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        
+
+
+    </style>
+</head>
+<body>
+   
+    <header>
+        <div class="nav-links">
+            <a href="https://maxkranz.github.io/ru/projects" style="margin-left:300px">Проекты</a>
+        </div>
+        <div><a href="https://maxkranz.github.io/ru"><img class="logo"src="logomk.png"></a></div>
+        <div class="nav-links">
+            <a href="https://maxkranz.github.io/ru/about" style="margin-right: 300px">Обо мне</a>
+        </div>
+        <div class="burger-menu" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="navMenu">
+            <a href="https://maxkranz.github.io/ru/projects/">Проекты</a>
+            <a href="https://maxkranz.github.io/ru/about">Обо мне</a>
+        </nav>
+    </header>
+    <section class="hero">
+        <h1>Max Kranz Publisher</h1>
+        <p>Представление нового проекта</p>
+        <button class="cta-button" onclick="window.open('https://maxkranz.github.io/publisher/')">Посмотрим!🚀</button>
+    </section>
+    
+        <div class="intro" style="color: #f8f8f8;">
+            Привет, я Макс Кранц, и я создаю веб-приложения и игры! Они полезные и забавные, так что вы не пожалеете, если воспользуетесь ими.
+
+        </div>
+    
+      
+          <div class="projects-grid">
+                <a href="https://maxkranz.github.io/amanda" class="project">
+                    <img src="amanda.png" alt="Amanda">
+                    <div class="project-title">Amanda</div>
+                </a>
+            
+                <a href="https://maxkranz.github.io/ru/apps/todoapp" class="project">
+                    <img src="todo.png" alt="To Do">
+                    <div class="project-title">To Do</div>
+                </a>
+                  
+                <a href="https://maxkranz.github.io/ru/games/guessthenumber" class="project">
+                    <img src="gtn.png" alt="Guess The Number">
+                    <div class="project-title">Угадай число</div>
+                </a>
+                <a href="https://maxkranz.github.io/ru/apps/noteapp" class="project">
+                    <img src="noteapp.png" alt="NoteApp">
+                    <div class="project-title">NoteApp</div>
+                </a>
+                <a href="https://maxkranz.github.io/ru/apps/timer" class="project">
+                    <img src="timer.png" alt="Timer">
+                    <div class="project-title">Таймер</div>
+                </a>
+                <a href="https://maxkranz.github.io/ru/apps/quotegenerator" class="project">
+                    <img src="quotes.png" alt="Quotes Generator">
+                    <div class="project-title">Генератор цитат</div>
+                </a>
+                <a href="https://maxkranz.github.io/ru/apps/calculator" class="project">
+                    <img src="calculate.png" alt="Calculator">
+                    <div class="project-title">Калькулятор</div>
+                </a>
+                <a href="https://maxkranz.github.io/ru/games/dino" class="project">
+                    <img src="dino.png" alt="Dino">
+                    <div class="project-title">Дино</div>
+                </a>
+                <a href="https://maxkranz.github.io/ru/games/mouse" class="project">
+                    <img src="mishl-Photoroom.png" alt="Mouse Clicker">
+                    <div class="project-title">Mouse Clicker</div>
+                </a>
+                <a href="https://maxkranz.github.io/ru/games/tictactoe" class="project">
+                    <img src="tictactoe.png" alt="Tic-Tac-Toe">
+                    <div class="project-title">Крестики-нолики</div>
+                </a>
+                <a href="https://maxkranz.github.io/ru/games/hangman" class="project">
+                    <img src="hangman.png" alt="Hangman">
+                    <div class="project-title">Виселица</div>
+                </a>
+                <a href="https://maxkranz.github.io/ru/games/bullsandcows" class="project">
+                    <img src="cow.png" alt="Bulls and Cows">
+                    <div class="project-title">Быки и коровы</div>
+                </a>
+
+        </div>
+        <div class="update-feed">
+            <h2>Недавние апдейты</h2>  
+            <h1 style="text-align: center; color: black;">Недавних апдейтов пока нет!</h1>     
+        </div>
+      
+          <div class="dropdown-container">
+              <div class="dropdown" onclick="toggleDropdown('apps')" style="color: white;">Приложения</div>
+              <div class="dropdown-content" id="apps">
+                  <a href="https://maxkranz.github.io/ru/apps/todoapp">To Do App</a>
+                  <a href="https://maxkranz.github.io/amanda">Поисковик Amanda</a>
+                  <a href="https://maxkranz.github.io/ru/apps/noteapp">NoteApp</a>
+                  <a href="https://maxkranz.github.io/ru/apps/timer">Таймер</a>
+                  <a href="https://maxkranz.github.io/ru/apps/quotegenerator">Генератор цитат</a>
+                  <a href="https://maxkranz.github.io/ru/apps/calculator">Калькулятор</a>
+              </div>
+              <div class="dropdown-container">
+              <div class="dropdown" onclick="toggleDropdown('games')" style="color: white;">Игры</div>
+              <div class="dropdown-content" id="games">
+                  <a href="https://maxkranz.github.io/games/ru/guessthenumber">Угадай число</a>
+                   <a href="https://maxkranz.github.io/games/ru/dino">Dino Game</a>
+                   <a href="https://maxkranz.github.io/games/ru/mouse">Mouse Clicker</a>
+                   <a href="https://maxkranz.github.io/games/ru/tictactoe">Крестики-нолики</a>
+                   <a href="https://maxkranz.github.io/games/ru/bullsandcows">Быки и коровы</a>
+                   <a href="https://maxkranz.github.io/games/ru/hangman">Виселица</a>
+                  
+              </div>
+              
+
+
+    <div class="section">
+        <h2>Кто я</h2>
+        <p>Привет, я Макс Кранц, и я создаю различные приложения, игры и даже проекты, большие проекты! Например, MK Publisher, Pas-Halko, Max Kranz Bot - все это сделал я. Так что если вы хотите узнать больше, нажмите на кнопку ниже!<br> 
+            <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/ru/about')">Обо мне</button></p>
+    </div>
+
+    <div class="section" style="justify-content: center; text-align: center; ">
+        <h2>Обо мне в видео</h2>
+        <img  src="WhatsApp-Video-2024-12-14-at-7.48.06-PM.gif"  style=" width: 320px; height: 220px; height: auto; display: block; margin: 0 auto; border-radius: 10px;">
+        <br>
+        <button style="margin-top: 20px;" onclick="window.open('https://maxkranz.github.io/maxkranz.mp4')">Посмотреть видео</button>
+    </div>
+<br>    
+    </div>
+
+</div>
+
+    <footer style="color: #f8f8f8; margin-top: 0;">© Max Kranz Inc. Все права защищены.<br><br><a href="https://maxkranz.github.io/" STYLE="color: #f8f8f8;
+        text-decoration: none;
+        font-size: 15px;
+        transition: color 0.3s ease; margin-top: 0;">EN</a>
+        <a href="https://t.me/maxkranzofficial" STYLE="color: #f8f8f8;
+        text-decoration: none;
+        font-size: 15px;
+        transition: color 0.3s ease; margin-top: 0;">Telegram</a>
+
+        <button class="scroll-top" onclick="scrollToTop()">↑</button>
+
+        <script>
+                    function toggleDropdown(id) {
+            const content = document.getElementById(id);
+            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const burger = document.querySelector('.burger-menu');
+            menu.classList.toggle('active');
+            burger.classList.toggle('active');
+        }
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        </script>
+</body>
+</html>
