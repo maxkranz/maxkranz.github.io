@@ -3,11 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Max Kranz Publisher</title>
+    <title>Shopping List by Zen Prog</title>
     <link rel="shortcut icon" href="logor.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-                * {
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #303030;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .game-container {
+            background-color: #4a90e2;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .game-container h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .game-container .game-detail {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .game-container .game-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #f0f0f0;
+        }
+
+        .play-button {
+            background-color: #4d81bd;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background-color: #4b9af5;
+            transform: translateY(-2px);
+        }
+
+        .play-button:active {
+            transform: translateY(2px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -589,12 +662,6 @@
             max-width: 800px;
             line-height: 1.5;
         }
-        .ratinge {
-            margin: 20px 0;
-            padding: 0 20px;
-            text-align: center;
-            max-width: 800px;
-        }
         #projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -703,7 +770,7 @@
 button {
     background-color: #4a90e2; /* Зеленый фон */
     color: white; /* Белый текст */
-    padding: 15px 20px; /* Отступы внутри кнопки */
+    padding: 15px 30px; /* Отступы внутри кнопки */
     border: none; /* Убираем рамку */
     border-radius: 8px; /* Закругленные углы */
     font-size: 16px; /* Размер текста */
@@ -724,137 +791,29 @@ button:active {
     transform: translateY(2px); /* Смещение при клике */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Меньшая тень */
 }
-@media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-        }
-        .hero {
-            width: 100%;
-            background: linear-gradient(to right, #00254e, #000000);
-            color: white;
-            text-align: center;
-            padding: 60px 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-
-        .hero .cta-button {
-            background-color: #4e8dd4;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .hero .cta-button:hover {
-            transform: translateY(-3px);
-            background-color: rgb(0, 128, 255);
-        }
-        .project {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Плавный эффект для прозрачности */
-}
-
-.project img {
+header {
+    position: fixed; /* Фиксируем header наверху */
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100px;
-    object-fit: cover; /* Предотвращает изменение размеров изображения */
+    padding: 15px 20px;
+    background-color: #4a90e2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Поверх остальных элементов */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.rating {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-        }
-
-        .rating span {
-            margin-right: 5px;
-        }
-
-        .rating .stars {
-            color: rgb(0, 0, 0);
-        }
-
-        .update-feed {
-            margin: 20px 0;
-            padding: 15px;
-            border: 2px solid #0073e6;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 800px;
-            background-color: #f0f8ff;
-            color: #000;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .update-feed h2 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #0056b3;
-            text-align: center;
-        }
-
-        .update-feed ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .update-feed ul li {
-            margin: 10px 0;
-            padding: 10px;
-            background-color: #e6f7ff;
-            border: 1px solid #b3e5fc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .project.hidden {
-            display: none;
-        }
-
-
-        .project.hidden {
-            transform: scale(0.3);
-            opacity: 0;
-        }
+body {
+    padding-top: 80px; /* Добавляем отступ, чтобы контент не скрывался за header */
+}
 
 
     </style>
 </head>
 <body>
-<header>
+    <header>
     <a href="https://maxkranz.github.io/publisher/" class="logo">
         <img src="logop.png" id="logop">
         
@@ -871,162 +830,20 @@ button:active {
         <span class="close-menu" onclick="toggleMenu()">Х</span>
         <a href="https://maxkranz.github.io/publisher/about/">About</a>
         <a href="https://telegra.ph/Post-Your-AppGame-at-MK-Publisher-12-17">Post Your Project</a>
-
+        <a href="https://maxkranz.github.io/publisher/app/">Apps</a>
+        <a href="https://maxkranz.github.io/publisher/game/">Games</a>
         <a href="https://maxkranz.github.io/publisher/pricing/">Pricing</a>
         <a href="https://t.me/maxkranzofficial">Telegram</a>
     </nav>
 </header>
-<section class="hero">
-    <h1>Max Kranz Publisher</h1>
-    <p>Discover and publish amazing apps and games with ease!</p>
-    <button class="cta-button" onclick="window.open('https://maxkranz.github.io/publisher/introducing/')">Introducing🌟</button>
-</section>
-
-<div class="intro">
-    Welcome to MK Publisher! Discover amazing apps and games.
-</div>
-
-<div id="projects-grid" >
-    <a href="https://maxkranz.github.io/publisher/introducing/" class="project" data-title="Introducing" style="background-color: rgb(216, 216, 216);">
-        <img src="introducing.png" alt="Example Project">
-        <div class="project-title">📌Introducing</div>
-
-    </a>
-
-
-    <a href="https://maxkranz.github.io/publisher/app/001/" class="project"data-title="Aries">
-        <img src="image.png" alt="Example Project">
-        <div class="project-title">Aries</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★☆☆</span>
-        </div>
-    </a>
-    <a href="https://maxkranz.github.io/publisher/app/002/" class="project"data-title="Pass(word) Manager">
-        <img src="pass.png" alt="Example Project">
-        <div class="project-title">Pass(word) Generator</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★★☆</span>
-        </div>
-    </a>
-    </a>
-      
-    <a href="https://maxkranz.github.io/publisher/app/003/" class="project"data-title="Consilium">
-        <img src="consilium.png" alt="Example Project">
-        <div class="project-title">Consilium Strategy</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★★★</span>
-        </div>
-    </a>
-    <a href="https://maxkranz.github.io/publisher/app/004/" class="project"data-title="Shopping List">
-        <img src="shl.png" alt="Example Project">
-        <div class="project-title">Shopping List</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★★☆</span>
-        </div>
-    </a>
-    </a>
-    <a href="https://maxkranz.github.io/publisher/app/005/" class="project"data-title="Fate Cube">
-        <img src="dice.png" alt="Example Project">
-        <div class="project-title">Fate Cube</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★★★</span>
-        </div>
-        
-    </a>
-    <a href="https://maxkranz.github.io/apps/quotegenerator" class="project"data-title="Quotes Generator">
-        <img src="quotes.png" alt="Example Project">
-        <div class="project-title">Quotes Generator</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★☆☆</span>
-        </div>
-    </a>
-    <a href="https://maxkranz.github.io/apps/calculator" class="project"data-title="Calculator">
-        <img src="calculate.png" alt="Example Project">
-        <div class="project-title">Calculator</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★☆☆</span>
-        </div>
-    </a>
-    <a href="https://maxkranz.github.io/games/dino" class="project"data-title="Dino">
-        <img src="dino.png" alt="Example Project">
-        <div class="project-title">Dino</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★★★</span>
-        </div>
-    </a>
-    <a href="https://maxkranz.github.io/games/mouse" class="project"data-title="Mouse Clicker">
-        <img src="mishl-Photoroom.png" alt="Example Project">
-        <div class="project-title">Mouse Clicker</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★★★</span>
-        </div>
-    </a>
-    <a href="https://maxkranz.github.io/games/tictactoe" class="project"data-title="Tic-Tac-Toe">
-        <img src="tictactoe.png" alt="Example Project">
-        <div class="project-title">Tic-Tac-Toe</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★☆☆</span>
-        </div>
-    </a>
-    <a href="https://maxkranz.github.io/games/hangman" class="project"data-title="Hangman">
-        <img src="hangman.png" alt="Example Project">
-        <div class="project-title">Hangman</div>
-        <div class="rating">
-            <span>Rating:</span> <span class="stars">★★★★☆</span>
-        </div>
-    </a>
-     
-       </div>
-    
-       <div class="update-feed">
-        <h2>Recent Updates</h2>
-        <ul id="update-list">
-            <li>📅 Consilium game added (01/02/2025)</li>
-            <li>📅 Password Generator added (12/29/2024)</li>
-            <li>📅 Aries App addded (12/28/2024)</li>
-        </ul>
+    <div class="game-container">
+        <h1>Shopping list</h1>
+        <p class="game-detail"><strong>Developer:</strong> <a href="https://zenay83.github.io" style="color: black; " >Zen Prog</a> </p>
+        <p class="game-detail"><strong>Description: </strong>Shopping list by Zen Prog.</p>
+        <button class="play-button" onclick="window.open('https://maxkranz.github.io/publisher/app/004/use/')">Use</button>
     </div>
-       
-<div class="dropdown-container">
-    <div class="dropdown" onclick="toggleDropdown('apps')">Trending</div>
-    <div class="dropdown-content" id="apps">
-        <a href="#">To Do App</a>
-        <a href="#">Amanda</a>
-    </div>
-</div>
-    </div>
-    <div class="section">
-        <h2>Popularity Rating</h2>
-        <p>The popularity of a project indicates how often it is used. The fewer stars, the less popular the project is, the more stars, the more popular it is.<br> 
-           </p>
-    </div>
-    
-    <div class="section">
-        <h2>What is Publisher</h2>
-        <p>MK Publisher is a platform for publishing projects and use it. For more, click the button below! <br> 
-            <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/publisher/about/')">About</button></p>
-    </div>
-    
-    <div class="section" style="justify-content: center; text-align: center; ">
-        <h2>About in Video</h2>
-        <img  src="publisher.gif"  style=" width: 320px; height: 220px; height: auto; display: block; margin: 0 auto; border-radius: 10px;">
-        <br>
-        <button style="margin-top: 20px;" onclick="window.open('https://maxkranz.github.io/publisher/publisher.mp4')">Watch Video</button>
-    </div>
-    <br>    
-    </div>
-    
-    </div>
-
-<footer>
-    © Max Kranz Inc. All rights reserved. 
-</footer>
-
-<script>
-    
- 
-    
-    function toggleMenu() {
+    <script>
+            function toggleMenu() {
         const navMenu = document.getElementById('navMenu');
         navMenu.classList.toggle('active');
     }
@@ -1037,28 +854,20 @@ button:active {
     }
 
     const searchInput = document.getElementById('search');
-const projectsGrid = document.getElementById('projects-grid');
-const projects = projectsGrid.getElementsByClassName('project');
+    const projectsGrid = document.getElementById('projects-grid');
+    const projects = projectsGrid.getElementsByClassName('project');
 
-searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase();
-    Array.from(projects).forEach(project => {
-        const title = project.getAttribute('data-title').toLowerCase();
-        if (title.includes(query)) {
-            project.classList.remove('hidden');
-        } else {
-            project.classList.add('hidden');
-        }
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        Array.from(projects).forEach(project => {
+            const title = project.getAttribute('data-title').toLowerCase();
+            project.style.display = title.includes(query) ? 'block' : 'none';
+        });
     });
-});
+    </script>
 
-    // После поиска сбрасываем размеры картинок
-
-
-
-    // После поиска сбрасываем размеры картинок
-
-
-</script>
+    <footer>
+        © Max Kranz Inc. All rights reserved.
+    </footer>
 </body>
 </html>
