@@ -25,7 +25,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(to right, #6a11cb, #2575fc);
+            background: linear-gradient(to right, #05a80d, #000000);
             color: #fff;
             margin: 0;
             padding: 0;
@@ -92,7 +92,7 @@
         }
         body {
     font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
+    background: linear-gradient(to right, #02940a, #000000);
     color: #fff;
     margin: 0;
     padding: 0;
@@ -244,9 +244,9 @@ h1 {
         if (population > 0) {
             const harvested = Math.floor(Math.random() * 20) + 10 + technology;
             food += harvested;
-            messageElement.textContent = `Вы собрали ${harvested} единиц еды!`;
+            messageElement.textContent = `You harvested ${harvested} units of food!`;
         } else {
-            messageElement.textContent = 'Недостаточно населения для сбора еды!';
+            messageElement.textContent = 'Not enough population to collect food!';
         }
         updateResources();
     }
@@ -255,9 +255,9 @@ h1 {
         if (population > 0) {
             const mined = Math.floor(Math.random() * 15) + 5 + technology;
             gold += mined;
-            messageElement.textContent = `Вы добыли ${mined} единиц золота!`;
+            messageElement.textContent = `You mined ${mined} units of gold!`;
         } else {
-            messageElement.textContent = 'Недостаточно населения для добычи золота!';
+            messageElement.textContent = 'Not enough population to mind gold!';
         }
         updateResources();
     }
@@ -272,9 +272,9 @@ h1 {
                 const added = Math.floor(Math.random() * 3) + 1;
                 population += added;
                 food -= 20;
-                messageElement.textContent = `Вы увеличили население на ${added} человек!`;
+                messageElement.textContent = `You increased the population by ${added} people!`;
             } else {
-                messageElement.textContent = 'Недостаточно еды для увеличения населения!';
+                messageElement.textContent = 'Not enough food to increase the population!';
             }
             updateResources();
         }
@@ -284,9 +284,9 @@ h1 {
                 const boost = Math.floor(Math.random() * 10) + 5;
                 happiness = Math.min(100, happiness + boost);
                 gold -= 10;
-                messageElement.textContent = `Вы увеличили счастье на ${boost} единиц!`;
+                messageElement.textContent = `You boosted happiness by ${boost} units!`;
             } else {
-                messageElement.textContent = 'Недостаточно золота для увеличения счастья!';
+                messageElement.textContent = 'Not enough gold to boost happiness!';
             }
             updateResources();
         }
@@ -295,9 +295,9 @@ h1 {
             if (gold >= 20) {
                 technology++;
                 gold -= 20;
-                messageElement.textContent = 'Вы исследовали новую технологию!';
+                messageElement.textContent = 'You researched new technology!';
             } else {
-                messageElement.textContent = 'Недостаточно золота для исследования технологий!';
+                messageElement.textContent = 'Not enough gold to research new technology!';
             }
             updateResources();
         }
@@ -306,9 +306,9 @@ h1 {
             if (gold >= 30) {
                 defense += 1;
                 gold -= 30;
-                messageElement.textContent = 'Вы улучшили оборону вашего государства!';
+                messageElement.textContent = 'You improved defense of your state!';
             } else {
-                messageElement.textContent = 'Недостаточно золота для улучшения обороны!';
+                messageElement.textContent = 'Not enough gold to improve defense!';
             }
             updateResources();
         }
@@ -319,9 +319,9 @@ h1 {
                 gold -= 20;
                 food -= 10;
                 happiness = Math.min(100, happiness + 10);
-                messageElement.textContent = 'Вы улучшили культурный уровень вашего государства!';
+                messageElement.textContent = 'You improved culture level of your state!';
             } else {
-                messageElement.textContent = 'Недостаточно ресурсов для развития культуры!';
+                messageElement.textContent = 'Not enough resources to improve culture!';
             }
             updateResources();
         }
@@ -336,16 +336,16 @@ h1 {
                     const rewardHappiness = Math.floor(Math.random() * 15) + 5;
                     gold += rewardGold;
                     happiness = Math.min(100, happiness + rewardHappiness);
-                    messageElement.textContent = `Вы выиграли войну! Получено ${rewardGold} золота и ${rewardHappiness} счастья.`;
+                    messageElement.textContent = `You won the war! You got ${rewardGold} of gold and ${rewardHappiness} of happiness.`;
                 } else {
                     const lostGold = Math.floor(Math.random() * 30) + 10;
                     const lostHappiness = Math.floor(Math.random() * 20) + 5;
                     gold = Math.max(0, gold - lostGold);
                     happiness = Math.max(0, happiness - lostHappiness);
-                    messageElement.textContent = `Вы проиграли войну. Потеряно ${lostGold} золота и ${lostHappiness} счастья.`;
+                    messageElement.textContent = `You lost the war! You lost ${lostGold} of gold and ${lostHappiness} of happiness.`;
                 }
             } else {
-                messageElement.textContent = 'Недостаточно ресурсов для начала войны!';
+                messageElement.textContent = 'Not enough resources to start war!';
             }
             updateResources();
         }
@@ -353,11 +353,11 @@ h1 {
         function enemyAttack() {
             if (defense > 0) {
                 defense--;
-                messageElement.textContent = 'На вас напали, но ваша оборона защитила ваше государство!';
+                messageElement.textContent = 'You were attacked, but your defense protected your state!!';
             } else {
                 const stolenGold = Math.floor(Math.random() * 20) + 10;
                 gold = Math.max(0, gold - stolenGold);
-                messageElement.textContent = `На вас напали! Потеряно ${stolenGold} золота из-за слабой обороны.`;
+                messageElement.textContent = `You were attacked! You lost ${stolenGold} of gold because of weak defense.`;
             }
             updateResources();
         }
@@ -365,7 +365,7 @@ h1 {
         function decreaseDefenseDaily() {
             if (defense > 0) {
                 defense = Math.max(0, defense - 1);
-                messageElement.textContent = 'Уровень обороны уменьшился, требуется поддержка!';
+                messageElement.textContent = 'Defense level has decreased, support is needed!';
                 updateResources();
             }
         }
