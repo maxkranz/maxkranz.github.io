@@ -376,7 +376,7 @@
         <div id="selectionScreen" class="hidden">
             <h2>Select your clicker:</h2>
             <div class="clicker-options">
-                <img src="mishl-Photoroom.png" alt="Mouse" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/games/mouse'">
+                <img src="mish-Photoroom.png" alt="Mouse" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/games/mouse'">
                 <img src="plov.png" alt="Plov" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/games/plov'">
                 <img src="u.png" alt="Unicorn" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/games/unicorn'">
                 <img src="k.png" alt="Poop" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/games/kakashka'">
@@ -603,7 +603,7 @@ function selectClicker(name, imagePath) {
         document.getElementById('shareButton').addEventListener('click', () => {
             html2canvas(document.body).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'mouse_clicker_result.png';
+                link.download = 'plov.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
