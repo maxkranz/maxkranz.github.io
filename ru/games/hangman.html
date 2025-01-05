@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
@@ -20,10 +20,10 @@
  <!-- /Yandex.Metrika counter -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Виселица</title>
+    <title>Hangman</title>
     <link rel="shortcut icon" href="html.png">
     <style>
-        * {
+           * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -139,6 +139,48 @@
                 grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); /* Увеличена минимальная ширина кнопок для удобства */
             }
         }
+        .modal {
+            display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000;
+    width: 300px;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal h2 {
+            margin-bottom: 15px;
+        }
+
+        .modal .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .modal .buttons button {
+            padding: 10px 20px;
+            background-color: deepskyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal .buttons button:hover {
+            background-color: #007acc;
+        }
     </style>
 </head>
 <body>
@@ -153,25 +195,37 @@
         </div>
         <button id="new-game-button">Новая игра</button>
     </div>
+    <div id="winModal" class="modal">
+        <p>Поздравляем, вы победили!</p>
+        <div class="buttons">
+            <button onclick="closeWinModal()">Ура!</button>
+        </div>
+    </div>
+
+    <div id="loseModal" class="modal">
+        <p id="loseText"></p>
+        <div class="buttons">
+            <button onclick="closeLoseModal()">Попробуем еще раз</button>
+        </div>
+    </div>
 
     <script>
         const wordsWithDefinitions = [
-            { word: 'яблоко', definition: 'Сладкий фрукт, чаще всего бывает зеленым или красным. ' },
-            { word: 'гора', definition: 'Натуральное, большое возвышение на земной поверхности.' },
-            { word: 'река', definition: 'Большой естественный поток воды, текущий по руслу к морю.' },
-            { word: 'слон', definition: 'БОльшое млекопитающее с хоботом.' },
-            { word: 'океан', definition: 'Огромный водоем с соленой водой, покрывающий почти три четверти Земли.' },
-            { word: 'гитара', definition: 'Музыкальный инструмент с 6 струнами.' },
-            { word: 'футбол', definition: 'Вид спорта, в котором игроки бьют по мячу в ворота.' },
-            { word: 'куртка', definition: 'Одежда, надеваемая на верхнюю часть тела для тепла.' },
-            { word: 'остров', definition: 'Часть суши, окруженная водой.' },
-            { word: 'кофе', definition: 'Темный, горький напиток из обжаренных кофейных зерен.' },
-            { word: 'пингвин', definition: 'Бесполетная птица, обитающая в холодных регионах.' },
-            { word: 'гугл', definition: 'Компания, базирующаяся в Маунтин-Вью, известна в основном благодаря своему поисковику.' },
-            { word: 'луна', definition: 'Естественный спутник Земли, видимый ночью.' },
-            { word: 'пустыня', definition: 'Бесплодный участок земли, на котором выпадает мало осадков.' },
-            { word: 'лес', definition: 'Большая территория, покрытая преимущественно деревьями и подлеском.' },
-            { word: 'пианино', definition: 'Большой музыкальный инструмент с клавишами.' },
+            { word: 'компьютер', definition: 'Устройство, без которого айтишникам никак. ' },
+            { word: 'телефон', definition: 'Устройство, без которого сложно выжить в современном мире.' },
+            { word: 'кофе', definition: 'Вкусный напиток, который, по идее, должен подбадривать.' },
+            { word: 'игра', definition: 'Веселая...' },
+            { word: 'гитара', definition: 'Музыкальный инструмент с чаще всего 6 струнами.' },
+            { word: 'футбол', definition: 'Популярная спортивная игра, многие повернуты на ней.' },
+            { word: 'стратегия', definition: 'Как победить? Как обойти систему? Нам нужна...' },
+            { word: 'работа', definition: 'То, что почти никому не хочется делать.' },
+            { word: 'школа', definition: 'Многие школьники отдали бы все, чтобы ее закончить.' },
+            { word: 'гугл', definition: 'Компания, которая более известна как поисковик.' },
+            { word: 'яма', definition: 'В нее можно легко упасть, особенно если не смотреть под ноги.' },
+            { word: 'луна', definition: 'Популярный, единственный и неповторимый спутник Земли.' },
+            { word: 'пустыня', definition: 'Без воды там не выжить.' },
+            { word: 'лес', definition: 'Место, где можно укрыться под деревьями.' },
+            { word: 'пианино', definition: 'Музыкальный инструмент с клавишами.' },
         ];
 
         let currentGame;
@@ -186,7 +240,7 @@
         const ctx = canvas.getContext('2d');
         const newGameButton = document.getElementById('new-game-button');
 
-        // Функция для рисования частей виселицы
+        // Function to draw parts of the hangman
         function drawHangman() {
             ctx.strokeStyle = "#000";
             switch (mistakes) {
@@ -252,7 +306,7 @@
         }
         }
 
-        // Обновление отображения слова
+        // Function to update the word display
         function updateWordDisplay() {
             wordContainer.innerHTML = currentGame.word
                 .split('')
@@ -260,7 +314,7 @@
                 .join(' ');
         }
 
-        // Обработка угаданных букв
+        // Function to handle guesses
         function handleGuess(letter) {
             if (!guessedLetters.includes(letter)) {
                 guessedLetters.push(letter);
@@ -276,53 +330,42 @@
             }
         }
 
-        // Обработка ввода с клавиатуры
+        // Function to handle keyboard input
         document.addEventListener('keydown', (event) => {
             const letter = event.key.toLowerCase();
-            if (letter.match(/[а-яa-z]/) && letter.length === 1) {
+            if (letter.match(/[а-я]/) && letter.length === 1) {
                 handleGuess(letter);
             }
         });
 
-        // Проверка на победу
-        function checkWin() {
-            if (currentGame.word.split('').every(letter => guessedLetters.includes(letter))) {
-                setTimeout(() => alert('Поздравляем, вы выиграли!'), 100);
-                disableAllButtons();
-            }
-        }
+        // Check if player won
 
-        // Проверка на проигрыш
-        function checkLoss() {
-            if (mistakes === maxMistakes) {
-                setTimeout(() => alert(`Вы проиграли! Загаданное слово: ${currentGame.word}`), 100);
-                disableAllButtons();
-            }
-        }
 
-        // Отключение всех кнопок
+
+
+        // Disable all buttons
         function disableAllButtons() {
             document.querySelectorAll('.keyboard button').forEach(button => button.disabled = true);
         }
 
-        // Инициализация игры
+        // Initialize the game
         function initGame() {
-            // Сброс переменных
+            // Reset variables
             const randomWord = wordsWithDefinitions[Math.floor(Math.random() * wordsWithDefinitions.length)];
             currentGame = randomWord;
             guessedLetters = [];
             mistakes = 0;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Обновление описания
-            explanationContainer.textContent = `Определение: ${currentGame.definition}`;
+            // Update explanation
+            explanationContainer.textContent = `Объяснение: ${currentGame.definition}`;
 
-            // Обновление отображения слова
+            // Update word display
             updateWordDisplay();
 
-            // Сброс клавиатуры
+            // Reset keyboard
             keyboardContainer.innerHTML = '';
-            const letters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('');
+            const letters = 'йцукенгшщзхъфывапролджэячсмитьбю'.split('');
             letters.forEach(letter => {
                 const button = document.createElement('button');
                 button.textContent = letter;
@@ -332,11 +375,31 @@
             });
         }
 
-        // Обработка новой игры
+        // Handle new game
         newGameButton.addEventListener('click', initGame);
 
-        // Запуск игры при первой загрузке
+        // Start initial game
         initGame();
+        function checkWin() {
+            if (currentGame.word.split('').every(letter => guessedLetters.includes(letter))) {
+                document.getElementById('winModal').classList.add('show');
+            }
+        }
+
+        function checkLoss() {
+            if (mistakes === maxMistakes) {
+                document.getElementById('loseText').textContent = `Вы проиграли! Неотгаданное слово: ${currentGame.word}`;
+                document.getElementById('loseModal').classList.add('show');
+            }
+        }
+
+        function closeWinModal() {
+            document.getElementById('winModal').classList.remove('show');
+        }
+
+        function closeLoseModal() {
+            document.getElementById('loseModal').classList.remove('show');
+        }
     </script>
 </body>
 </html>

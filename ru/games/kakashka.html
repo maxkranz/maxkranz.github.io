@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +71,7 @@
         .click-count {
             font-size: 24px;
             font-weight: bold;
-            color: rgb(255, 217, 0);
+            color: orange;
         }
 
         .main-bat {
@@ -110,7 +108,7 @@
             background-color: #0056b3;
         }
         .newgame:hover{
-            background-color: #df2019;
+            background-color: #c0312c;
         }
 
         @keyframes fadeIn {
@@ -186,9 +184,91 @@
         }
 
         .newgame{
-            background-color: rgb(218, 17, 17);
+            background-color: orangered;
             color: white;
         }
+        #selectionScreen {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #222;
+    border-radius: 10px;
+    padding: 20px;
+    z-index: 1000;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 80%;
+    max-width: 500px;
+}
+
+.clicker-options {
+    display: flex;
+    flex-wrap: wrap; /* Для адаптивности */
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.clicker-option {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.2s ease;
+}
+
+.clicker-option:hover {
+    transform: scale(1.1);
+}
+
+#selectClickerLink {
+    display: block;
+    margin-top: 10px;
+    color: gold;
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#selectClickerLink:hover {
+    color: orange;
+}
+
+.close-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: orangered;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.close-button:hover {
+    background-color: #a02620;
+}
+
+/* Адаптивность для маленьких экранов */
+@media (max-width: 768px) {
+    .clicker-option {
+        width: 120px;
+        height: 120px;
+    }
+
+    #selectionScreen h2 {
+        font-size: 18px;
+    }
+
+    .close-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+
      
 .new-badge {
     position: absolute;
@@ -202,6 +282,76 @@
     font-weight: bold;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Добавляет тень для лучшего визуального эффекта */
 }
+@media (max-width: 768px) {
+    .clicker-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Две колонки */
+        gap: 15px; /* Расстояние между картинками */
+    }
+
+
+    #selectionScreen h6 {
+        font-size: 18px;
+    }
+
+    .close-button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+    #confirmModal{
+        width: 300px;
+    }
+}
+#confirmModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000;
+}
+
+        #confirmModal h6 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        #confirmModal .modal-buttons {
+            display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+        
+
+        #confirmModal .modal-buttons button {
+            padding: 10px 20px;
+            background-color: orangered;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s ease;
+        }
+
+        #confirmModal .modal-buttons button:hover {
+            background-color: #a02620;
+        }
+
+        #confirmModal .modal-buttons .cancel {
+            background-color: deepskyblue;
+        }
+
+        #confirmModal .modal-buttons .cancel:hover {
+            background-color: dodgerblue;
+        }
+
 
     </style>
 </head>
@@ -220,30 +370,53 @@
             </button>
             
             </button>            
-            <button class="newgame" onclick="confirmResetGame()"  >Новая игра</button>
-            <button id="endButton" class="hidden" onclick="triggerEnding()" style="color: gold;">Концовка</button>
+            <button class="newgame"  onclick="showConfirmModal()" >Новая игра</button>
+            <button id="endButton" class="hidden" onclick="triggerEnding()" style="background-color: gold; color: black;">Концовка</button>
         </div>
+        <div id="selectionScreen" class="hidden">
+            <h2>Выберите свой кликер:</h2>
+            <div class="clicker-options">
+                <img src="mishl-Photoroom.png" alt="Mouse" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/ru/games/mouse'">
+                <img src="plov.png" alt="Plov" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/ru/games/plov'">
+                <img src="u.png" alt="Unicorn" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/ru/games/unicorn'">
+                <img src="k.png" alt="Poop" class="clicker-option" onclick="window.location.href='https://maxkranz.github.io/ru/games/kakashka'">
+            </div>
+            <button class="close-button" onclick="closeClickerSelection()">Закрыть</button>
+        </div>
+        <a href="#" id="selectClickerLink" onclick="showClickerSelection()" style="margin-top: 30px;">Что вы хотите тапать?</a>
+        
+        </div>
+        
     </div>
     <div id="endScreen" class="end-screen hidden">
-        <h1 id="endText">Какашка смылся!</h1>
+        <h1 id="endText">Какашка смыта!</h1>
         <img id="explodingBat" src="k.png" alt="Bat" class="main-bat hidden">
         <div class="buttons">
             <button onclick="freeMode()" style="background-color: rgb(0, 201, 0);">Свободный режим</button>
-            <button onclick="confirmResetGame()" class="newgame">Новая игра</button>
+            <button  class="newgame" onclick="showConfirmModal()">Новая игра</button>
             <button id="shareButton">Поделиться результатом</button>
         </div>
     </div>
+    <div id="confirmModal">
+        <p>Вы уверены, что хотите начать новую игру? Весь прогресс будет сброшен.</p>
+        <div class="modal-buttons">
+            <button class="confirm" onclick="restartGame(),closeConfirmModal()">Да</button>
+            <button class="cancel" onclick="closeConfirmModal()">Отмена</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script>
        
-let freeModeActive = false; 
-const storyTexts = [
+       let freeModeActive = false; 
+       const storyTexts = [
 "It was//",
- "Баги зашел в туалет и решил смыть какашку.", 
+ "Багги зашел в туалет и решил смыть какашку.", 
  "Но какашка оказалась упрямой, и надо 10000 раз ударить по ней!",
-  "Помогите Баги!", 
+  "Помогите Багги!", 
 
 ];
+
 
 let currentStoryIndex = 0;
 let gameStarted = localStorage.getItem('gameStarted') === 'true';
@@ -292,7 +465,7 @@ function showNextStory() {
         }
 
         function incrementClicks(event) {
-            clickCount++; 
+            clickCount+=5000; 
             document.getElementById("clickCount").textContent = clickCount;
             localStorage.setItem('clickCount', clickCount);
 
@@ -314,7 +487,13 @@ function showNextStory() {
         clickText.remove();
     }, 1000); 
 }
+function showConfirmModal() {
+            document.getElementById("confirmModal").style.display = "block";
+        }
 
+        function closeConfirmModal() {
+            document.getElementById("confirmModal").style.display = "none";
+        }
 
         function animateBatTilt(event) {
             const $bat = document.getElementById('batImage');
@@ -363,14 +542,34 @@ function showNextStory() {
         function triggerEnding() {
             endGame();
         }
+        function showClickerSelection() {
+    document.getElementById('selectionScreen').classList.remove('hidden');
+}
+function showClickerSelection() {
+    document.getElementById('selectionScreen').classList.remove('hidden');
+}
+
+function closeClickerSelection() {
+    document.getElementById('selectionScreen').classList.add('hidden');
+}
+
+function selectClicker(name, imagePath) {
+    alert(`You selected ${name}!`);
+    document.getElementById('batImage').src = imagePath; // Меняем изображение
+    closeClickerSelection(); // Закрываем окно после выбора
+}
+
+
+function selectClicker(name, imagePath) {
+    alert(`You selected ${name}!`);
+    document.getElementById('batImage').src = imagePath; // Replace the main bat image with the selected one
+    document.getElementById('selectionScreen').classList.add('hidden'); // Hide the selection screen
+}
+
 
     
 
-function confirmResetGame() {
-    if (confirm("Вы уверены, что хотите начать новую игру? Все достижения будут сброшены.")) {
-        restartGame();
-    }
-}
+
 
         function restartGame() {
             clickCount = 0;
@@ -405,18 +604,15 @@ function confirmResetGame() {
         document.getElementById('shareButton').addEventListener('click', () => {
             html2canvas(document.body).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'deardeer.png';
+                link.download = 'mouse_clicker_result.png';
                 link.href = canvas.toDataURL();
                 link.click();
             });
         });
+        let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+document.getElementById("clickCount").textContent = clickCount;
 
  
     </script>
 </body>
 </html>
-
-
-
-
-

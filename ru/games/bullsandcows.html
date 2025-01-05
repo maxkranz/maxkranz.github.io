@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
- 
-    ym(98959916, "init", {
-         clickmap:true,
-         trackLinks:true,
-         accurateTrackBounce:true,
-         webvisor:true
-    });
- </script>
- <noscript><div><img src="https://mc.yandex.ru/watch/98959916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
- <!-- /Yandex.Metrika counter -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Быки и коровы</title>
-    <link rel="shortcut icon" href="html.png"></link>
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+     
+        ym(98959916, "init", {
+             clickmap:true,
+             trackLinks:true,
+             accurateTrackBounce:true,
+             webvisor:true
+        });
+     </script>
+     <noscript><div><img src="https://mc.yandex.ru/watch/98959916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <link rel="shortcut icon" href="html.png">
     <style>
         * {
             margin: 0;
@@ -108,32 +106,19 @@
         }
 
         .results {
-            margin-top: 20px;
-            max-width: 100%;
-            overflow-y: auto;
-            padding: 10px;
-            background-color: #444;
-            border-radius: 10px;
-            width: 300px;
             display: flex;
-            flex-direction: column;
-            align-items: center; /* Центрирование контента по горизонтали */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #444;
+    border-radius: 10px;
+    width: 300px;
+    max-width: 100%;
+    text-align: center;
+    margin-top: 30px;
         }
-        #results { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            padding: 10px;
-            background-color: #444;
-            border-radius: 10px;
-            width: 300px;
-            max-width: 100%;
-            text-align: center;
-            margin-top: 30px;
-}
-
 
         .result-item {
             margin-bottom: 10px;
@@ -141,7 +126,7 @@
             background-color: #555;
             border-radius: 5px;
             text-align: left;
-            width: 100%; /* Для выравнивания по всей ширине */
+            width: 100%;
         }
 
         @media screen and (max-width: 600px) {
@@ -160,12 +145,56 @@
                 width: 90%;
             }
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            width: 352px;
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal h2 {
+            margin-bottom: 15px;
+        }
+
+        .modal .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .modal .buttons button {
+            padding: 10px 20px;
+            background-color: deepskyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal .buttons button:hover {
+            background-color: #007acc;
+        }
     </style>
 </head>
 <body>
     <h1>Быки и коровы</h1>
     <div class="game-container">
-        <div class="info">Попробуй угадать четырехзначное число. Оно не может начинатся с 0.</div>
+        <div class="info">Попробуйте отгдать четырехзначное число. Оно не может начинаться с 0.</div>
 
         <div class="guess-container">
             <div class="guess-input" id="guess-input">
@@ -175,21 +204,32 @@
                 <input type="text" maxlength="1" id="digit4">
             </div>
 
-            <button id="submit-button">Подтвердить</button>
+            <button id="submit-button">Подтвердить догадку</button>
         </div>
 
         <div class="results" id="results"></div>
+    </div>
+
+    <div id="invalidGuessModal" class="modal">
+        <p>Пожалуйста, введите валидное число с уникальными цифрами. Оно не может начинаться с 0.</p>
+        <div class="buttons">
+            <button onclick="closeInvalidGuessModal()">Хорошо</button>
+        </div>
+    </div>
+
+    <div id="winModal" class="modal">
+        <h2 id="winText"></h2>
+        <div class="buttons">
+            <button onclick="closeWinModal()">OK</button>
+        </div>
     </div>
 
     <script>
         let secretNumber = generateSecretNumber();
         let attempts = 0;
 
-        // Generate a random 4-digit number with unique digits and ensure it doesn't start with 0
         function generateSecretNumber() {
             let digits = [];
-            
-            // Ensure the first digit is not 0
             while (digits.length < 4) {
                 const randomDigit = Math.floor(Math.random() * 10);
 
@@ -203,7 +243,6 @@
             return digits.join('');
         }
 
-        // Handle submit button click
         document.getElementById('submit-button').addEventListener('click', handleSubmit);
 
         function handleSubmit() {
@@ -215,7 +254,7 @@
             const guess = digit1 + digit2 + digit3 + digit4;
 
             if (guess.length !== 4 || hasDuplicates(guess) || guess[0] === '0') {
-                alert('Пожалуйста, введите правильное число с отличающимеся друг от друга цифрами. Число не может начинатся с 0.');
+                document.getElementById('invalidGuessModal').classList.add('show');
                 return;
             }
 
@@ -224,14 +263,14 @@
             displayResult(guess, result);
 
             if (result.bulls === 4) {
-                alert(`Поздравляем! Вы угадали число  ${secretNumber} за ${attempts} попыток!!`);
+                document.getElementById('winText').textContent = `Поздравляем! Вы угадали число ${secretNumber} за ${attempts} попыток!`;
+                document.getElementById('winModal').classList.add('show');
                 resetGame();
             } else {
                 resetInput();
             }
         }
 
-        // Check the guess for bulls and cows
         function checkGuess(guess) {
             let bulls = 0;
             let cows = 0;
@@ -247,7 +286,6 @@
             return { bulls, cows };
         }
 
-        // Display the result in the results container
         function displayResult(guess, result) {
             const resultItem = document.createElement('div');
             resultItem.className = 'result-item';
@@ -255,12 +293,10 @@
             document.getElementById('results').prepend(resultItem);
         }
 
-        // Check if a number has duplicate digits
         function hasDuplicates(number) {
             return new Set(number).size !== number.length;
         }
 
-        // Reset input fields for a new guess
         function resetInput() {
             document.getElementById('digit1').value = '';
             document.getElementById('digit2').value = '';
@@ -269,36 +305,44 @@
             document.getElementById('digit1').focus();
         }
 
-        // Reset the game
         function resetGame() {
             secretNumber = generateSecretNumber();
             attempts = 0;
             document.getElementById('results').innerHTML = '';
             resetInput();
         }
+
+        function closeInvalidGuessModal() {
+            document.getElementById('invalidGuessModal').classList.remove('show');
+        }
+
+        function closeWinModal() {
+            document.getElementById('winModal').classList.remove('show');
+        }
+
         document.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        document.getElementById('submit-button').click();
-    }
-});
-const inputs = document.querySelectorAll('.guess-input input');
-
-        inputs.forEach((input, index) => {
-            input.addEventListener('input', (e) => {
-                if (e.target.value.length === 1 && index < inputs.length - 1) {
-                    inputs[index + 1].focus();
-                }
-            });
-
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
-                    inputs[index - 1].focus();
-                }
-            });
+            if (event.key === 'Enter') {
+                document.getElementById('submit-button').click();
+            }
         });
 
+const inputs = document.querySelectorAll('.guess-input input');
 
+inputs.forEach((input, index) => {
+    input.addEventListener('input', (e) => {
+        if (e.target.value.length === 1 && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+        }
+    });
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
+            inputs[index - 1].focus();
+        }
+    });
+});
 
     </script>
 </body>
 </html>
+

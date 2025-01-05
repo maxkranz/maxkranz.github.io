@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-    m[i].l=1*new Date();
-    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
- 
-    ym(98959916, "init", {
-         clickmap:true,
-         trackLinks:true,
-         accurateTrackBounce:true,
-         webvisor:true
-    });
- </script>
- <noscript><div><img src="https://mc.yandex.ru/watch/98959916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
- <!-- /Yandex.Metrika counter -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dino Game</title>
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+     
+        ym(98959916, "init", {
+             clickmap:true,
+             trackLinks:true,
+             accurateTrackBounce:true,
+             webvisor:true
+        });
+     </script>
+     <noscript><div><img src="https://mc.yandex.ru/watch/98959916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <link rel="shortcut icon" href="html.png">
     <style>
         body {
@@ -107,17 +105,16 @@
             font-size: 20px;
             color: white;
         }
-        #punder{
+
+        #punder {
             text-align: center;
-            margin: 20px;
-            font-size: 15px;
+            margin: 15px;
+            font-size: 20px;
             color: white;
             font-style: italic;
         }
 
         @media (max-width: 768px) {
-
-
             .game {
                 max-width: 100%;
                 height: 200px;
@@ -141,23 +138,88 @@
                 margin: 10px;
             }
         }
+
+        /* Стили модального окна */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
+        }
+
+        .modal.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: rgb(0, 0, 0);
+            color: rgb(255, 255, 255);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .modal-content button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        .again{
+            background-color: rgb(0, 81, 255);
+        }
+        .again:hover{
+            background-color: rgb(1, 71, 223);
+        }
+        .close{
+            background-color: rgb(226, 3, 3);
+        }
+        .close:hover{
+            background-color: rgb(187, 1, 1);
+        }
     </style>
 </head>
 <body>
     <div id="scoreboard">
-        Время: <span id="time">0</span> секунд | Лучшее время: <span id="best-time">0</span> секунд
+        Время: <span id="time">0</span> сек | Лучшее время: <span id="best-time">0</span> сек
     </div>
     <div class="game" id="gameArea">
         <div id="dino"></div>
         <div id="cactus"></div>
     </div>
-    <p id="punder">Нажмите любую кнопку/в любое место чтобы начать.</p>
+    <p id="punder">Нажмите любую клавишу/нажмите в любое место, чтобы начать.</p>
+
+    <!-- Модальное окно -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <p id="game-over-message"></p>
+            <button onclick="playAgain()" class="again">Играть еще раз</button>
+            <button onclick="closeModal()" class="close">Закрыть</button>
+        </div>
+    </div>
+
     <script>
         const dino = document.getElementById("dino");
         const cactus = document.getElementById("cactus");
         const timeElement = document.getElementById("time");
         const bestTimeElement = document.getElementById("best-time");
         const gameArea = document.getElementById("gameArea");
+        const modal = document.getElementById("modal");
+        const gameOverMessage = document.getElementById("game-over-message");
 
         let time = 0;
         let bestTime = localStorage.getItem("bestTime") || 0;
@@ -174,10 +236,8 @@
                 timeElement.textContent = time;
             }, 1000);
 
-            // Запускаем движение кактуса
             cactus.style.animation = "cactusMov 1.5s infinite linear";
 
-            // Добавляем события прыжка
             gameArea.addEventListener("click", jump);
             document.addEventListener("keydown", jump);
         }
@@ -203,34 +263,32 @@
                 cactus.style.animation = "none";
                 cactus.style.left = `${cactusLeft}px`;
 
-                let message;
                 if (time > bestTime) {
                     localStorage.setItem("bestTime", time);
                     bestTimeElement.textContent = time;
-                    message = `Игра окончена! Новый рекорд: ${time} секунд!`;
+                    gameOverMessage.textContent = `Игра окончена! Новый рекорд: ${time} секунд!`;
                 } else {
-                    message = `Игра окончена! Ваше время: ${time} секунд.`;
+                    gameOverMessage.textContent = `Игра окончена! Ваше время: ${time} секунд.`;
                 }
 
-                if (confirm(`${message} Играть снова?`)) {
-                    location.reload();
-                }
+                showModal();
             }
         }, 10);
 
-        // Начало игры по клику или нажатию на клавишу
+        function showModal() {
+            modal.classList.add("show");
+        }
+
+        function closeModal() {
+            modal.classList.remove("show");
+        }
+
+        function playAgain() {
+            location.reload();
+        }
+
         gameArea.addEventListener("click", startGame);
         document.addEventListener("keydown", startGame);
-        window.onload = () => {
-    const savedData = localStorage.getItem('sync_data');
-    if (savedData) {
-        const syncData = JSON.parse(savedData);
-        // Данные доступны для использования в любом приложении
-        console.log(`Синхронизированные данные: ${syncData.username}, ${syncData.data}`);
-        // Можно использовать эти данные как угодно в под-приложении
-    }
-}
-
     </script>
 </body>
 </html>
