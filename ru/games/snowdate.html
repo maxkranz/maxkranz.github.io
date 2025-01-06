@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snowdate</title>
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+ 
+    ym(98959916, "init", {
+         clickmap:true,
+         trackLinks:true,
+         accurateTrackBounce:true,
+         webvisor:true
+    });
+ </script>
+ <noscript><div><img src="https://mc.yandex.ru/watch/98959916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <link rel="shortcut icon" href="html.png">
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #001f3f, #0074D9);
+      overflow: hidden;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    .characters {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .character {
+      position: relative;
+      width: 60px;
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .head {
+      width: 40px;
+      height: 40px;
+      background: #ffcc99;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .eye {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: black;
+      border-radius: 50%;
+      top: 17px;
+    }
+
+    .eye.left {
+      left: 10px;
+    }
+
+    .eye.right {
+      right: 10px;
+    }
+
+    .hair {
+      position: absolute;
+      top: 0;
+      width: 40px;
+      height: 20px;
+      background: black;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .hair.boy {
+      clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+    }
+
+    .hair.girl {
+      background: rgb(53, 4, 4);
+      height: 15px;
+      clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+    }
+
+    .body {
+      width: 40px;
+      height: 60px;
+      margin-top: 5px;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .body.boy {
+      background: black;
+    }
+
+    .body.girl {
+      background: brown;
+    }
+
+    .scarf {
+      position: absolute;
+      width: 45px;
+      height: 10px;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: red;
+    }
+
+    .girl .scarf {
+      background: pink;
+    }
+
+    .legs {
+      display: flex;
+      gap: 5px;
+      margin-top: 5px;
+    }
+
+    .leg {
+      width: 10px;
+      height: 30px;
+      background: black;
+      border-radius: 3px;
+    }
+
+    .thought {
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: white;
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+
+    .character:hover .thought {
+      opacity: 1;
+    }
+
+    .thought.visible {
+      opacity: 1 !important;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="snowCanvas"></canvas>
+
+  <div class="characters">
+    <div class="character boy" onclick="showThought(this)">
+      <div class="head">
+        <div class="hair boy"></div>
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+      </div>
+      <div class="body boy">
+        <div class="scarf"></div>
+      </div>
+      <div class="legs">
+        <div class="leg"></div>
+        <div class="leg"></div>
+      </div>
+      <div class="thought" style="top: -70px;">Мне нравится этот снегопад.</div>
+    </div>
+    <div class="character girl" onclick="showThought(this)">
+      <div class="head">
+        <div class="hair girl"></div>
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+      </div>
+      <div class="body girl">
+        <div class="scarf"></div>
+      </div>
+      <div class="legs">
+        <div class="leg"></div>
+        <div class="leg"></div>
+      </div>
+      <div class="thought" style="top: -70px;">Позови меня уже на свидание!</div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("snowCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Resize canvas to fill the screen
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const snowflakes = [];
+    const mouse = { x: null, y: null };
+
+    // Snowflake class
+    class Snowflake {
+      constructor(x, y, radius, speed) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.speed = speed;
+        this.wind = 0;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = "white";
+        ctx.fill();
+        ctx.closePath();
+      }
+
+      update() {
+        this.y += this.speed;
+        this.x += this.wind; // Apply wind effect
+
+        // Reset position if snowflake goes out of bounds
+        if (this.y > canvas.height) {
+          this.y = -this.radius;
+          this.x = Math.random() * canvas.width;
+        }
+
+        // Gradually reduce wind
+        this.wind *= 0.98;
+
+        this.draw();
+      }
+    }
+
+    // Create snowflakes
+    function createSnowflakes(count) {
+      for (let i = 0; i < count; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const radius = Math.random() * 3 + 1;
+        const speed = Math.random() * 2 + 1;
+        snowflakes.push(new Snowflake(x, y, radius, speed));
+      }
+    }
+
+    // Track mouse movement
+    canvas.addEventListener("mousemove", (event) => {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+
+      // Apply wind effect to nearby snowflakes
+      snowflakes.forEach((flake) => {
+        const dx = flake.x - mouse.x;
+        const dy = flake.y - mouse.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 100) {
+          flake.wind += dx / distance * 2; // Push away from mouse
+        }
+      });
+    });
+
+    // Animation loop
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      snowflakes.forEach((flake) => flake.update());
+
+      requestAnimationFrame(animate);
+    }
+
+    // Initialize
+    createSnowflakes(200);
+    animate();
+
+    // Update canvas size on resize
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      snowflakes.length = 0; // Clear snowflakes
+      createSnowflakes(200); // Recreate snowflakes
+    });
+
+    // Show thought bubble on tap for mobile devices
+    function showThought(character) {
+      const thoughtBubble = character.querySelector(".thought");
+      thoughtBubble.classList.add("visible");
+
+      setTimeout(() => {
+        thoughtBubble.classList.remove("visible");
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
