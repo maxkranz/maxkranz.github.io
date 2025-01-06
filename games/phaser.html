@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Да? Нет? Мэйби?</title>
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(98959916, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/98959916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #303030;
+            font-family: Arial, sans-serif;
+        }
+        #dice {
+            width: 300px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 10px;
+            font-size: 48px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+            padding: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: deepskyblue;
+            color: white;
+            transition: background-color 0.3s;
+            border-color: blue;
+        }
+        button:hover {
+            background-color: rgb(1, 161, 214);
+        }
+        #input{
+            height: 30px;
+            border-radius: 10px;
+            font-size: 20px;
+            padding: 4px;
+        }
+        input:focus {
+            border-color: deepskyblue;            
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <input placeholder="Задайте вопрос"id="input">
+   <div id="dice">?</div>
+   <button onclick="showRandomWord()">Сделать прогноз</button>
+
+    <script>
+        const randomWords = [
+            'Да',
+            'Нет',
+            'Мэйби',
+            'Никто не знает',
+            'Шкибиди сигма'
+        ];
+        function showRandomWord(){
+            const randomIndex = Math.floor(Math.random() * randomWords.length );
+            document.getElementById ('dice').textContent = randomWords[randomIndex];        
+        }
+        document.getElementById('input').addEventListener('keydown', function(event){
+            if (event.key == 'Enter'){
+                showRandomWord()
+            }
+        })
+    </script>
+</body>
+</html>
