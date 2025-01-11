@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <title>Quiz</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" href="html.png">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Poppins', sans-serif;
+            }
+            body{
+                background-color: rgb(0, 134, 179);
+            }
+            .app{
+                background: #fff;
+                width: 90%;
+                max-width: 600px;
+                margin: 100px auto 0;
+                border-radius: 10px;
+                padding: 30px;
+            }
+            .app h1{
+                font-weight: 600px;
+                font-size: 25px;
+                color: #001e4d;
+                border-bottom: 1px solid #333;
+                padding-bottom: 30px;
+            }
+            .quiz{
+                padding: 20px 0;
+            }
+            .quiz h2{
+                font-size: 18px;
+                color: #001e4d;
+            }
+            .btn{
+                background-color: #fff;
+                color: #222;
+                font-weight: 500;
+                width: 100%;
+                border: 1px solid #222;
+                padding: 10px;
+                margin: 10px 0;
+                text-align: left;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            .btn:hover{
+                background-color: #222;
+                color: #fff;
+            }
+            #next-btn{
+                color: #fff;
+                background-color: #001e4d;
+                font-weight: 500;
+                width: 150px;
+                padding: 10px;
+                margin: 20px auto 0;
+                border-radius: 4px;
+                border: 0;
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app">
+            <h1>Quiz</h1>
+            <div class="quiz">
+                <h2 id="question">Quiestion goes here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+               </div>
+               <button id="next-btn">Next</button>
+            </div>
+        </div>
+        <script>
+            const questions = [
+                {
+                    question: "Who is the richest person for 2025?",
+                    answers: [
+                        { text: "Bill Gates", correct: false},
+                        { text: "Elon Musk", correct: true},
+                        { text: "Mark Zuckerberg", correct: false},
+                        { text: "Larry Page", correct: false}
+                    ]
+                },
+            {
+                question: "Which ocean is the largest?",
+                    answers: [
+                        { text: "Indian", correct: false},
+                        { text: "Atlantic", correct: false},
+                        { text: "Arctic", correct: false},
+                        { text: "Pacific", correct: true}
+                    ]
+            },
+            {
+                question: "Which country has the largest population?",
+                    answers: [
+                        { text: "China", correct: false},
+                        { text: "USA", correct: false},
+                        { text: "India", correct: true},
+                        { text: "Russia", correct: false}
+                    ]
+            },
+            {
+                question: "Who wrote 'Idiot'?",
+                    answers: [
+                        { text: "Dostoevsky", correct: true},
+                        { text: "Pushkin", correct: false},
+                        { text: "Vera Polozkova", correct: false},
+                        { text: "Tolstoy", correct: false}
+                    ]
+            },
+
+
+            ]
+            const questionElement = document.getElementById("question");
+            const answerButton = document.getElementById("answer-buttons");
+            const nextButton = document.getElementById("next-btn");
+
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            function startQuiz(){
+                currentQuestionIndex = 0;
+                score = 0;
+                nextButton.innerHTML = "Next";
+                showQuestion()
+            }
+            function showQuestion(){
+                let currentQuestion = questions[currentQuestionIndex];
+                let questionNo = currentQuestion + 1;
+                questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+                currentQuestion.answers.forEach(answer => {
+                    const button = document.createElement("button");
+                    button.innerHTML = answer.text;
+                    button.classList.add("btn");
+                    answerButton.appendChild(button)
+                })
+            }
+            startQuiz();
+
+        </script>
+    </body>
+</html>
