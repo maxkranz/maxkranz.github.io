@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yunick Bot</title>
+    <style>
+        /* Общие стили */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%; /* Изменено height на min-height */
+            font-family: 'Arial', sans-serif;
+            background-image: url('yunick.jpg'); /* Задний фон */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Хэдер */
+        header {
+            width: 100%;
+            padding: 30px 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            background: linear-gradient(135deg, #001b75, #000000); /* Градиент для хедера */
+        }
+
+        header h1 {
+            font-size: 3.5em;
+            margin: 0;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            animation: fadeInDown 1.5s ease;
+        }
+
+        /* Стили кнопок */
+        .button {
+            width: 90%;
+            max-width: 700px;
+            display: flex;
+            align-items: center;
+            background-color: #000116;       
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 15px;
+            text-decoration: none;
+            color: #fff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .button:hover {
+            transform: scale(1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Иконка в кнопке */
+        .button-icon {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: white;
+        }
+
+        .button-icon img {
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Текст кнопки */
+        .button-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .button-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .button-description {
+            font-size: 1.1em;
+            color: #ddd;
+            line-height: 1.4em;
+        }
+
+        /* Текст под кнопками */
+        .description {
+            margin-top: 40px;
+            padding: 0 20px;
+            max-width: 700px;
+            text-align: center;
+            font-size: 1.3em;
+            color: #ddd;
+            line-height: 1.6em;
+            text-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+            padding: 10px;
+        }
+
+        /* Анимация появления */
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .button {
+                padding: 20px;
+            }
+
+            .button-icon {
+                width: 60px;
+                height: 60px;
+                margin-right: 20px;
+            }
+
+            .button-title {
+                font-size: 1.5em;
+            }
+
+            .button-description {
+                font-size: 1em;
+            }
+
+            .description {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+
+            .button {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+
+            .button-icon {
+                margin: 0 0 20px 0;
+            }
+
+            .description {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Хэдер -->
+    <header>
+        <h1>Yunick</h1>
+    </header>
+
+    <!-- Кнопка Mouse Clicker -->
+    <a href="https://t.me/maxkranzbot/clicker" class="button">
+        <div class="button-icon">
+            <img src="mishl-Photoroom.png">
+        </div>
+        <div class="button-text">
+            <div class="button-title">Mouse Clicker</div>
+            <div class="button-description">Клик-клик, туда-сюда - спас бедную мышку от браконьера.</div>
+        </div>
+    </a>
+
+    <!-- Кнопка Guess The Number -->
+    <a href="https://t.me/maxkranzbot/guessthenumber" class="button">
+        <div class="button-icon">
+            <img src="gtn.png" alt="Number Icon">
+        </div>
+        <div class="button-text">
+            <div class="button-title">Угадай число</div>
+            <div class="button-description">Угадай число, чтобы доказать, что ты догадливый.</div>
+        </div>
+    </a>
+
+    <!-- Текст под кнопками -->
+    <div class="description">
+        Меня зовут Юник, и я ваш верный помощник. <br>
+        Я умею многое: от простых игр до сложных напоминаний. <br>
+        Нажмите на одну из кнопок выше, чтобы начать веселиться!
+    </div>
+</body>
+</html>

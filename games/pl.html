@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platformer Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #303030;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            background: #87CEEB;
+            border: 2px solid #000;
+            overflow: hidden;
+        }
+
+        #player {
+            width: 40px;
+            height: 40px;
+            background-color: red;
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+        }
+
+        .platform {
+            position: absolute;
+            background-color: #654321;
+            width: 100px;
+            height: 20px;
+        }
+
+        .obstacle {
+            position: absolute;
+            background-color: green;
+            width: 30px;
+            height: 30px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .button {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:active {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container" id="gameContainer">
+        <div id="player"></div>
+        <div class="platform" style="bottom: 50px; left: 100px;"></div>
+        <div class="platform" style="bottom: 150px; left: 200px;"></div>
+        <div class="platform" style="bottom: 100px; left: 400px;"></div>
+        <div class="obstacle" style="bottom: 50px; left: 300px;"></div>
+    </div>
+
+    <div class="controls">
+        <button class="button" id="leftButton">Left</button>
+        <button class="button" id="rightButton">Right</button>
+        <button class="button" id="jumpButton">Jump</button>
+    </div>
+
+    <script>
+        const player = document.getElementById('player');
+        const gameContainer = document.getElementById('gameContainer');
+
+        let isJumping = false;
+        let velocityY = 0;
+        let gravity = 0.5;
+        let playerX = 50;
+        let playerY = 50;
+        const speed = 5;
+        const jumpPower = 10;
+
+        const keys = {
+            left: false,
+            right: false,
+            jump: false
+        };
+
+        // Add keyboard controls
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a') keys.left = true;
+            if (e.key === 'ArrowRight' || e.key === 'd') keys.right = true;
+            if (e.key === 'ArrowUp' || e.key === 'w') keys.jump = true;
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a') keys.left = false;
+            if (e.key === 'ArrowRight' || e.key === 'd') keys.right = false;
+            if (e.key === 'ArrowUp' || e.key === 'w') keys.jump = false;
+        });
+
+        // Add touch controls
+        document.getElementById('leftButton').addEventListener('mousedown', () => keys.left = true);
+        document.getElementById('rightButton').addEventListener('mousedown', () => keys.right = true);
+        document.getElementById('jumpButton').addEventListener('mousedown', () => keys.jump = true);
+        document.querySelectorAll('.button').forEach(button => {
+            button.addEventListener('mouseup', () => {
+                keys.left = keys.right = keys.jump = false;
+            });
+        });
+
+        function gameLoop() {
+            // Horizontal movement
+            if (keys.left) playerX -= speed;
+            if (keys.right) playerX += speed;
+
+            // Jump logic
+            if (keys.jump && !isJumping) {
+                isJumping = true;
+                velocityY = -jumpPower;
+            }
+
+            // Gravity
+            velocityY += gravity;
+            playerY -= velocityY;
+
+            // Collision with ground
+            if (playerY >= 50) {
+                playerY = 50;
+                isJumping = false;
+            }
+
+            // Update player position
+            player.style.left = `${playerX}px`;
+            player.style.bottom = `${playerY}px`;
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
