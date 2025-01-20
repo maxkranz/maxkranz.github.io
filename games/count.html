@@ -6,7 +6,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
 
         <style>
-            body{
+            body {
                 margin: 0;
                 display: flex;
                 justify-content: center;
@@ -16,39 +16,68 @@
                 background: linear-gradient(deepskyblue, rgb(120, 220, 253));
                 font-family: 'Montserrat', sans-serif;
             }
-            .form{
+
+            .form {
                 background-color: #fff;
                 padding: 20px;
                 border-radius: 10px;
-                box-shadow: 0 4px 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 margin: 10px;
-            }
-            .input{
+                max-width: 400px;
                 width: 100%;
-                display: block;
-                text-align: center;
-                font-size: 17px;
             }
-            .input::placeholder{
-                color: lightgray;
+
+            .score {
+                color: green;
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+                font-weight: 600;
             }
-            .btn{
-                display: block;
+
+            h1 {
+                font-size: 1.5rem;
+                color: #333;
+                margin-bottom: 20px;
+            }
+
+            .input {
                 width: 100%;
-                background-color: green;
-                color: white;
                 padding: 10px;
-                font-size: 17px;
-                margin: 20px 0;
+                font-size: 16px;
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                margin-bottom: 15px;
+                box-sizing: border-box;
+                transition: border-color 0.3s ease;
+            }
+
+            .input:focus {
+                outline: none;
+                border-color: deepskyblue;
+            }
+
+            .input::placeholder {
+                color: lightgray;
+                font-style: italic;
+            }
+
+            .btn {
+                display: block;
+                width: 100%;
+                background-color: deepskyblue;
+                color: white;
+                padding: 12px;
+                font-size: 16px;
+                font-weight: 600;
+                border: none;
                 border-radius: 5px;
                 cursor: pointer;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                transition: background-color 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             }
-            .btn:hover{
-                filter: brightness(0.9);
-            }
-            .score{
-                color: green;
+
+            .btn:hover {
+                background-color: #007acc;
             }
         </style>
     </head>
@@ -56,27 +85,27 @@
         <form class="form" id="form">
             <h4 class="score" id="score">Score: 0</h4>
             <h1 id="question">What is 1 multiply by 1?</h1>
-            <input type="text" class="input" id="input" placeholder="Enter your answer..." autofocus >
+            <input type="text" class="input" id="input" placeholder="Enter your answer..." autofocus>
             <button class="btn" type="submit">Submit</button>
         </form>
         <script>
             const num1 = Math.ceil(Math.random() * 10);
             const num2 = Math.ceil(Math.random() * 10);
-        
+
             let score = JSON.parse(localStorage.getItem("score"));
             if (!score) {
                 score = 0;
             }
-        
+
             const questionEl = document.getElementById("question");
             const inputEl = document.getElementById("input");
             const formEl = document.getElementById("form");
             const scoreEl = document.getElementById("score");
-        
+
             questionEl.innerText = `What is ${num1} multiply by ${num2}?`;
-        
+
             const correctAns = num1 * num2;
-        
+
             formEl.addEventListener("submit", (event) => {
                 event.preventDefault(); 
                 const userAns = Number(inputEl.value); 
@@ -90,13 +119,12 @@
                 inputEl.value = ""; 
                 location.reload(); 
             });
-        
+
             function updateLocalStorage() {
                 localStorage.setItem("score", JSON.stringify(score));
             }
-        
+
             scoreEl.innerText = `Score: ${score}`;
         </script>
-        
     </body>
 </html>
