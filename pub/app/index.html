@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Kranz Publisher</title>
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+     
+        ym(98959916, "init", {
+             clickmap:true,
+             trackLinks:true,
+             accurateTrackBounce:true,
+             webvisor:true
+        });
+     </script>
+     <noscript><div><img src="https://mc.yandex.ru/watch/98959916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+     <!-- /Yandex.Metrika counter -->
+    <link rel="shortcut icon" href="logop.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #303030;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 15px 20px;
+            background-color: #4a90e2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo {
+            margin-right: auto;
+        }
+
+        .search-container {
+            margin: 0 10px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .burger-menu {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .burger-menu div {
+            width: 30px;
+            height: 4px;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100%;
+            background-color: #4a90e2;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        nav.active {
+            transform: translateX(-100%);
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        nav .close-menu {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .intro {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        #projects-grid {
+    display: grid;
+    gap: 20px; /* Расстояние между квадратиками */
+    padding: 20px; /* Внутренний отступ */
+    width: 100%;
+    max-width: 1200px;
+}
+
+        .project {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            width: 250px;
+        }
+        @media (max-width: 768px) {
+    #projects-grid {
+        grid-template-columns: repeat(1, 1fr); /* 1 колонка для телефонов */
+        justify-content: center; /* Центрирует элементы */
+    }
+
+    .project {
+        max-width: none; /* Убирает ограничение ширины */
+        width: 100%; /* Элемент занимает всю ширину родителя */
+    }
+}
+
+        .project:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .project img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+        }
+
+        .project-title {
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .dropdown-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .dropdown {
+            background-color: #4a90e2;
+            color: #fff;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown:hover {
+            background-color: #357ab7;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 5px 0;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            color: #4a90e2;
+        }
+
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+
+            nav {
+                width: 90%;
+            }
+        }
+        footer a{
+            margin: 7px;
+        }
+        .intro {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 20px;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        #projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project {
+            background-color: DeepSkyBlue;
+            padding: 30px;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        /* Эффект появления текста */
+
+
+        .project:hover .project-description,
+        .project.active .project-description {
+            bottom: 0;
+        }
+        footer a{
+            margin: 5px;
+        }
+
+        .project a {
+            color: #f8f8f8;
+            text-decoration: none;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .project-description {
+                font-size: 14px;
+            }
+
+            .project {
+                width: 100%;
+            }
+
+        }
+        body{
+            color: #f8f8f8;
+            background-color: #303030;
+        }
+        #projects-grid {
+    display: grid;
+    gap: 20px; /* Расстояние между квадратиками */
+    padding: 20px; /* Внутренний отступ */
+    width: 100%;
+    max-width: 1200px;
+}
+
+.project {
+    background-color: #fff; /* Белый фон */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень */
+    text-align: center;
+    overflow: hidden; /* Убираем выход за границы */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Эффект при наведении */
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение */
+    align-items: center;
+    text-decoration: none;
+    height: 200px; /* Фиксированная высота */
+}
+
+
+
+.project-title {
+    padding: 10px; /* Отступы */
+    font-size: 1rem; /* Размер текста */
+    font-weight: 600; /* Полужирный текст */
+    color: #333; /* Цвет текста */
+}
+#logop{
+    height: 60px;
+}
+
+.project:hover {
+    transform: translateY(-10px); /* Поднятие квадрата при наведении */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Увеличение тени */
+}
+
+
+    </style>
+</head>
+<body>
+<header>
+    <a href="https://maxkranz.github.io/publisher/" class="logo">
+        <img src="logop.png" id="logop">
+        
+    </a>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search apps...">
+    </div>
+    <div class="burger-menu" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <nav id="navMenu">
+        <span class="close-menu" onclick="toggleMenu()">Х</span>
+        <a href="https://maxkranz.github.io/publisher/about/">About</a>
+        <a href="https://telegra.ph/Post-Your-AppGame-at-MK-Publisher-12-17">Post Your Project</a>
+        <a href="https://maxkranz.github.io/publisher/app/">App</a>
+        <a href="https://maxkranz.github.io/publisher/game/">Games</a>
+        <a href="https://t.me/maxkranzofficial">Telegram</a>
+    </nav>
+</header>
+
+<div class="intro">
+    Welcome to MK Publisher! Discover amazing apps and games.
+</div>
+
+<div id="projects-grid">
+    <a href="https://maxkranz.github.io/amanda" class="project" data-title="Amanda">
+        <img src="amanda.png" alt="Example Project">
+        <div class="project-title">Amanda</div>
+    </a>
+
+    <a href="https://maxkranz.github.io/apps/todoapp" class="project"data-title="To Do">
+        <img src="todo.png" alt="Example Project">
+        <div class="project-title">To Do</div>
+    </a>
+    <a href="https://maxkranz.github.io/apps/noteapp" class="project"data-title="NoteApp">
+        <img src="noteapp.png" alt="Example Project">
+        <div class="project-title">NoteApp</div>
+    </a>
+    <a href="https://maxkranz.github.io/apps/timer" class="project"data-title="Timer">
+        <img src="timer.png" alt="Example Project">
+        <div class="project-title">Timer</div>
+    </a>
+    <a href="https://maxkranz.github.io/apps/quotegenerator" class="project"data-title="Quotes Generator">
+        <img src="quotes.png" alt="Example Project">
+        <div class="project-title">Quotes Generator</div>
+    </a>
+    <a href="https://maxkranz.github.io/apps/calculator" class="project"data-title="Calculator">
+        <img src="calculate.png" alt="Example Project">
+        <div class="project-title">Calculator</div>
+    </a>
+
+
+
+
+</div>
+
+<div class="dropdown-container">
+    <div class="dropdown" onclick="toggleDropdown('apps')">Trending</div>
+    <div class="dropdown-content" id="apps">
+        <a href="#">To Do App</a>
+        <a href="#">Amanda</a>
+    </div>
+</div>
+    </div>
+
+<footer>
+    © Max Kranz Inc. All rights reserved. 
+</footer>
+
+
+
+<script>
+    
+    function toggleMenu() {
+        const navMenu = document.getElementById('navMenu');
+        navMenu.classList.toggle('active');
+    }
+
+    function toggleDropdown(id) {
+        const dropdown = document.getElementById(id);
+        dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    }
+
+    const searchInput = document.getElementById('search');
+    const projectsGrid = document.getElementById('projects-grid');
+    const projects = projectsGrid.getElementsByClassName('project');
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        Array.from(projects).forEach(project => {
+            const title = project.getAttribute('data-title').toLowerCase();
+            project.style.display = title.includes(query) ? 'block' : 'none';
+        });
+    });
+
+</script>
+</body>
+</html>

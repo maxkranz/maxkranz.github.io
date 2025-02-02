@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consilium</title>
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+     
+        ym(98959916, "init", {
+             clickmap:true,
+             trackLinks:true,
+             accurateTrackBounce:true,
+             webvisor:true
+        });
+     </script>
+     <noscript><div><img src="https://mc.yandex.ru/watch/98959916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+     <!-- /Yandex.Metrika counter -->
+    <link rel="shortcut icon" href="html.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #game-container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        #resources {
+            margin-bottom: 20px;
+        }
+        .resource {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 5px 0;
+            border-radius: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            background: linear-gradient(to right, #43e97b, #38f9d7);
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        #message {
+            font-size: 1rem;
+            margin-top: 20px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(to right, #02940a, #000000);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Смещаем содержимое вверх */
+    height: 100vh;
+    overflow-y: auto; /* Прокрутка для длинного контента */
+}
+
+#game-container {
+    width: 90%;
+    max-width: 600px;
+    max-height: 90%; /* Гарантируем, что контейнер вмещается */
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    text-align: center;
+    overflow-y: auto; /* Прокрутка внутри контейнера */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    #game-container {
+        padding: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Consilium</h1>
+        <p>Управляй своим государством, развивай ресурсы и избегай конфликтов!</p>
+
+        <div id="resources">
+            <div class="resource">
+                <span>Еда:</span>
+                <span id="food">100</span>
+            </div>
+            <div class="resource">
+                <span>Золото:</span>
+                <span id="gold">50</span>
+            </div>
+            <div class="resource">
+                <span>Население:</span>
+                <span id="population">10</span>
+            </div>
+            <div class="resource">
+                <span>Счастье:</span>
+                <span id="happiness">70</span>
+            </div>
+            <div class="resource">
+                <span>Технологии:</span>
+                <span id="technology">0</span>
+            </div>
+            <div class="resource">
+                <span>Оборона:</span>
+                <span id="defense">0</span>
+            </div>
+            <div class="resource">
+                <span>Культура:</span>
+                <span id="culture">0</span>
+            </div>
+        </div>
+
+        <div id="actions">
+            <button onclick="harvestFood()">Собрать еду</button>
+            <button onclick="mineGold()">Добыть золото</button>
+            <button onclick="expandPopulation()">Увеличить население</button>
+            <button onclick="researchTechnology()">Исследовать технологии</button>
+            <button onclick="boostHappiness()">Увеличить счастье</button>
+            <button onclick="improveDefense()">Улучшить оборону</button>
+            <button onclick="improveCulture()">Развить культуру</button>
+            <button onclick="startWar()">Начать войну</button>
+        </div>
+
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Начальные значения ресурсов
+    // Начальные значения ресурсов
+    let food = 100;
+    let gold = 50;
+    let population = 10;
+    let happiness = 70;
+    let technology = 0;
+    let defense = 0;
+    let culture = 0;
+
+    const foodElement = document.getElementById('food');
+    const goldElement = document.getElementById('gold');
+    const populationElement = document.getElementById('population');
+    const happinessElement = document.getElementById('happiness');
+    const technologyElement = document.getElementById('technology');
+    const defenseElement = document.getElementById('defense');
+    const cultureElement = document.getElementById('culture');
+    const messageElement = document.getElementById('message');
+
+    function saveGame() {
+        const gameState = { food, gold, population, happiness, technology, defense, culture };
+        localStorage.setItem('peacefulSimulatorSave', JSON.stringify(gameState));
+    }
+
+    function loadGame() {
+        const savedState = localStorage.getItem('peacefulSimulatorSave');
+        if (savedState) {
+            const { food: savedFood, gold: savedGold, population: savedPopulation, happiness: savedHappiness, technology: savedTechnology, defense: savedDefense, culture: savedCulture } = JSON.parse(savedState);
+            food = savedFood || 0;
+            gold = savedGold || 0;
+            population = savedPopulation || 0;
+            happiness = savedHappiness || 0;
+            technology = savedTechnology || 0;
+            defense = savedDefense || 0;
+            culture = savedCulture || 0;
+            updateResources();
+        }
+    }
+
+    function updateResources() {
+        foodElement.textContent = food;
+        goldElement.textContent = gold;
+        populationElement.textContent = population;
+        happinessElement.textContent = happiness;
+        technologyElement.textContent = technology;
+        defenseElement.textContent = defense;
+        cultureElement.textContent = culture;
+
+        // Автоматическое сохранение после любого изменения
+        saveGame();
+    }
+
+    // Примеры действий с автоматическим сохранением
+    function harvestFood() {
+        if (population > 0) {
+            const harvested = Math.floor(Math.random() * 20) + 10 + technology;
+            food += harvested;
+            messageElement.textContent = `Вы собрали ${harvested} единиц еды!`;
+        } else {
+            messageElement.textContent = 'Недостаточно населения для сбора еды!';
+        }
+        updateResources();
+    }
+
+    function mineGold() {
+        if (population > 0) {
+            const mined = Math.floor(Math.random() * 15) + 5 + technology;
+            gold += mined;
+            messageElement.textContent = `Вы добыли ${mined} единиц золота!`;
+        } else {
+            messageElement.textContent = 'Недостаточно населения для добычи золота!';
+        }
+        updateResources();
+    }
+
+    // Загрузка игры при старте страницы
+    loadGame();
+    updateResources();
+
+
+        function expandPopulation() {
+            if (food >= 20) {
+                const added = Math.floor(Math.random() * 3) + 1;
+                population += added;
+                food -= 20;
+                messageElement.textContent = `Вы увеличили население на ${added} человек!`;
+            } else {
+                messageElement.textContent = 'Недостаточно еды для увеличения населения!';
+            }
+            updateResources();
+        }
+
+        function boostHappiness() {
+            if (gold >= 10) {
+                const boost = Math.floor(Math.random() * 10) + 5;
+                happiness = Math.min(100, happiness + boost);
+                gold -= 10;
+                messageElement.textContent = `Вы увеличили счастье на ${boost} единиц!`;
+            } else {
+                messageElement.textContent = 'Недостаточно золота для увеличения счастья!';
+            }
+            updateResources();
+        }
+
+        function researchTechnology() {
+            if (gold >= 20) {
+                technology++;
+                gold -= 20;
+                messageElement.textContent = 'Вы исследовали новую технологию!';
+            } else {
+                messageElement.textContent = 'Недостаточно золота для исследования технологий!';
+            }
+            updateResources();
+        }
+
+        function improveDefense() {
+            if (gold >= 30) {
+                defense += 1;
+                gold -= 30;
+                messageElement.textContent = 'Вы улучшили оборону вашего государства!';
+            } else {
+                messageElement.textContent = 'Недостаточно золота для улучшения обороны!';
+            }
+            updateResources();
+        }
+
+        function improveCulture() {
+            if (gold >= 20 && food >= 10) {
+                culture += 1;
+                gold -= 20;
+                food -= 10;
+                happiness = Math.min(100, happiness + 10);
+                messageElement.textContent = 'Вы улучшили культурный уровень вашего государства!';
+            } else {
+                messageElement.textContent = 'Недостаточно ресурсов для развития культуры!';
+            }
+            updateResources();
+        }
+
+        function startWar() {
+            if (gold >= 50 && happiness >= 20) {
+                gold -= 50;
+                happiness -= 20;
+                const warResult = Math.random() < 0.5 ? 'win' : 'lose';
+                if (warResult === 'win') {
+                    const rewardGold = Math.floor(Math.random() * 50) + 20;
+                    const rewardHappiness = Math.floor(Math.random() * 15) + 5;
+                    gold += rewardGold;
+                    happiness = Math.min(100, happiness + rewardHappiness);
+                    messageElement.textContent = `Вы выиграли войну! Получено ${rewardGold} золота и ${rewardHappiness} счастья.`;
+                } else {
+                    const lostGold = Math.floor(Math.random() * 30) + 10;
+                    const lostHappiness = Math.floor(Math.random() * 20) + 5;
+                    gold = Math.max(0, gold - lostGold);
+                    happiness = Math.max(0, happiness - lostHappiness);
+                    messageElement.textContent = `Вы проиграли войну. Потеряно ${lostGold} золота и ${lostHappiness} счастья.`;
+                }
+            } else {
+                messageElement.textContent = 'Недостаточно ресурсов для начала войны!';
+            }
+            updateResources();
+        }
+
+        function enemyAttack() {
+            if (defense > 0) {
+                defense--;
+                messageElement.textContent = 'На вас напали, но ваша оборона защитила ваше государство!';
+            } else {
+                const stolenGold = Math.floor(Math.random() * 20) + 10;
+                gold = Math.max(0, gold - stolenGold);
+                messageElement.textContent = `На вас напали! Потеряно ${stolenGold} золота из-за слабой обороны.`;
+            }
+            updateResources();
+        }
+
+        function decreaseDefenseDaily() {
+            if (defense > 0) {
+                defense = Math.max(0, defense - 1);
+                messageElement.textContent = 'Уровень обороны уменьшился, требуется поддержка!';
+                updateResources();
+            }
+        }
+
+        setInterval(saveGame, 1);
+        setInterval(randomEvent, 30000);
+        setInterval(decreaseDefenseDaily, 86400000); // Уменьшение обороны раз в день
+        setInterval(enemyAttack, Math.random() * 60000 + 30000); // Атака через рандомное время
+
+        loadGame();
+        updateResources();
+        // Функция для сохранения текущего состояния игры
+function saveGame() {
+    const gameState = { food, gold, population, happiness, technology, defense, culture };
+    localStorage.setItem('peacefulSimulatorSave', JSON.stringify(gameState));
+}
+
+// Функция для загрузки сохраненного состояния игры
+function loadGame() {
+    const savedState = localStorage.getItem('peacefulSimulatorSave');
+    if (savedState) {
+        const { food: savedFood, gold: savedGold, population: savedPopulation, happiness: savedHappiness, technology: savedTechnology, defense: savedDefense, culture: savedCulture } = JSON.parse(savedState);
+        food = savedFood || 0;
+        gold = savedGold || 0;
+        population = savedPopulation || 0;
+        happiness = savedHappiness || 0;
+        technology = savedTechnology || 0;
+        defense = savedDefense || 0;
+        culture = savedCulture || 0;
+        updateResources();
+    }
+}
+
+// Функция для обновления интерфейса и автоматического сохранения
+function updateResources() {
+    foodElement.textContent = food;
+    goldElement.textContent = gold;
+    populationElement.textContent = population;
+    happinessElement.textContent = happiness;
+    technologyElement.textContent = technology;
+    defenseElement.textContent = defense;
+    cultureElement.textContent = culture;
+
+    // Автоматическое сохранение после обновления
+    saveGame();
+}
+
+// Загрузка сохраненной игры при загрузке страницы
+loadGame();
+
+
+    </script>
+</body>
+</html>

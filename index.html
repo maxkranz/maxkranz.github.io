@@ -44,7 +44,7 @@
         header {
             width: 100%;
             padding: 20px;
-            background-color: DeepSkyBlue;
+            background-color: purple;
             color: white;
             display: flex;
             justify-content: space-between;
@@ -147,7 +147,7 @@
         header {
             width: 100%;
             padding: 30px 20px;
-            background-color: DeepSkyBlue;
+            background-color: purple;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -232,7 +232,7 @@
         }
 
         .dropdown {
-            background-color: DeepSkyBlue;
+            background-color:  rgb(100, 0, 100);
             color: black;
             padding: 15px;
             cursor: pointer;
@@ -272,7 +272,7 @@
             right: 0;
             width: 250px;
             height: 100%;
-            background-color: DeepSkyBlue;
+            background-color:  rgb(100, 0, 100);
             box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
             z-index: 9;
             padding: 60px 20px;
@@ -404,7 +404,7 @@
         header {
             width: 100%;
             padding: 30px 20px;
-            background-color: DeepSkyBlue;
+            background-color: rgb(224, 8, 224);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -532,11 +532,11 @@ p, a, h2, h1, h6{
     color: white;
 }
 button {
-    background-color: DEEPSKYBLUE; /* Зеленый фон */
+  background-color:  rgb(100, 0, 100); /* Зеленый фон */
     color: white; /* Белый текст */
     padding: 15px 30px; /* Отступы внутри кнопки */
     border: none; /* Убираем рамку */
-    border-radius: 8px; /* Закругленные углы */
+    border-radius: 30px; /* Закругленные углы */
     font-size: 16px; /* Размер текста */
     font-weight: bold; /* Жирный текст */
     cursor: pointer; /* Указатель при наведении */
@@ -546,9 +546,8 @@ button {
 }
 
 button:hover {
-    background-color: rgb(29, 172, 219); /* Темно-зеленый при наведении */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Увеличение тени */
-    transform: translateY(-2px); /* Легкое поднятие */
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #AA00FF, #7B1FA2);
 }
 
 button:active {
@@ -571,7 +570,7 @@ button:active {
         }
         .hero {
             width: 100%;
-            background: linear-gradient(to right, #00254e, #000000);
+            background: linear-gradient(to right, rgb(100, 0, 100), #000000);
             color: white;
             text-align: center;
             padding: 60px 20px;
@@ -592,13 +591,13 @@ button:active {
         }
 
         .hero .cta-button {
-            background-color: #4e8dd4;
+            background-color:  rgb(100, 0, 100);
             padding: 15px 30px;
             color: white;
             font-size: 18px;
             font-weight: bold;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, background-color 0.3s ease;
@@ -606,7 +605,7 @@ button:active {
 
         .hero .cta-button:hover {
             transform: translateY(-3px);
-            background-color: #459bfc;
+            background: linear-gradient(135deg, #AA00FF, #7B1FA2);
         }
         .scroll-top {
             position: fixed;
@@ -747,8 +746,114 @@ button:active {
             border-radius: 5px;
             font-size: 16px;
         }
+        body{
+            background-color: black;
+            color: white;
+        }
 
-        
+        .price-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .price-card {
+            background: linear-gradient(135deg, #7B1FA2, #9C27B0);
+            border-radius: 20px;
+            padding: 35px;
+            width: 320px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 20px rgba(156, 39, 176, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .price-card:hover {
+            box-shadow: 0 0 40px rgba(156, 39, 176, 0.9);
+        }
+
+        .price-card:before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 5px;
+            background: #fff;
+            border-radius: 10px;
+        }
+
+        .price-card .plan-name {
+            font-size: 26px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .price-card .price {
+            font-size: 50px;
+            font-weight: bold;
+            color: #fff;
+            margin: 20px 0;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .price-card .features {
+            font-size: 18px;
+            color: #E0E0E0;
+            margin: 25px 0;
+            text-align: left;
+            padding: 0 15px;
+        }
+
+        .price-card .features p {
+            margin: 10px 0;
+            font-weight: 400;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .price-card .features p::before {
+            content: '✔';
+            color: #FFD700;
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+        }
+
+        .cta {
+            background-color:  rgb(100, 0, 100);
+            padding: 15px 30px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cta:hover {
+            background: linear-gradient(135deg, #AA00FF, #7B1FA2);
+            transform: translateY(-3px);
+        }
+
+        .cta:active {
+            transform: scale(1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 900px) {
+            .price-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+
 
 
     </style>
@@ -757,7 +862,7 @@ button:active {
    
     <header>
         <div class="nav-links">
-            <a href="https://maxkranz.github.io/projects" style="margin-left:300px">Projects</a>
+            <a href="https://maxkranz.github.io/" style="margin-left:300px">Home</a>
         </div>
         <div><a href="https://maxkranz.github.io"><img class="logo"src="logomk.png"></a></div>
         <div class="nav-links">
@@ -769,23 +874,24 @@ button:active {
             <div></div>
         </div>
         <nav id="navMenu">
-            <a href="https://maxkranz.github.io/projects">Projects</a>
+            <a href="https://maxkranz.github.io/">Home</a>
             <a href="https://maxkranz.github.io/about">About</a>
         </nav>
     </header>
     <section class="hero">
-        <h1>Max Kranz Publisher</h1>
-        <p>Introducing new project</p>
-        <button class="cta-button" onclick="window.open('https://maxkranz.github.io/publisher/')">Explore🚀</button>
+        <h1>Max Kranz X.</h1>
+        <p>Access to all services.</p>
+        <button class="cta-button" onclick="window.open('https://telegra.ph/max-kranz-x-02-01')">Get</button>
     </section>
     
+   
         <div class="intro" style="color: #f8f8f8;">
-          Hey, I am Max Kranz, and I create web apps and games! It's useful and funny, so you won't regret if you will use it.
+            Hi, my name is Max Kranz and here on my site you can play fun games, use cool apps and utilize my services and projects. Enjoy!)
         </div>
     
       
           <div class="projects-grid">
-                <a href="https://maxkranz.github.io/amanda" class="project">
+                <a href="https://avatar.maxkranz.me" class="project">
                     <img src="amanda.png" alt="Amanda">
                     <div class="project-title">Amanda</div>
                 </a>
@@ -860,21 +966,13 @@ button:active {
             <div class="project-title">Consilium Strategy</div>
         </a>
         </div>
-        <div class="update-feed">
-            <h2>Recent Updates</h2>
-            <ul id="update-list">
-                <li>📅 New game Consilium added (01/01/2025)</li>
-                <li>📅 New story Snowdate 2 added (12/29/2024)</li>
-                <li>📅 New story Snowdate added (12/28/2024)</li>
-                <li>📅 Password Generator release (12/25/2024)</li>
-            </ul>
-        </div>
+       
       
           <div class="dropdown-container">
               <div class="dropdown" onclick="toggleDropdown('apps')" style="color: white;">Apps</div>
               <div class="dropdown-content" id="apps">
                   <a href="https://maxkranz.github.io/apps/todoapp">To Do App</a>
-                  <a href="https://maxkranz.github.io/amanda">Amanda Search Engine</a>
+                  <a href="https://avatar.maxkranz.me/">Amanda Search Engine</a>
                   <a href="https://maxkranz.github.io/apps/noteapp">NoteApp</a>
                   <a href="https://maxkranz.github.io/apps/timer">Timer</a>
                   <a href="https://maxkranz.github.io/apps/quotegenerator">Quote Generator</a>
@@ -896,26 +994,48 @@ button:active {
                   
                   
               </div>
+              </div>
+              </div>
+              <div class="price-container">
+                <div class="price-card">
+                    <div class="plan-name">Avatar</div>
+                    <div class="price">⭐15</div>
+                    <div class="features">
+                        <p>1 avatar</p>
+                        <p>Support</p>
+                    </div>
+                    <button class="cta" onclick="window.open('https://avatar.maxkranz.me/pricing/')">Get</button>
+                </div>
+        
+                <div class="price-card">
+                    <div class="plan-name">Max Kranz X</div>
+                    <div class="price">⭐25</div>
+                    <div class="features">
+                        <p>Access to all services</p>
+                        <p>Profitable</p>
+                    </div>
+                    <button class="cta" onclick="window.open('https://telegra.ph/max-kranz-x-02-01')">Get</button>
+                </div>
+        
+                <div class="price-card">
+                    <div class="plan-name">Max Zakaz</div>
+                    <div class="price">⭐50</div>
+                    <div class="features">
+                        <p>Creating a website by order</p>
+                        <p>Good quality</p>
+                    </div>
+                    <button class="cta" onclick="window.open('https://telegra.ph/max-zakaz-02-01')">Get</button>
+                </div>
+            </div>
 
 
 
 
     <div class="section">
         <h2>Who Am I</h2>
-        <p>Hey, I am Max Kranz and I make diffrent apps and games and even projects, big projects! For example MK Publisher, Pas-Halko, Max Kranz Bot, I made it. So if you want to know more, tap the button below! <br> 
+        <p>My name is Max Kranz, here on this site my partners and I create games, apps and games that people like. I will be happy if my projects are used <3 <br> 
             <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/about')">About</button></p>
     </div>
-
-    <div class="section" style="justify-content: center; text-align: center; ">
-        <h2>About Me in Video</h2>
-        <img  src="WhatsApp-Video-2024-12-14-at-7.48.06-PM.gif"  style=" width: 320px; height: 220px; height: auto; display: block; margin: 0 auto; border-radius: 10px;">
-        <br>
-        <button style="margin-top: 20px;" onclick="window.open('https://maxkranz.github.io/maxkranz.mp4')">Watch Video</button>
-    </div>
-<br>    
-    </div>
-
-</div>
 
     <footer style="color: #f8f8f8; margin-top: 0;">© Max Kranz Inc. All rights reserved.<br><br><a href="https://maxkranz.github.io/ru" STYLE="color: #f8f8f8;
         text-decoration: none;

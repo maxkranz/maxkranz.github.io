@@ -22,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Max Kranz</title>
     <link rel="shortcut icon" href="html.png">
-    <meta name="description" content="Откройте для себя классные веб-приложения, игры и проекты">
+    <meta name="description" content="Explore amazing web apps and games">
     <meta property="og:image" content="html.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -44,7 +44,7 @@
         header {
             width: 100%;
             padding: 20px;
-            background-color: DeepSkyBlue;
+            background-color: purple;
             color: white;
             display: flex;
             justify-content: space-between;
@@ -147,7 +147,7 @@
         header {
             width: 100%;
             padding: 30px 20px;
-            background-color: DeepSkyBlue;
+            background-color: purple;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -232,7 +232,7 @@
         }
 
         .dropdown {
-            background-color: DeepSkyBlue;
+            background-color:  rgb(100, 0, 100);
             color: black;
             padding: 15px;
             cursor: pointer;
@@ -272,7 +272,7 @@
             right: 0;
             width: 250px;
             height: 100%;
-            background-color: DeepSkyBlue;
+            background-color:  rgb(100, 0, 100);
             box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
             z-index: 9;
             padding: 60px 20px;
@@ -404,7 +404,7 @@
         header {
             width: 100%;
             padding: 30px 20px;
-            background-color: DeepSkyBlue;
+            background-color: rgb(224, 8, 224);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -532,11 +532,11 @@ p, a, h2, h1, h6{
     color: white;
 }
 button {
-    background-color: DEEPSKYBLUE; /* Зеленый фон */
+  background-color:  rgb(100, 0, 100); /* Зеленый фон */
     color: white; /* Белый текст */
-    padding: 15px 20px; /* Отступы внутри кнопки */
+    padding: 15px 30px; /* Отступы внутри кнопки */
     border: none; /* Убираем рамку */
-    border-radius: 8px; /* Закругленные углы */
+    border-radius: 30px; /* Закругленные углы */
     font-size: 16px; /* Размер текста */
     font-weight: bold; /* Жирный текст */
     cursor: pointer; /* Указатель при наведении */
@@ -546,9 +546,8 @@ button {
 }
 
 button:hover {
-    background-color: rgb(29, 172, 219); /* Темно-зеленый при наведении */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Увеличение тени */
-    transform: translateY(-2px); /* Легкое поднятие */
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #AA00FF, #7B1FA2);
 }
 
 button:active {
@@ -571,7 +570,7 @@ button:active {
         }
         .hero {
             width: 100%;
-            background: linear-gradient(to right, #00254e, #000000);
+            background: linear-gradient(to right, rgb(100, 0, 100), #000000);
             color: white;
             text-align: center;
             padding: 60px 20px;
@@ -592,13 +591,13 @@ button:active {
         }
 
         .hero .cta-button {
-            background-color: #4e8dd4;
-            padding: 15px 15px;
+            background-color:  rgb(100, 0, 100);
+            padding: 15px 30px;
             color: white;
             font-size: 18px;
             font-weight: bold;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, background-color 0.3s ease;
@@ -606,7 +605,7 @@ button:active {
 
         .hero .cta-button:hover {
             transform: translateY(-3px);
-            background-color: #459bfc;
+            background: linear-gradient(135deg, #AA00FF, #7B1FA2);
         }
         .scroll-top {
             position: fixed;
@@ -651,6 +650,81 @@ button:active {
             color: #000;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
+        /* From Uiverse.io by njesenberger */ 
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: .5em;
+  padding: .125em;
+  background-image: linear-gradient(to bottom, #d5d5d5, #e8e8e8);
+  box-shadow: 0 1px 1px rgb(255 255 255 / .6);
+  /* resize for demo */
+  font-size: 1.5em;
+}
+
+.toggle-checkbox {
+  appearance: none;
+  position: absolute;
+  z-index: 1;
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+  /* fix em sizing */
+  font: inherit;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: .375em;
+  width: 3em;
+  height: 1.5em;
+  background-color: #e8e8e8;
+  box-shadow: inset 0 0 .0625em .125em rgb(255 255 255 / .2), inset 0 .0625em .125em rgb(0 0 0 / .4);
+  transition: background-color .4s linear;
+}
+
+.toggle-checkbox:checked + .toggle-container {
+  background-color: #f3b519;
+}
+
+.toggle-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: .0625em;
+  border-radius: .3125em;
+  width: 1.375em;
+  height: 1.375em;
+  background-color: #e8e8e8;
+  box-shadow: inset 0 -.0625em .0625em .125em rgb(0 0 0 / .1), inset 0 -.125em .0625em rgb(0 0 0 / .2), inset 0 .1875em .0625em rgb(255 255 255 / .3), 0 .125em .125em rgb(0 0 0 / .5);
+  transition: left .4s;
+}
+
+.toggle-checkbox:checked + .toggle-container > .toggle-button {
+  left: 1.5625em;
+}
+
+.toggle-button-circles-container {
+  display: grid;
+  grid-template-columns: repeat(3, min-content);
+  gap: .125em;
+  position: absolute;
+  margin: 0 auto;
+}
+
+.toggle-button-circle {
+  border-radius: 50%;
+  width: .125em;
+  height: .125em;
+  background-image: radial-gradient(circle at 50% 0, #f5f5f5, #c4c4c4);
+}
 
         .update-feed h2 {
             font-size: 20px;
@@ -672,8 +746,113 @@ button:active {
             border-radius: 5px;
             font-size: 16px;
         }
+        body{
+            background-color: black;
+            color: white;
+        }
 
-        
+        .price-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .price-card {
+            background: linear-gradient(135deg, #7B1FA2, #9C27B0);
+            border-radius: 20px;
+            padding: 35px;
+            width: 320px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 20px rgba(156, 39, 176, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .price-card:hover {
+            box-shadow: 0 0 40px rgba(156, 39, 176, 0.9);
+        }
+
+        .price-card:before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 5px;
+            background: #fff;
+            border-radius: 10px;
+        }
+
+        .price-card .plan-name {
+            font-size: 26px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .price-card .price {
+            font-size: 50px;
+            font-weight: bold;
+            color: #fff;
+            margin: 20px 0;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .price-card .features {
+            font-size: 18px;
+            color: #E0E0E0;
+            margin: 25px 0;
+            text-align: left;
+            padding: 0 15px;
+        }
+
+        .price-card .features p {
+            margin: 10px 0;
+            font-weight: 400;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .price-card .features p::before {
+            content: '✔';
+            color: #FFD700;
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+        }
+
+        .cta {
+            background-color:  rgb(100, 0, 100);
+            padding: 15px 30px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cta:hover {
+            background: linear-gradient(135deg, #AA00FF, #7B1FA2);
+            transform: translateY(-3px);
+        }
+
+        .cta:active {
+            transform: scale(1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 900px) {
+            .price-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
 
 
     </style>
@@ -682,7 +861,7 @@ button:active {
    
     <header>
         <div class="nav-links">
-            <a href="https://maxkranz.github.io/ru/projects" style="margin-left:300px">Проекты</a>
+            <a href="https://maxkranz.github.io/ru" style="margin-left:300px">Главная</a>
         </div>
         <div><a href="https://maxkranz.github.io/ru"><img class="logo"src="logomk.png"></a></div>
         <div class="nav-links">
@@ -694,24 +873,24 @@ button:active {
             <div></div>
         </div>
         <nav id="navMenu">
-            <a href="https://maxkranz.github.io/ru/projects/">Проекты</a>
+            <a href="https://maxkranz.github.io/ru">Главная</a>
             <a href="https://maxkranz.github.io/ru/about">Обо мне</a>
         </nav>
     </header>
     <section class="hero">
-        <h1>Max Kranz Publisher</h1>
-        <p>Представление нового проекта</p>
-        <button class="cta-button" onclick="window.open('https://maxkranz.github.io/publisher/')">Посмотрим!🚀</button>
+        <h1>Max Kranz X.</h1>
+        <p>Доступ ко всем сервисам.</p>
+        <button class="cta-button" onclick="window.open('https://telegra.ph/max-kranz-x-02-01')">Получить</button>
     </section>
     
+   
         <div class="intro" style="color: #f8f8f8;">
-            Привет, я Макс Кранц, и я создаю веб-приложения и игры! Они полезные и забавные, так что вы не пожалеете, если воспользуетесь ими.
-
+          Привет, меня зовут Макс Кранц, и здесь, на моем сайте, ты можешь поиграть в увлекательные игры, использовать классные приложения и использовать мои сервисы и проекты. Наслаждайся!)
         </div>
     
       
           <div class="projects-grid">
-                <a href="https://maxkranz.github.io/amanda" class="project">
+                <a href="https://amanda.maxkranz.me" class="project">
                     <img src="amanda.png" alt="Amanda">
                     <div class="project-title">Amanda</div>
                 </a>
@@ -723,7 +902,7 @@ button:active {
                   
                 <a href="https://maxkranz.github.io/ru/games/guessthenumber" class="project">
                     <img src="gtn.png" alt="Guess The Number">
-                    <div class="project-title">Угадай число</div>
+                    <div class="project-title">Guess The Number</div>
                 </a>
                 <a href="https://maxkranz.github.io/ru/apps/noteapp" class="project">
                     <img src="noteapp.png" alt="NoteApp">
@@ -731,19 +910,19 @@ button:active {
                 </a>
                 <a href="https://maxkranz.github.io/ru/apps/timer" class="project">
                     <img src="timer.png" alt="Timer">
-                    <div class="project-title">Таймер</div>
+                    <div class="project-title">Timer</div>
                 </a>
                 <a href="https://maxkranz.github.io/ru/apps/quotegenerator" class="project">
                     <img src="quotes.png" alt="Quotes Generator">
-                    <div class="project-title">Генератор цитат</div>
+                    <div class="project-title">Quotes Generator</div>
                 </a>
                 <a href="https://maxkranz.github.io/ru/apps/calculator" class="project">
                     <img src="calculate.png" alt="Calculator">
-                    <div class="project-title">Калькулятор</div>
+                    <div class="project-title">Calculator</div>
                 </a>
                 <a href="https://maxkranz.github.io/ru/games/dino" class="project">
                     <img src="dino.png" alt="Dino">
-                    <div class="project-title">Дино</div>
+                    <div class="project-title">Dino</div>
                 </a>
                 <a href="https://maxkranz.github.io/ru/games/mouse" class="project">
                     <img src="mishl-Photoroom.png" alt="Mouse Clicker">
@@ -751,15 +930,15 @@ button:active {
                 </a>
                 <a href="https://maxkranz.github.io/ru/games/tictactoe" class="project">
                     <img src="tictactoe.png" alt="Tic-Tac-Toe">
-                    <div class="project-title">Крестики-нолики</div>
+                    <div class="project-title">Tic-Tac-Toe</div>
                 </a>
                 <a href="https://maxkranz.github.io/ru/games/hangman" class="project">
                     <img src="hangman.png" alt="Hangman">
-                    <div class="project-title">Виселица</div>
+                    <div class="project-title">Hangman</div>
                 </a>
                 <a href="https://maxkranz.github.io/ru/games/bullsandcows" class="project">
                     <img src="cow.png" alt="Bulls and Cows">
-                    <div class="project-title">Быки и коровы</div>
+                    <div class="project-title">Bulls And Cows</div>
                 </a>
                 <a href="https://maxkranz.github.io/pas-halko/seeker/" class="project">
                     <img src="passeeker.png" alt="Pas-Halko Seeker">
@@ -785,18 +964,14 @@ button:active {
             <img src="consilium.png" alt="Snowdate">
             <div class="project-title">Consilium Strategy</div>
         </a>
-
         </div>
-        <div class="update-feed">
-            <h2>Недавние апдейты</h2>  
-            <h1 style="text-align: center; color: black;">Недавних апдейтов пока нет!</h1>     
-        </div>
+       
       
           <div class="dropdown-container">
               <div class="dropdown" onclick="toggleDropdown('apps')" style="color: white;">Приложения</div>
               <div class="dropdown-content" id="apps">
                   <a href="https://maxkranz.github.io/ru/apps/todoapp">To Do App</a>
-                  <a href="https://maxkranz.github.io/amanda">Поисковик Amanda</a>
+                  <a href="https://amanda.maxkranz.me">Поисковик Amanda</a>
                   <a href="https://maxkranz.github.io/ru/apps/noteapp">NoteApp</a>
                   <a href="https://maxkranz.github.io/ru/apps/timer">Таймер</a>
                   <a href="https://maxkranz.github.io/ru/apps/quotegenerator">Генератор цитат</a>
@@ -811,32 +986,58 @@ button:active {
                    <a href="https://maxkranz.github.io/ru/games/tictactoe">Крестики-нолики</a>
                    <a href="https://maxkranz.github.io/ru/games/bullsandcows">Быки и коровы</a>
                    <a href="https://maxkranz.github.io/ru/games/hangman">Виселица</a>
-                   <a href="https://maxkranz.github.io/pas-halko/seeker/">Pas-Halko Seeker</a>
+                   <a href="https://maxkranz.github.io/pas-halko/seeker">Pas-Halko Seeker</a>
+                   <a href="https://maxkranz.github.io/ru/games/st">Возвращение Очень странных дел
+                   </a>
                    <a href="https://maxkranz.github.io/ru/games/snowdate">Snowdate</a>
                    <a href="https://maxkranz.github.io/ru/games/snowdate2">Snowdate 2</a>
                   
+                  
               </div>
-              
+              </div>
+              </div>
+              <div class="price-container">
+                <div class="price-card">
+                    <div class="plan-name">Avatar</div>
+                    <div class="price">⭐15</div>
+                    <div class="features">
+                        <p>1 аватарка</p>
+                        <p>Поддержка</p>
+                    </div>
+                    <button class="cta" onclick="window.open('https://avatar.maxkranz.me/pricing/')">Получить</button>
+                </div>
+        
+                <div class="price-card">
+                    <div class="plan-name">Max Kranz X</div>
+                    <div class="price">⭐25</div>
+                    <div class="features">
+                        <p>Доступ ко всем сервисам</p>
+                        <p>Выгодно</p>
+                    </div>
+                    <button class="cta" onclick="window.open('https://telegra.ph/max-kranz-x-02-01')">Получить</button>
+                </div>
+        
+                <div class="price-card">
+                    <div class="plan-name">Max Zakaz</div>
+                    <div class="price">⭐50</div>
+                    <div class="features">
+                        <p>Создание сайта на заказ</p>
+                        <p>Хорошее качество</p>
+                    </div>
+                    <button class="cta" onclick="window.open('https://telegra.ph/max-zakaz-02-01')">Получить</button>
+                </div>
+            </div>
+
+
 
 
     <div class="section">
         <h2>Кто я</h2>
-        <p>Привет, я Макс Кранц, и я создаю различные приложения, игры и даже проекты, большие проекты! Например, MK Publisher, Pas-Halko, Max Kranz Bot - все это сделал я. Так что если вы хотите узнать больше, нажмите на кнопку ниже!<br> 
+        <p>Меня зовут Макс Кранц. Здесь, на этом сайте, я и мои партнеры создаем игры, приложения и игры, которые нравятся людям. Я буду рад, если моими проектами будут пользоваться <3 <br> 
             <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/ru/about')">Обо мне</button></p>
     </div>
 
-    <div class="section" style="justify-content: center; text-align: center; ">
-        <h2>Обо мне в видео</h2>
-        <img  src="WhatsApp-Video-2024-12-14-at-7.48.06-PM.gif"  style=" width: 320px; height: 220px; height: auto; display: block; margin: 0 auto; border-radius: 10px;">
-        <br>
-        <button style="margin-top: 20px;" onclick="window.open('https://maxkranz.github.io/maxkranz.mp4')">Посмотреть видео</button>
-    </div>
-<br>    
-    </div>
-
-</div>
-
-    <footer style="color: #f8f8f8; margin-top: 0;">© Max Kranz Inc. Все права защищены.<br><br><a href="https://maxkranz.github.io/" STYLE="color: #f8f8f8;
+    <footer style="color: #f8f8f8; margin-top: 0;">© Max Kranz Inc. All rights reserved.<br><br><a href="https://maxkranz.github.io/" STYLE="color: #f8f8f8;
         text-decoration: none;
         font-size: 15px;
         transition: color 0.3s ease; margin-top: 0;">EN</a>

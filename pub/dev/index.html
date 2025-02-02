@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Cards</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .card .title {
+      color: #888;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .card .name {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .card a {
+      display: inline-block;
+      color: #007bff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .grid {
+        gap: 15px;
+      }
+
+      .card {
+        padding: 15px;
+      }
+
+      .card img {
+        width: 80px;
+        height: 80px;
+      }
+    }
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #303030;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            padding: 15px 20px;
+            background-color: #4a90e2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .logo {
+            margin-right: auto;
+        }
+
+        .search-container {
+            margin: 0 10px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .burger-menu {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .burger-menu div {
+            width: 30px;
+            height: 4px;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100%;
+            background-color: #4a90e2;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        nav.active {
+            transform: translateX(-100%);
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        nav .close-menu {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .intro {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .projects-grid {
+    display: grid;
+    gap: 20px; /* Расстояние между квадратиками */
+    padding: 20px; /* Внутренний отступ */
+    width: 100%;
+    max-width: 1200px;
+}
+
+        .project {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            width: 250px;
+        }
+        @media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: repeat(1, 1fr); /* 1 колонка для телефонов */
+        justify-content: center; /* Центрирует элементы */
+    }
+
+    .project {
+        max-width: none; /* Убирает ограничение ширины */
+        width: 100%; /* Элемент занимает всю ширину родителя */
+    }
+}
+
+        .project:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .project img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .project-title {
+            padding: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .dropdown-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .dropdown {
+            background-color: #4a90e2;
+            color: #fff;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown:hover {
+            background-color: #357ab7;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 5px 0;
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            color: #4a90e2;
+        }
+
+        @media (max-width: 768px) {
+            .burger-menu {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+
+            nav {
+                width: 90%;
+            }
+        }
+        footer a{
+            margin: 7px;
+        }
+        .intro {
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 20px;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .project {
+            background-color: DeepSkyBlue;
+            padding: 30px;
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        /* Эффект появления текста */
+
+
+        .project:hover .project-description,
+        .project.active .project-description {
+            bottom: 0;
+        }
+        footer a{
+            margin: 5px;
+        }
+
+        .project a {
+            color: #f8f8f8;
+            text-decoration: none;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .project-description {
+                font-size: 14px;
+            }
+
+            .project {
+                width: 100%;
+            }
+
+        }
+        body{
+            color: #f8f8f8;
+            background-color: #303030;
+        }
+        .projects-grid {
+    display: grid;
+    gap: 20px; /* Расстояние между квадратиками */
+    padding: 20px; /* Внутренний отступ */
+    width: 100%;
+    max-width: 1200px;
+}
+
+.project {
+    background-color: #fff; /* Белый фон */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Тень */
+    text-align: center;
+    overflow: hidden; /* Убираем выход за границы */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Эффект при наведении */
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; /* Вертикальное расположение */
+    align-items: center;
+    text-decoration: none;
+    height: 200px; /* Фиксированная высота */
+}
+
+.project img {
+    width: 100%; /* Ширина изображения */
+    height: 150px; /* Высота изображения */
+    object-fit: cover; /* Обрезка изображения */
+}
+
+.project-title {
+    padding: 10px; /* Отступы */
+    font-size: 1rem; /* Размер текста */
+    font-weight: 600; /* Полужирный текст */
+    color: #333; /* Цвет текста */
+}
+
+.project:hover {
+    transform: translateY(-10px); /* Поднятие квадрата при наведении */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Увеличение тени */
+}
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; margin-bottom: 30px;">Developers</h1>
+  <div class="grid">
+    <!-- Карточка разработчика -->
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Developer Photo">
+      <div class="title">Developer</div>
+      <div class="name">John Doe</div>
+      <a href="#about">About</a>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Developer Photo">
+      <div class="title">Developer</div>
+      <div class="name">Jane Smith</div>
+      <a href="#about">About</a>
+    </div>
+
+    <!-- Больше карточек -->
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Developer Photo">
+      <div class="title">Developer</div>
+      <div class="name">Alice Johnson</div>
+      <a href="#about">About</a>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/100" alt="Developer Photo">
+      <div class="title">Developer</div>
+      <div class="name">Bob Brown</div>
+      <a href="#about">About</a>
+    </div>
+  </div>
+</body>
+</html>
