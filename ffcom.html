@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сообщество Фоксфорда</title>
+    <style>
+        :root {
+            --primary-color: #ff6600;
+            --secondary-color: #1e1e1e;
+            --background-color: #b3daff;
+            --text-color: #333;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        header {
+            background: var(--primary-color);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        nav {
+            display: flex;
+            justify-content: flex-start;
+            background: var(--secondary-color);
+            padding: 15px;
+            height: 80px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background: var(--primary-color);
+            transition: 0.1s;
+            height: 45px;
+        }
+        nav a:hover {
+            background: white;
+            color: black;
+            border: 3px solid orange;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .hero {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        .contact {
+            background: white;
+            padding: 40px;
+            margin-top: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--secondary-color);
+            color: white;
+            margin-top: 40px;
+        }
+        .math-game {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        .math-game input {
+            padding: 12px;
+            font-size: 18px;
+            margin-top: 10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            text-align: center;
+            outline: none;
+        }
+        .math-game button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .math-game button:hover {
+            background: #e65c00;
+        }
+        .floating-fox {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            animation: float 6s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            50% { transform: translateY(-50px) translateX(30px); opacity: 0.8; }
+            100% { transform: translateY(0) translateX(0); opacity: 1; }
+        }
+        a {
+            text-decoration: none;
+            color: orange;
+        }
+        a:hover {
+            color: black;
+            transition: 0.3s;
+        }
+
+        /* Мобильная адаптивность */
+        @media (max-width: 768px) {
+            header {
+                font-size: 24px;
+                padding: 30px;
+            }
+            nav {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                overflow-x: scroll;
+            }
+            nav a {
+                font-size: 16px;
+                padding: 8px 15px;
+            }
+            .container {
+                margin: 20px;
+                padding: 10px;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .contact {
+                padding: 20px;
+            }
+            .math-game {
+                padding: 20px;
+            }
+            .math-game input {
+                font-size: 16px;
+                padding: 10px;
+            }
+            .math-game button {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+        }
+
+        /* Для экранов меньших 480px */
+        @media (max-width: 480px) {
+            header {
+                font-size: 20px;
+                padding: 20px;
+            }
+            nav {
+                padding: 10px;
+            }
+            nav a {
+                font-size: 14px;
+                padding: 8px 12px;
+              height:45px;
+            }
+            .hero h1 {
+                font-size: 28px;
+            }
+            .contact {
+                padding: 15px;
+            }
+            .math-game {
+                padding: 15px;
+            }
+            .math-game input {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .math-game button {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+      .contact p{
+        margin: 10px;
+      }
+          .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-height: 80%;
+            overflow-y: auto;
+            width: 80%;
+            text-align: left;
+        }
+        .modal-content h2 {
+            margin-bottom: 20px;
+        }
+        .close-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+        }
+        .close-btn:hover {
+            background: #e65c00;
+        }
+      .modal-content p{
+        margin:20px;
+      }
+    </style>
+</head>
+<body>
+    <header>Foxford Community</header>
+    <nav>
+        <a href="https://foxfordcommunity.ru">Главная</a>
+        <a href="https://foxford.ru/about?srsltid=AfmBOoqT2HVvdMMe_bwAoP_NcxHCiaeZwz3R9iLLJzIWtF9xvm2wX24S">О Фоксфорде</a>
+        <a href="#" id="team-link">Команда</a>
+        <a href="https://rules.foxford-community.ru">Правила чатов</a>
+    </nav>
+    <div class="container">
+        <div class="hero">
+            <h1>Добро пожаловать в наше сообщество!</h1>
+            <p>Здесь мы обсуждаем, учимся и поддерживаем друг друга.</p>
+        </div>
+        <div class="contact">
+            <h2>Важные ссылки</h2>
+            <p><a href="https://t.me/foxford_edu">Телеграм канал Фоксфорда</a></p>
+            <p><a href="https://t.me/vaid_studio">Телеграм канал VAID</a> </p>
+           <p><a href="https://t.me/communityfoxford">Комьюнити-менеджер Фоксфорда</a> </p>
+        </div>
+
+    </div>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2>VΛID — это объединение юных энтузиастов, каждый из которых принимает участие из собственной инициативы, на добровольной и безвозмездной основе. Участники команды:</h2>
+          <p><strong>Вадим Х (VAI)</strong> — CEO Студии VAID, <a href="https://t.me/vai_programmer">Telegram</a></p>
+          <p><strong>Арт (Артём)</strong> — Веб-дизайнер, Бэк-эндер, <a href="https://t.me/Pon2010goda">Telegram</a></p>
+            <p><strong>Кека</strong> — Основатель локального комьюнити-проекта "Язва ИИ", Кодер, Бэк-эндер, <a href="https://t.me/yazwaceo">Telegram</a></p>
+            <p><strong>Фиолетовый-Пингвин (Маша)</strong> — специалист в социальной сфере, <a href="https://t.me/PURPLE_PENGUIN">Telegram</a></p>
+           <p><strong>Макс Кранц</strong> — веб-разработчик, основатель одноименного проекта, <a href="https://t.me/maxkranz">Telegram</a></p>
+            <button class="close-btn" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+
+    <footer>&copy; 2025 Фоксфорд & VAID. Все права защищены.</footer>
+    <script>
+      
+        function createFloatingFox() {
+            const fox = document.createElement("img");
+            fox.src = "fox.png";
+            fox.classList.add("floating-fox");
+            fox.style.left = Math.random() * window.innerWidth + "px";
+            fox.style.top = Math.random() * window.innerHeight + "px";
+            document.body.appendChild(fox);
+            setTimeout(() => fox.remove(), 6000);
+        }
+        setInterval(createFloatingFox, 2000);
+        document.getElementById("team-link").onclick = function(event) {
+            event.preventDefault();
+            document.getElementById("modal").style.display = "flex";
+        }
+
+        // Закрыть модальное окно
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+    </script>
+</body>
+</html>
