@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сообщество Фоксфорда</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #ff6600;
             --secondary-color: #1e1e1e;
-            --background-color: #b3daff;
+            --background-color: black;
             --text-color: #333;
         }
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
         body {
             background-color: var(--background-color);
@@ -37,6 +38,7 @@
             height: 80px;
             overflow-x: auto;
             white-space: nowrap;
+            background-color: #ff6600;
         }
         nav a {
             color: white;
@@ -49,11 +51,12 @@
             transition: 0.1s;
             height: 45px;
             text-align: center;
+            border: 1px solid black;
         }
         nav a:hover {
             background: white;
             color: black;
-            border: 3px solid orange;
+            border: 1px solid orange;
         }
         .container {
             max-width: 1200px;
@@ -62,11 +65,17 @@
             text-align: center;
             position: relative;
         }
+
         .hero {
-            background: white;
-            padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to right, rgb(0, 113, 151), rgb(0, 0, 0));
+            color: white;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 60px;
+
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            
         }
         .hero h1 {
             font-size: 42px;
@@ -217,9 +226,7 @@
             padding: 30px;
             border-radius: 10px;
             max-height: 80%;
-            overflow-y: auto;
-            width: 80%;
-            text-align: left;
+            overflow-y: auto;            text-align: left;
         }
         .modal-content h2 {
             margin-bottom: 20px;
@@ -242,40 +249,225 @@
         margin:20px;
       }
       footer{
-        color: black;
         background: none;
       }
+      /* From Uiverse.io by kennyotsu */ 
+      .card {
+  /* color used to softly clip top and bottom of the .words container */
+  --bg-color: #212121;
+  background-color: var(--bg-color);
+  padding: 1rem 2rem;
+  border-radius: 1.25rem;
+}
+.loader {
+  color: rgb(124, 124, 124);
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 25px;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  padding: 10px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 8px;
+}
+
+.words {
+  overflow: hidden;
+  position: relative;
+}
+.words::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    var(--bg-color) 10%,
+    transparent 30%,
+    transparent 70%,
+    var(--bg-color) 90%
+  );
+  z-index: 20;
+}
+
+.word {
+  display: block;
+  height: 100%;
+  padding-left: 6px;
+  color: #956afa;
+  animation: spin_4991 4s infinite;
+}
+
+@keyframes spin_4991 {
+  10% {
+    -webkit-transform: translateY(-102%);
+    transform: translateY(-102%);
+  }
+
+  25% {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+
+  35% {
+    -webkit-transform: translateY(-202%);
+    transform: translateY(-202%);
+  }
+
+  50% {
+    -webkit-transform: translateY(-200%);
+    transform: translateY(-200%);
+  }
+
+  60% {
+    -webkit-transform: translateY(-302%);
+    transform: translateY(-302%);
+  }
+
+  75% {
+    -webkit-transform: translateY(-300%);
+    transform: translateY(-300%);
+  }
+
+  85% {
+    -webkit-transform: translateY(-402%);
+    transform: translateY(-402%);
+  }
+
+  100% {
+    -webkit-transform: translateY(-400%);
+    transform: translateY(-400%);
+  }
+}
+@media (max-width: 768px) {
+    .loader {
+        font-size: 20px;
+    }
+    .words {
+        height: 25px;
+    }
+}
+.words {
+    position: relative;
+    align-items: center;
+    height: 40px; /* Установи высоту, чтобы текст не прыгал */
+
+    justify-content: center;
+}
+.word {
+    display: block;
+    height: 30px;
+    padding-left: 6px;
+    color: #ffdd57;
+    animation: spin_4991 4s infinite;
+}
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+
+    text-align: center;
+}
+
+.loader {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-size: 25px;
+    display: flex;
+    flex-direction: column; /* Чтобы текст шел на новую строку */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    border-radius: 12px;
+    width: 700px;
+    height: 250px;
+    background: black;
+    font-size: 30px;
+}
+
+.words {
+    overflow: hidden;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.word {
+    display: block;
+    color: #ffdd57;
+}
+
+
+
+/* Адаптация под мобильные устройства */
+@media (max-width: 768px) {
+    .loader {
+        font-size: 20px;
+    }
+    .words {
+        height: 25px;
+    }
+    .ff{
+        width: 90%;
+    }
+}
+.vaid{
+    height: 200px;
+    width: 200px;
+}
+
+
+
     </style>
 </head>
 <body>
-    <header>Foxford Community</header>
+    <header>Foxford Community </header>
     <nav>
         <a href="https://foxfordcommunity.ru">Главная</a>
         <a href="https://foxford.ru/about?srsltid=AfmBOoqT2HVvdMMe_bwAoP_NcxHCiaeZwz3R9iLLJzIWtF9xvm2wX24S">О Фоксфорде</a>
         <a href="#" id="team-link">Команда</a>
         <a href="https://rules.foxford-community.ru">Правила чатов</a>
     </nav>
-    <div class="container">
-        <div class="hero">
-            <h1>Добро пожаловать в наше сообщество!</h1>
-            <p>Здесь мы обсуждаем, учимся и поддерживаем друг друга.</p>
+    <div class="hero">
+        <div class="loader-container">
+            <div class="loader">
+                <p style="color: white;">В сообществе Фоксфорда мы</p> 
+                <div class="words">
+                    <span class="word">учимся</span>
+                    <span class="word">развиваемся</span>
+                    <span class="word">общаемся</span>
+                    <span class="word">поддерживаем</span>
+                    <span class="word">создаем</span>
+                </div>
+            </div>
         </div>
+</div>            
+    </div>
+            <div class="container">
         <div class="contact">
             <h2>Важные ссылки</h2>
             <p><a href="https://t.me/foxford_edu">Телеграм канал Фоксфорда</a></p>
             <p><a href="https://t.me/vaid_studio">Телеграм канал VAID</a> </p>
            <p><a href="https://t.me/communityfoxford">Комьюнити-менеджер Фоксфорда</a> </p>
+           <img class="ff" src="ff.gif">
+        </div>
         </div>
 
     </div>
     <div class="container">
-        <div class="hero">
+        <div class="contact">
             <h1>О команде VAID</h1>
             <p>Данный проект разработан студией VAID. VΛID — это объединение юных энтузиастов, каждый из которых принимает участие из собственной инициативы, на добровольной и безвозмездной основе.</p>
+            <img src="image.png" class="vaid">
+        </div>
         </div>
     <div class="modal" id="modal">
         <div class="modal-content">
-            <h2>VΛID — это объединение юных энтузиастов, каждый из которых принимает участие из собственной инициативы, на добровольной и безвозмездной основе. Участники команды:</h2>
+            <h2>Разработчики студии VΛID </h2>
           <p><strong>Вадим Х (VAI)</strong> — CEO Студии VAID, <a href="https://t.me/vai_programmer">Telegram</a></p>
           <p><strong>Арт (Артём)</strong> — Веб-дизайнер, Бэк-эндер, <a href="https://t.me/Pon2010goda">Telegram</a></p>
             <p><strong>Кека</strong> — Основатель локального комьюнити-проекта "Язва ИИ", Кодер, Бэк-эндер, <a href="https://t.me/yazwaceo">Telegram</a></p>
