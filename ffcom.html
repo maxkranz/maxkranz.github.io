@@ -480,15 +480,7 @@
     <footer>&copy; 2025 Фоксфорд & VAID. Все права защищены.</footer>
     <script>
       
-        function createFloatingFox() {
-            const fox = document.createElement("img");
-            fox.src = "fox.png";
-            fox.classList.add("floating-fox");
-            fox.style.left = Math.random() * window.innerWidth + "px";
-            fox.style.top = Math.random() * window.innerHeight + "px";
-            document.body.appendChild(fox);
-            setTimeout(() => fox.remove(), 6000);
-        }
+       
         setInterval(createFloatingFox, 2000);
         document.getElementById("team-link").onclick = function(event) {
             event.preventDefault();
