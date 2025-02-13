@@ -26,6 +26,96 @@
     <meta property="og:image" content="html.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        .animated-button {
+  position: relative;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 36px;
+  border: 4px solid;
+  border-color: transparent;
+  font-size: 16px;
+  background-color: inherit;
+  border-radius: 100px;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 0 0 2px rgb(128, 0, 128);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.animated-button svg {
+  position: absolute;
+  width: 24px;
+  fill: rgb(100, 0, 100);
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .arr-1 {
+  right: 16px;
+}
+
+.animated-button .arr-2 {
+  left: -25%;
+}
+
+.animated-button .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: rgb(100, 0, 100);
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .text {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-12px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button:hover {
+  box-shadow: 0 0 0 12px transparent;
+  color: #fff;
+  border-radius: 12px;
+}
+
+.animated-button:hover .arr-1 {
+  right: -25%;
+}
+
+.animated-button:hover .arr-2 {
+  left: 16px;
+}
+
+.animated-button:hover .text {
+  transform: translateX(12px);
+}
+
+.animated-button:hover svg {
+  fill: #212121;
+}
+
+.animated-button:active {
+  scale: 0.95;
+  box-shadow: 0 0 0 4px rgb(100, 0, 100);
+}
+
+.animated-button:hover .circle {
+  width: 220px;
+  height: 220px;
+  opacity: 1;
+}
+
         * {
             margin: 0;
             padding: 0;
@@ -855,6 +945,7 @@ button:active {
         }
 
 
+
     </style>
 </head>
 <body>
@@ -878,14 +969,28 @@ button:active {
         </nav>
     </header>
     <section class="hero">
-        <h1>Max Kranz X.</h1>
-        <p>Доступ ко всем сервисам.</p>
-        <button class="cta-button" onclick="window.open('https://telegra.ph/max-kranz-x-02-01')">Получить</button>
+        <h1>Max Kranz Projects</h1>
+        <p>Откройте для себя все наши проекты</p>
+        <button class="animated-button" onclick="window.open('https://telegra.ph/max-kranz-02-12-2')">
+            <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+              ></path>
+            </svg>
+            <span class="text">Go!</span>
+            <span class="circle"></span>
+            <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+              ></path>
+            </svg>
+          </button>
+          
     </section>
     
    
         <div class="intro" style="color: #f8f8f8;">
-          Привет, меня зовут Макс Кранц, и здесь, на моем сайте, ты можешь поиграть в увлекательные игры, использовать классные приложения и использовать мои сервисы и проекты. Наслаждайся!)
+            Max Kranz - это компания, которая создает приложения, игры, сайты и разные полезные проекты. Мы делаем проекты, которые <i>нравятся людям.</i>
         </div>
     
       
@@ -996,45 +1101,14 @@ button:active {
               </div>
               </div>
               </div>
-              <div class="price-container">
-                <div class="price-card">
-                    <div class="plan-name">Avatar</div>
-                    <div class="price">⭐15</div>
-                    <div class="features">
-                        <p>1 аватарка</p>
-                        <p>Поддержка</p>
-                    </div>
-                    <button class="cta" onclick="window.open('https://avatar.maxkranz.me/pricing/')">Получить</button>
-                </div>
-        
-                <div class="price-card">
-                    <div class="plan-name">Max Kranz X</div>
-                    <div class="price">⭐25</div>
-                    <div class="features">
-                        <p>Доступ ко всем сервисам</p>
-                        <p>Выгодно</p>
-                    </div>
-                    <button class="cta" onclick="window.open('https://telegra.ph/max-kranz-x-02-01')">Получить</button>
-                </div>
-        
-                <div class="price-card">
-                    <div class="plan-name">Max Zakaz</div>
-                    <div class="price">⭐50</div>
-                    <div class="features">
-                        <p>Создание сайта на заказ</p>
-                        <p>Хорошее качество</p>
-                    </div>
-                    <button class="cta" onclick="window.open('https://telegra.ph/max-zakaz-02-01')">Получить</button>
-                </div>
-            </div>
-
+           
 
 
 
     <div class="section">
-        <h2>Кто я</h2>
-        <p>Меня зовут Макс Кранц. Здесь, на этом сайте, я и мои партнеры создаем игры, приложения и игры, которые нравятся людям. Я буду рад, если моими проектами будут пользоваться <3 <br> 
-            <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/ru/about')">Обо мне</button></p>
+        <h2>О нас</h2>
+        <p>Max Kranz - это компания, которая занимается созданием приложений, игр, сайтов и различных полезных проектов. Мы разрабатываем что-то каждый день, и это что-то действительно полезное или забавное.  <br> 
+            <button style="margin-top: 50px;" onclick="window.open('https://maxkranz.github.io/ru/about')">О нас</button></p>
     </div>
 
     <footer style="color: #f8f8f8; margin-top: 0;">© Max Kranz Inc. All rights reserved.<br><br><a href="https://maxkranz.github.io/" STYLE="color: #f8f8f8;
