@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сердечко Милана</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 100vh;
+            background-color: #222;
+        }
+        .heart {
+            position: absolute;
+            bottom: 0;
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            clip-path: path('M24.4 3.6c-2.9-2.9-7.5-2.9-10.4 0l-1.2 1.2-1.2-1.2c-2.9-2.9-7.5-2.9-10.4 0s-2.9 7.5 0 10.4L12.8 24l10.4-10.4c2.9-2.9 2.9-7.5 0-10.4z');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 30px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            animation: rise 3s linear forwards;
+        }
+        @keyframes rise {
+            0% { bottom: 0; }
+            100% { bottom: 90vh; }
+        }
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: yellow;
+            opacity: 0;
+            animation: confetti-rise 1s ease-out forwards;
+        }
+        @keyframes confetti-rise {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-50vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart">Милана</div>
+    <script>
+        document.querySelector('.heart').addEventListener('animationend', () => {
+            for (let i = 0; i < 30; i++) {
+                let confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                document.body.appendChild(confetti);
+                
+                let startX = Math.random() * 80 + 10 + '%';
+                confetti.style.left = startX;
+                confetti.style.bottom = '50vh';
+                confetti.style.backgroundColor = ['red', 'blue', 'yellow', 'green', 'pink'][Math.floor(Math.random() * 5)];
+                
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+            }
+        });
+    </script>
+</body>
+</html>
