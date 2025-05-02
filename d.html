@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday, Папа!</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #00ff99;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    #code {
+      font-size: 2em;
+      white-space: nowrap;
+      border-right: 3px solid #00ff99;
+      overflow: hidden;
+      width: 0;
+      opacity: 0;
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 1.5em;
+      opacity: 0;
+      color: #ffffff;
+    }
+    #runButton, #againButton {
+      background-color: #00ff99;
+      color: #0d0d0d;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.2em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, opacity 0.5s;
+    }
+    #runButton:hover, #againButton:hover {
+      background-color: #00cc77;
+    }
+    #againButton {
+      margin-top: 20px;
+      display: none;
+      opacity: 0;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<button id="runButton">Run Command</button>
+<h1 id="code"></h1>
+<p id="message">С Днем Рождения, папа! Я тебя люблю ❤️</p>
+<button id="againButton">Run Command Again</button>
+<canvas id="confetti"></canvas>
+
+<script>
+  const runButton = document.getElementById('runButton');
+  const againButton = document.getElementById('againButton');
+  const code = document.getElementById('code');
+  const message = document.getElementById('message');
+  const text = "function happyBirthday() { 🎉 }";
+
+  runButton.addEventListener('click', startAnimation);
+  againButton.addEventListener('click', startAnimation);
+
+  function startAnimation() {
+    runButton.style.display = 'none';
+    againButton.style.display = 'none';
+    againButton.style.opacity = 0;
+    code.textContent = '';
+    code.style.width = '0';
+    code.style.opacity = 1;
+    message.style.opacity = 0;
+    let i = 0;
+
+    const typing = setInterval(() => {
+      code.textContent = text.substring(0, i);
+      i++;
+      code.style.width = i + 'ch';
+      if (i > text.length) {
+        clearInterval(typing);
+        setTimeout(() => {
+          message.style.animation = 'fadeIn 2s forwards';
+          launchConfetti();
+          setTimeout(() => {
+            showAgainButton();
+          }, 1500);
+        }, 500);
+      }
+    }, 100);
+  }
+
+  function showAgainButton() {
+    againButton.style.display = 'inline-block';
+    setTimeout(() => {
+      againButton.style.opacity = 1;
+    }, 100);
+  }
+
+  // Конфетти фейерверк
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function createParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: canvas.height,
+      speedX: (Math.random() - 0.5) * 5,
+      speedY: Math.random() * -10 - 5,
+      color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+      size: Math.random() * 5 + 2
+    };
+  }
+
+  function launchConfetti() {
+    for (let i = 0; i < 200; i++) {
+      particles.push(createParticle());
+    }
+    animateConfetti();
+  }
+
+  function animateConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p, index) => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      p.speedY += 0.2; // гравитация
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (p.y > canvas.height) {
+        particles.splice(index, 1);
+      }
+    });
+    if (particles.length > 0) {
+      requestAnimationFrame(animateConfetti);
+    }
+  }
+</script>
+
+</body>
+</html>
