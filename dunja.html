@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffd6e7, #c1f0ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 400px;
+            perspective: 1500px;
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: rotateY(10deg);
+        }
+
+        .card.open {
+            transform: rotateY(-180deg);
+        }
+
+        .card-front, .card-inside {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+        }
+
+        .card-front {
+            background: linear-gradient(45deg, #ff8fab, #fb6f92);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .card-inside {
+            background: white;
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .robot {
+            width: 120px;
+            height: 150px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .robot-head {
+            width: 80px;
+            height: 80px;
+            background: #4cc9f0;
+            border-radius: 20px;
+            margin: 0 auto 10px;
+            position: relative;
+            border: 5px solid #3a86ff;
+        }
+
+        .robot-eyes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: absolute;
+            top: 25px;
+            width: 100%;
+        }
+
+        .eye {
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pupil {
+            width: 10px;
+            height: 10px;
+            background: #4361ee;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            animation: blink 3s infinite;
+        }
+
+        .robot-body {
+            width: 100px;
+            height: 70px;
+            background: #7209b7;
+            border-radius: 15px;
+            margin: 0 auto;
+            border: 5px solid #560bad;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff006e;
+            font-size: 24px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        .flowers {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+        }
+
+        .flower {
+            position: absolute;
+            bottom: 0;
+            animation: float 4s infinite ease-in-out;
+        }
+
+        .flower:nth-child(1) {
+            left: 15%;
+            color: #ffafcc;
+            font-size: 40px;
+            animation-delay: 0s;
+        }
+
+        .flower:nth-child(2) {
+            left: 45%;
+            color: #ffc8dd;
+            font-size: 50px;
+            animation-delay: 0.5s;
+        }
+
+        .flower:nth-child(3) {
+            left: 75%;
+            color: #cdb4db;
+            font-size: 35px;
+            animation-delay: 1s;
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .click-hint {
+            font-size: 14px;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .message {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .signature {
+            font-family: cursive;
+            font-size: 20px;
+            color: #7209b7;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .decoration {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.3;
+        }
+
+        .decoration.gear {
+            top: 20px;
+            right: 20px;
+            animation: spin 8s infinite linear;
+            color: #4361ee;
+        }
+
+        .decoration.star {
+            bottom: 20px;
+            left: 20px;
+            animation: spin 10s infinite reverse linear;
+            color: #ffafcc;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                height: 450px;
+            }
+            .title {
+                font-size: 30px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="card-container">
+        <div class="card" id="birthdayCard">
+            <div class="card-front">
+                <div class="robot">
+                    <div class="robot-head">
+                        <div class="robot-eyes">
+                            <div class="eye"><div class="pupil"></div></div>
+                            <div class="eye"><div class="pupil"></div></div>
+                        </div>
+                    </div>
+                    <div class="robot-body">
+                        <div class="heart">❤️</div>
+                    </div>
+                </div>
+                
+                <div class="flowers">
+                    <div class="flower">🌸</div>
+                    <div class="flower">🌺</div>
+                    <div class="flower">🌼</div>
+                </div>
+                
+                <h1 class="title">Happy B-day!</h1>
+                <p class="subtitle">To Dunja</p>                
+                <div class="decoration gear">⚙️</div>
+                <div class="decoration star">✦</div>
+            </div>
+            
+            <div class="card-inside">
+                <p class="message">
+                    Dear bestie,<br><br>
+                    Wishing you the most amazing birthday! May your day be filled with joy, laughter, and all the things that make you smile. You're as brilliant as the most advanced robot and as beautiful as the most delicate flower.<br><br>
+                    Hope your year ahead is full of exciting adventures, new discoveries, and wonderful moments. You deserve all the happiness in the world!<br><br>
+                    Can't wait to celebrate with you! 🎉
+                </p>
+                <div class="signature">
+                    With love,<br>
+                    Your friend
+                </div>
+                <div class="flowers" style="bottom: 10px; height: 60px;">
+                    <div class="flower" style="left: 10%;">🌷</div>
+                    <div class="flower" style="left: 30%;">💐</div>
+                    <div class="flower" style="left: 50%;">🌹</div>
+                    <div class="flower" style="left: 70%;">🌻</div>
+                    <div class="flower" style="left: 90%;">🥀</div>
+                </div>
+                <div class="decoration gear" style="top: auto; bottom: 15px; right: 15px; font-size: 20px;">⚙️</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const card = document.getElementById('birthdayCard');
+        
+        card.addEventListener('click', function() {
+            this.classList.toggle('open');
+        });
+
+        // Add some interactive hover effects
+        card.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('open')) {
+                this.style.transform = 'rotateY(10deg) scale(1.02)';
+            }
+        });
+
+        card.addEventListener('mouseleave', function() {
+            if (!this.classList.contains('open')) {
+                this.style.transform = 'rotateY(0deg) scale(1)';
+            }
+        });
+    </script>
+</body>
+</html>
